@@ -15,15 +15,13 @@ const Login = () => {
   return (
     <Flex
       p={{ base: '20px 35px', md: '20px 220px' }}
-      bg='gray.700'
       color='white'
-      h='90vh'
       flexDirection='column'
       justifyContent='center'
       alignItems='center'
     >
       <Heading textAlign='center' size='lg'>Sign In</Heading>
-      <Divider w='7%' mt='13px' border='2px' />
+      <Divider w='7%' mt='13px' border='2px' bg='white' />
       <HStack
         mt='50px'
         width='100%'
