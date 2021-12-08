@@ -11,10 +11,15 @@ import {
   DrawerBody,
   DrawerContent,
   DrawerCloseButton,
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
   useDisclosure
 } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
 import { GiHamburgerMenu } from 'react-icons/gi';
+import { FiChevronDown } from 'react-icons/fi';
 
 const Navbar = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -41,7 +46,27 @@ const Navbar = () => {
             d={{ base: 'none', md: 'flex' }}
           >
             <Link to='/' border='none' textDecoration='none'>Home</Link>
-            <Link to='/category'>Category</Link>
+            <Menu autoSelect={false}>
+              <MenuButton
+                as={Button}
+                rightIcon={<FiChevronDown />}
+                bg='transparent'
+                fontWeight='normal'
+                _hover={{ bg: 'transparent' }}
+                _active={{ bg: 'transparent' }}
+                _focus={{ outline: 'none' }}
+              >
+                Category
+              </MenuButton>
+              <MenuList zIndex='2' bg='gray.600' borderColor='gray.500'>
+                <MenuItem
+                  _hover={{ bg: 'gray.500' }}
+                  _active={{ bg: 'gray.500' }}
+                >
+                  Test
+                </MenuItem>
+              </MenuList>
+            </Menu>
             <Button
               bg='orange.400'
               variant='solid'
