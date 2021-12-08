@@ -2,6 +2,7 @@ import {
   Box,
   Heading,
   HStack,
+  VStack,
   Spacer,
   Flex,
   Icon,
@@ -15,6 +16,7 @@ import {
   MenuButton,
   MenuList,
   MenuItem,
+  Collapse,
   useDisclosure
 } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
@@ -23,6 +25,7 @@ import { FiChevronDown } from 'react-icons/fi';
 
 const Navbar = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const { isOpen: isOpenMenu, onToggle } = useDisclosure();
 
   return (
     <>
@@ -45,7 +48,7 @@ const Navbar = () => {
             spacing='10'
             d={{ base: 'none', md: 'flex' }}
           >
-            <Link to='/' border='none' textDecoration='none'>Home</Link>
+            <Link to='/'>Home</Link>
             <Menu autoSelect={false}>
               <MenuButton
                 as={Button}
@@ -58,7 +61,11 @@ const Navbar = () => {
               >
                 Category
               </MenuButton>
-              <MenuList zIndex='2' bg='gray.600' borderColor='gray.500'>
+              <MenuList
+                zIndex='2'
+                bg='gray.600'
+                borderColor='gray.500'
+              >
                 <MenuItem
                   _hover={{ bg: 'gray.500' }}
                   _active={{ bg: 'gray.500' }}
@@ -98,6 +105,50 @@ const Navbar = () => {
             color='white'
           >
             <Link to='/'>Home</Link>
+            <Box mt='15px'>
+              <Button
+              p='0'
+                rightIcon={<FiChevronDown />}
+                bg='transparent'
+                fontWeight='normal'
+                _hover={{ bg: 'transparent' }}
+                _active={{ bg: 'transparent' }}
+                _focus={{ outline: 'none' }}
+                onClick={onToggle}
+              >
+                Category
+              </Button>
+            </Box>
+            <Collapse in={isOpenMenu}>
+              <VStack
+                bg='gray.600'
+                borderRadius='5px'
+                padding='10px'
+                alignItems='flex-start'
+                spacing='15px'
+              >
+                <Box>
+                  <Link to='/'>HML</Link>
+                </Box>
+                <Box>
+                  <Link to='/'>HML</Link>
+                </Box>
+                <Box>
+                  <Link to='/'>HML</Link>
+                </Box>
+              </VStack>
+            </Collapse>
+            <Box>
+              <Button
+                bg='orange.400'
+                variant='solid'
+                mt='15px'
+                _active={{ bg: 'orange.600' }}
+                _hover={{ bg: 'orange.600' }}
+              >
+                Sign In
+              </Button>
+            </Box>
           </DrawerBody>
         </DrawerContent>
       </Drawer>
