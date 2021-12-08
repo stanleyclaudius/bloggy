@@ -31,7 +31,7 @@ const Filter = () => {
         <Box>
           <InputGroup borderColor='gray.500'>
             <Input
-              w='300px'
+              w={{ base: '100%', md: '300px' }}
               bg='gray.600'
               color='white'
               placeholder='Search ...'
