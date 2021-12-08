@@ -3,6 +3,7 @@ import {
   HStack,
   Spacer,
   Image,
+  Flex,
   Text,
   Box
 } from '@chakra-ui/react';
@@ -11,14 +12,15 @@ import { Link } from 'react-router-dom';
 const Article = ({category, title, description, author, date, image}) => {
   return (
     <Link to='/'>
-      <HStack
+      <Flex
         color='white'
         borderRadius='5px'
         border='1px'
         borderColor='gray.500'
-        spacing='100px'
         p='15px'
         transition='200ms'
+        alignItems='center'
+        mb='30px'
         _hover={{ transform: 'scale(1.02)' }}
       >
         <Box>
@@ -33,7 +35,7 @@ const Article = ({category, title, description, author, date, image}) => {
           </HStack>
         </Box>
         <Spacer />
-        <Box w='300px' h='150px'>
+        <Box w='300px' h='150px' d={{ base: 'none', md: 'block' }}>
           <Image
             src={image}
             alt='Bloggy Article Image'
@@ -41,9 +43,11 @@ const Article = ({category, title, description, author, date, image}) => {
             border='1px'
             borderColor='gray.500'
             height='100%'
+            width='100%'
+            objectFit='cover'
           />
         </Box>
-      </HStack>
+      </Flex>
     </Link>
   )
 }
