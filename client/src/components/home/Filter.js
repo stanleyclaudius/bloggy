@@ -22,7 +22,6 @@ const Filter = () => {
   return (
     <Box
       p={{ base: '0 35px 20px 35px' , md: '0 100px 20px 100px'}}
-      bg='gray.700'
     >
       <HStack
         justifyContent='flex-end'
@@ -32,7 +31,7 @@ const Filter = () => {
           <InputGroup borderColor='gray.500'>
             <Input
               w={{ base: '100%', md: '300px' }}
-              bg='gray.600'
+              bg='gray.700'
               color='white'
               placeholder='Search ...'
             />
@@ -47,7 +46,7 @@ const Filter = () => {
         </Box>
         <Box>
           <Button
-            bg='gray.600'
+            bg='gray.700'
             border='1px'
             borderColor='gray.500'
             color='white'
@@ -86,7 +85,7 @@ const Filter = () => {
           size='lg'
           borderRadius='full'
           variant='solid'
-          bg='gray.600'
+          bg='green.500'
         >
           <TagLabel>HTML</TagLabel>
           <TagCloseButton />
@@ -95,7 +94,7 @@ const Filter = () => {
           size='lg'
           borderRadius='full'
           variant='solid'
-          bg='gray.600'
+          bg='green.500'
         >
           <TagLabel>HTML</TagLabel>
           <TagCloseButton />

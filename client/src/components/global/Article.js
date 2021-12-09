@@ -13,10 +13,12 @@ const Article = ({category, title, description, author, date, image}) => {
   return (
     <Link to='/'>
       <Flex
+        bg='gray.700'
         color='white'
-        borderRadius='5px'
-        border='1px'
-        borderColor='gray.500'
+        borderRadius='7px'
+        shadow='md'
+        // border='1px'
+        // borderColor='gray.500'
         p='15px'
         transition='200ms'
         alignItems='center'

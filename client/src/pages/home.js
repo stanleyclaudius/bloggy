@@ -10,7 +10,6 @@ const home = () => {
       <Filter />
       <Box
         p={{ base: '15px 35px', md: '15px 100px' }}
-        bg='gray.700'
       >
         <Article
           category='html'

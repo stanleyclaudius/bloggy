@@ -9,7 +9,6 @@ import {
 const Header = () => {
   return (
     <VStack
-      bg='gray.700'
       minH='400px'
       color='white'
       position='relative'

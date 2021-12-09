@@ -19,7 +19,7 @@ import {
   Collapse,
   useDisclosure
 } from '@chakra-ui/react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { GiHamburgerMenu } from 'react-icons/gi';
 import { FiChevronDown } from 'react-icons/fi';
 
@@ -27,11 +27,12 @@ const Navbar = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { isOpen: isOpenMenu, onToggle } = useDisclosure();
 
+  const navigate = useNavigate();
+
   return (
     <>
       <Flex
         p={{ base: '15px 35px', md: '15px 100px' }}
-        bg='gray.700'
         color='white'
         alignItems='center'
       >
@@ -63,12 +64,12 @@ const Navbar = () => {
               </MenuButton>
               <MenuList
                 zIndex='2'
-                bg='gray.600'
-                borderColor='gray.500'
+                bg='gray.700'
+                borderColor='gray.600'
               >
                 <MenuItem
-                  _hover={{ bg: 'gray.500' }}
-                  _active={{ bg: 'gray.500' }}
+                  _hover={{ bg: 'gray.600' }}
+                  _active={{ bg: 'gray.600' }}
                 >
                   Test
                 </MenuItem>
@@ -79,6 +80,7 @@ const Navbar = () => {
               variant='solid'
               _active={{ bg: 'orange.600' }}
               _hover={{ bg: 'orange.600' }}
+              onClick={() => navigate('/login')}
             >
               Sign In
             </Button>
@@ -145,6 +147,7 @@ const Navbar = () => {
                 mt='15px'
                 _active={{ bg: 'orange.600' }}
                 _hover={{ bg: 'orange.600' }}
+                onClick={() => navigate('/login')}
               >
                 Sign In
               </Button>
