@@ -3,16 +3,16 @@ import {
   HStack,
   Spacer,
   Image,
-  Flex,
+  // HStack,
   Text,
   Box
 } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
 
-const Article = ({category, title, description, author, date, image}) => {
+const Article = ({category, title, description, author, date, image, isProfile}) => {
   return (
     <Link to='/'>
-      <Flex
+      <HStack
         bg='gray.700'
         color='white'
         borderRadius='7px'
@@ -25,7 +25,7 @@ const Article = ({category, title, description, author, date, image}) => {
       >
         <Box>
           <Text color='orange.400'>Category: {category}</Text>
-          <Heading pb='12px' size='lg'>{title}</Heading>
+          <Heading pb='12px' size={isProfile ? 'md' : 'lg'}>{title}</Heading>
           <Text pb='12px'>{description}</Text>
           <HStack spacing='20px'>
             <Text>
@@ -35,7 +35,7 @@ const Article = ({category, title, description, author, date, image}) => {
           </HStack>
         </Box>
         <Spacer />
-        <Box w='300px' h='150px' d={{ base: 'none', md: 'block' }}>
+        <Box w={isProfile ? '150px' : '300px'} h={isProfile ? '120px' : '150px'} d={{ base: 'none', md: 'block' }}>
           <Image
             src={image}
             alt='Bloggy Article Image'
@@ -47,7 +47,7 @@ const Article = ({category, title, description, author, date, image}) => {
             objectFit='cover'
           />
         </Box>
-      </Flex>
+      </HStack>
     </Link>
   )
 }
