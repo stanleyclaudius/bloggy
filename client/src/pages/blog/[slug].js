@@ -6,6 +6,7 @@ import {
   HStack
 } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
+import Comment from './../../components/comment/Comment';
 
 const BlogDetail = () => {
   return (
@@ -35,6 +36,7 @@ const BlogDetail = () => {
       <Box mt='30px'>
         <Heading fontSize='25px'>Comments</Heading>
         <Divider bg='white' m='20px 0' />
+        <Comment />
       </Box>
     </Box>
   );
