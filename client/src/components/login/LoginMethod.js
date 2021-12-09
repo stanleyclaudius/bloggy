@@ -1,10 +1,14 @@
 import { Box, Button } from '@chakra-ui/react';
 import { FaSms } from 'react-icons/fa';
 import { BsKeyFill } from 'react-icons/bs';
+import { MdAccountCircle } from 'react-icons/md';
+import { useNavigate } from 'react-router-dom';
 import GoogleLogin from 'react-google-login-lite';
 import FacebookLogin from 'react-facebook-login-lite';
 
 const LoginMethod = ({isSmsLogin, setIsSmsLogin}) => {
+  const navigate = useNavigate();
+
   const onGoogleSuccess = response => {
 
   }
@@ -34,11 +38,23 @@ const LoginMethod = ({isSmsLogin, setIsSmsLogin}) => {
         leftIcon={isSmsLogin ? <BsKeyFill /> : <FaSms />}
         width='100%'
         bg='teal.600'
+        mb='25px'
         _hover={{ bg: 'teal.700' }}
         _active={{ bg: 'teal.700' }}
         onClick={() => setIsSmsLogin(!isSmsLogin)}
       >
         Sign in with {isSmsLogin ? 'Bloggy Account' : 'SMS'}
+      </Button>
+
+      <Button
+        leftIcon={<MdAccountCircle />}
+        width='100%'
+        bg='teal.600'
+        _hover={{ bg: 'teal.700' }}
+        _active={{ bg: 'teal.700' }}
+        onClick={() => navigate('/register')}
+      >
+        Register new account
       </Button>
     </Box>
   );
