@@ -17,8 +17,6 @@ const Article = ({category, title, description, author, date, image}) => {
         color='white'
         borderRadius='7px'
         shadow='md'
-        // border='1px'
-        // borderColor='gray.500'
         p='15px'
         transition='200ms'
         alignItems='center'

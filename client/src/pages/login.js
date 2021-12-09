@@ -1,17 +1,17 @@
 import {
-  FormControl,
-  FormLabel,
-  Input,
-  Button,
   Heading,
   HStack,
   Flex,
   Divider,
-  Box
 } from '@chakra-ui/react';
-import { FaSms } from 'react-icons/fa';
+import { useState } from 'react';
+import LoginMethod from './../components/login/LoginMethod';
+import AccountLogin from './../components/login/AccountLogin';
+import SmsLogin from './../components/login/SmsLogin';
 
 const Login = () => {
+  const [isSmsLogin, setIsSmsLogin] = useState(false);
+
   return (
     <Flex
       p={{ base: '20px 35px', md: '20px 220px' }}
@@ -19,29 +19,18 @@ const Login = () => {
       flexDirection='column'
       justifyContent='center'
       alignItems='center'
+      mt={{ base: '20px', md: '50px' }}
     >
       <Heading textAlign='center' size='lg'>Sign In</Heading>
       <Divider w='7%' mt='13px' border='2px' bg='white' />
       <HStack
-        mt='50px'
+        mt={{ base: '30px', md: '50px' }}
         width='100%'
+        spacing={{ base: '0', md: '100px' }}
+        flexDirection={{ base: 'column', md: 'row' }}
       >
-        <Box width='100%'>
-          <Button leftIcon={<FaSms />} bg='teal.600' _hover={{ bg: 'teal.700' }} _active={{ bg: 'teal.700' }}>
-            Login with SMS
-          </Button>
-        </Box>
-        <Box width='100%'>
-          <FormControl id='account' isRequired>
-            <FormLabel>Email or Phone number</FormLabel>
-            <Input autoComplete='off' bg='gray.600' borderColor='gray.500' />
-          </FormControl>
-          <FormControl mt='20px' id='password' isRequired>
-            <FormLabel>Password</FormLabel>
-            <Input bg='gray.600' borderColor='gray.500' />
-          </FormControl>
-          <Button mt='25px' bg='orange.400' _hover={{ bg: 'orange.600' }} _active={{ bg: 'orange.600' }}>Sign In</Button>
-        </Box>
+        <LoginMethod isSmsLogin={isSmsLogin} setIsSmsLogin={setIsSmsLogin} />
+        {isSmsLogin ? <SmsLogin /> : <AccountLogin />}
       </HStack>
     </Flex>
   );
