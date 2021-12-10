@@ -3,6 +3,7 @@ const cookieParser = require('cookie-parser');
 const cors = require('cors');
 const morgan = require('morgan');
 const dotenv = require('dotenv');
+const connectDB = require('./config/db');
 
 dotenv.config({
   path: './config/.env'
@@ -16,4 +17,5 @@ app.use(cors());
 app.use(morgan('dev'));
 app.use(cookieParser());
 
+connectDB();
 app.listen(process.env.PORT, () => console.log(`Server is running on PORT ${process.env.PORT}`));
