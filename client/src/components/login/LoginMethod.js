@@ -4,7 +4,7 @@ import { BsKeyFill } from 'react-icons/bs';
 import { MdAccountCircle } from 'react-icons/md';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { googleLogin } from './../../redux/actions/authActions';
+import { googleLogin, facebookLogin } from './../../redux/actions/authActions';
 import GoogleLogin from 'react-google-login-lite';
 import FacebookLogin from 'react-facebook-login-lite';
 
@@ -19,7 +19,8 @@ const LoginMethod = ({isSmsLogin, setIsSmsLogin}) => {
   }
 
   const onFacebookSuccess = response => {
-
+    const {accessToken, userID} = response.authResponse;
+    dispatch(facebookLogin(accessToken, userID));
   }
 
   return (
@@ -34,7 +35,7 @@ const LoginMethod = ({isSmsLogin, setIsSmsLogin}) => {
 
       <Box mb='25px'>
         <FacebookLogin
-          appId=''
+          appId='485087349580137'
           onSuccess={onFacebookSuccess}
         />
       </Box>

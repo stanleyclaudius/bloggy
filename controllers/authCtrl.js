@@ -1,5 +1,6 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const fetch = require('cross-fetch');
 const User = require('./../models/User');
 const sendMail = require('./../utils/sendMail');
 const { generateActivationToken, generateAccessToken, generateRefreshToken } = require('./../utils/generateToken');
@@ -148,6 +149,38 @@ const authCtrl = {
           avatar: picture,
           password: passwordHash,
           type: 'google'
+        }
+        registerUser(user, res);
+      }
+    } catch (err) {
+      return res.status(500).json({msg: err.message});
+    }
+  },
+  facebookLogin: async(req, res) => {
+    try {
+      const {accessToken, userID} = req.body;
+      const url = `https://graph.facebook.com/v3.0/${userID}/?fields=id,name,email,picture&access_token=${accessToken}`;
+
+      const data = await fetch(url)
+        .then(res => res.json())
+        .then(res => {return res});
+
+      const {email, name, picture} = data;
+
+      const password = email + '_YoUuR-EmaiL_pa5sw0rD+W11T-GoEes_T_H3re.';
+      const passwordHash = await bcrypt.hash(password, 12);
+
+      const user = await User.findOne({account: email});
+
+      if (user) {
+        loginUser(user, password, res);
+      } else {
+        const user = {
+          account: email,
+          name,
+          avatar: picture.data.url,
+          password: passwordHash,
+          type: 'facebook'
         }
         registerUser(user, res);
       }
