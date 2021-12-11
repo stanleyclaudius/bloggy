@@ -5,6 +5,9 @@ const sendMail = require('./../utils/sendMail');
 const { generateActivationToken, generateAccessToken, generateRefreshToken } = require('./../utils/generateToken');
 const { checkEmail, checkPhone } = require('./../utils/validator');
 const { sendSms } = require('./../utils/sendSms');
+const { OAuth2Client } = require('google-auth-library');
+
+const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
 const authCtrl = {
   register: async(req, res) => {
@@ -121,14 +124,51 @@ const authCtrl = {
     } catch (err) {
       return res.status(500).json({msg: err.message});
     }
+  },
+  googleLogin: async(req, res) => {
+    try {
+      const {id_token} = req.body;
+      const verify = await client.verifyIdToken({idToken: id_token, audience: process.env.GOOGLE_CLIENT_ID});
+
+      const {email, email_verified, name, picture} = verify.getPayload();
+
+      if (!email_verified)
+        return res.status(502).json({msg: 'Email verification failed'});
+
+      const password = email + '_YoUuR-EmaiL_pa5sw0rD+W11T-GoEes_T_H3re.';
+      const passwordHash = await bcrypt.hash(password, 12);
+
+      const user = await User.findOne({account: email});
+      if (user) {
+        loginUser(user, password, res);
+      } else {
+        const user = {
+          account: email,
+          name,
+          avatar: picture,
+          password: passwordHash,
+          type: 'google'
+        }
+        registerUser(user, res);
+      }
+    } catch (err) {
+      return res.status(500).json({msg: err.message});
+    }
   }
 }
 
 const loginUser = async(user, password, res) => {
   const isPasswordMatch = await bcrypt.compare(password, user.password);
 
+  let msg = '';
+  if (user.type === 'register') {
+    msg = `This account is created using Bloggy account, please login using your account and password.`;
+  } else {
+    msg = 'Invalid authentication';
+  }
+
   if (!isPasswordMatch)
-    return res.status(403).json({msg: 'Invalid authentication.'});
+    return res.status(403).json({msg});
 
   const accessToken = generateAccessToken({id: user._id});
   const refreshToken = generateRefreshToken({id: user._id});
@@ -147,6 +187,33 @@ const loginUser = async(user, password, res) => {
     accessToken,
     msg: `Authenticated as ${user.name}`
   });
+}
+
+const registerUser = async(user, res) => {
+  try {
+    const newUser = new User(user);
+    await newUser.save();
+
+    const accessToken = generateAccessToken({id: newUser._id});
+    const refreshToken = generateRefreshToken({id: newUser._id});
+
+    res.cookie('bloggy_rfToken', refreshToken, {
+      httpOnly: true,
+      path: '/api/v1/auth/refresh_token',
+      maxAge: 30 * 24 * 60 * 60 * 1000
+    });
+    
+    res.status(200).json({
+      user: {
+        ...newUser._doc,
+        password: ''
+      },
+      accessToken,
+      msg: `Authenticated as ${newUser.name}`
+    });
+  } catch (err) {
+    return res.status(500).json({msg: err.message});
+  }
 }
 
 module.exports = authCtrl;
