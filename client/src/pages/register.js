@@ -13,10 +13,30 @@ import {
 } from '@chakra-ui/react';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { register } from './../redux/actions/authActions';
 
 const Register = () => {
+  const [userData, setUserData] = useState({
+    name: '',
+    account: '',
+    password: '',
+    confirmPassword: ''
+  });
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
+  const dispatch = useDispatch();
+
+  const handleChange = e => {
+    const {name, value} = e.target;
+    setUserData({...userData, [name]: value});
+  }
+
+  const handleSubmit = e => {
+    e.preventDefault();
+    dispatch(register(userData));
+  }
 
   return (
     <Flex
@@ -28,19 +48,19 @@ const Register = () => {
     >
       <Heading size='lg'>Sign Up</Heading>
       <Divider w='7%' mt='13px' border='2px' bg='white' />
-      <Box as='form' w={{ base: '100%', md: '50%' }}>
+      <Box as='form' onSubmit={handleSubmit} w={{ base: '100%', md: '50%' }}>
         <FormControl mt='20px'>
           <FormLabel>Name</FormLabel>
-          <Input bg='gray.700' />
+          <Input bg='gray.700' name='name' value={userData.name} onChange={handleChange} />
         </FormControl>
         <FormControl mt='20px'>
           <FormLabel>Email or Phone number</FormLabel>
-          <Input bg='gray.700' />
+          <Input bg='gray.700' name='account' value={userData.account} onChange={handleChange} />
         </FormControl>
         <FormControl mt='20px'>
           <FormLabel>Password</FormLabel>
           <InputGroup>
-            <Input type={showPassword ? 'text' : 'password'} bg='gray.700' borderColor='gray.600' />
+            <Input type={showPassword ? 'text' : 'password'} bg='gray.700' borderColor='gray.600' name='password' value={userData.password} onChange={handleChange} />
             <InputRightElement mr='7px'>
               <Button
                 h='1.75rem'
@@ -56,7 +76,7 @@ const Register = () => {
         <FormControl mt='20px'>
           <FormLabel>Confirm Password</FormLabel>
           <InputGroup>
-            <Input type={showConfirmPassword ? 'text' : 'password'} bg='gray.700' borderColor='gray.600' />
+            <Input type={showConfirmPassword ? 'text' : 'password'} bg='gray.700' borderColor='gray.600' name='confirmPassword' value={userData.confirmPassword} onChange={handleChange} />
             <InputRightElement mr='7px'>
               <Button
                 h='1.75rem'
