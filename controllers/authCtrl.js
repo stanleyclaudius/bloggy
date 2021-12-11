@@ -5,7 +5,7 @@ const User = require('./../models/User');
 const sendMail = require('./../utils/sendMail');
 const { generateActivationToken, generateAccessToken, generateRefreshToken } = require('./../utils/generateToken');
 const { checkEmail, checkPhone } = require('./../utils/validator');
-const { sendSms } = require('./../utils/sendSms');
+const { sendSms, sendOTP, verifyOTP } = require('./../utils/sendSms');
 const { OAuth2Client } = require('google-auth-library');
 
 const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
@@ -187,6 +187,42 @@ const authCtrl = {
     } catch (err) {
       return res.status(500).json({msg: err.message});
     }
+  },
+  smsLogin: async(req, res) => {
+    try {
+      const {phone} = req.body;
+      await sendOTP(phone, 'sms');
+      res.status(200).json({msg: 'An OTP has been sent to your phone number via SMS'});
+    } catch (err) {
+      return res.status(500).json({msg: err.message});
+    }
+  },
+  verifyOTP: async(req, res) => {
+    try {
+      const {phone, code} = req.body;
+      const data = await verifyOTP(phone, code);
+
+      if (!data?.valid)
+        return res.status(403).json({msg: 'Invalid authentication.'});
+
+      const password = phone + '_YoUuR-EmaiL_pa5sw0rD+W11T-GoEes_T_H3re.';
+      const passwordHash = await bcrypt.hash(password, 12);
+
+      const user = await User.findOne({account: phone});
+      if (user) {
+        loginUser(user, password, res);
+      } else {
+        const user = {
+          account: phone,
+          name: phone,
+          password: passwordHash,
+          type: 'sms'
+        }
+        registerUser(user, res);
+      }
+    } catch (err) {
+      return res.status(500).json({msg: err.message});
+    }
   }
 }
 
@@ -195,9 +231,9 @@ const loginUser = async(user, password, res) => {
 
   let msg = '';
   if (user.type === 'register') {
-    msg = `This account is created using Bloggy account, please login using your account and password.`;
+    msg = `Invalid authentication`;
   } else {
-    msg = 'Invalid authentication';
+    msg = `This account login using ${user.type}`;
   }
 
   if (!isPasswordMatch)
