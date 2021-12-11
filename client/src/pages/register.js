@@ -11,9 +11,10 @@ import {
   InputGroup,
   InputRightElement
 } from '@chakra-ui/react';
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { GLOBAL_TYPES } from './../redux/types/globalTypes';
 import { register } from './../redux/actions/authActions';
 
 const Register = () => {
@@ -26,7 +27,9 @@ const Register = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
+  const navigate = useNavigate();
   const dispatch = useDispatch();
+  const {alert, auth} = useSelector(state => state);
 
   const handleChange = e => {
     const {name, value} = e.target;
@@ -35,8 +38,40 @@ const Register = () => {
 
   const handleSubmit = e => {
     e.preventDefault();
+    if (!userData.name || !userData.account || !userData.password || !userData.confirmPassword) {
+      return dispatch({
+        type: GLOBAL_TYPES.ALERT,
+        payload: {
+          errors: 'Please fill up every field.'
+        }
+      });
+    }
+
+    if (userData.password.length < 8) {
+      return dispatch({
+        type: GLOBAL_TYPES.ALERT,
+        payload: {
+          errors: 'Password should be at least 8 characters.'
+        }
+      });
+    }
+
+    if (userData.password !== userData.confirmPassword) {
+      return dispatch({
+        type: GLOBAL_TYPES.ALERT,
+        payload: {
+          errors: 'Password confirmation should be matched.'
+        }
+      });
+    }
     dispatch(register(userData));
   }
+
+  useEffect(() => {
+    if (auth.token) {
+      navigate('/');
+    }
+  }, [auth.token, navigate]);
 
   return (
     <Flex
@@ -51,11 +86,11 @@ const Register = () => {
       <Box as='form' onSubmit={handleSubmit} w={{ base: '100%', md: '50%' }}>
         <FormControl mt='20px'>
           <FormLabel>Name</FormLabel>
-          <Input bg='gray.700' name='name' value={userData.name} onChange={handleChange} />
+          <Input bg='gray.700' name='name' value={userData.name} onChange={handleChange} autoComplete='off' />
         </FormControl>
         <FormControl mt='20px'>
           <FormLabel>Email or Phone number</FormLabel>
-          <Input bg='gray.700' name='account' value={userData.account} onChange={handleChange} />
+          <Input bg='gray.700' name='account' value={userData.account} onChange={handleChange} autoComplete='off' />
         </FormControl>
         <FormControl mt='20px'>
           <FormLabel>Password</FormLabel>
@@ -90,6 +125,8 @@ const Register = () => {
           </InputGroup>
         </FormControl>
         <Button
+          isLoading={alert.loading ? true : false}
+          loadingText='Loading'
           bg='orange.400'
           type='submit'
           _hover={{ bg: 'orange.600' }}

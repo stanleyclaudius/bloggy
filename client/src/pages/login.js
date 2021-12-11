@@ -4,13 +4,24 @@ import {
   Flex,
   Divider,
 } from '@chakra-ui/react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import LoginMethod from './../components/login/LoginMethod';
 import AccountLogin from './../components/login/AccountLogin';
 import SmsLogin from './../components/login/SmsLogin';
 
 const Login = () => {
   const [isSmsLogin, setIsSmsLogin] = useState(false);
+
+  const navigate = useNavigate();
+  const {auth} = useSelector(state => state);
+
+  useEffect(() => {
+    if (auth.token) {
+      navigate('/');
+    }
+  }, [auth.token, navigate]);
 
   return (
     <Flex

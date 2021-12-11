@@ -55,18 +55,18 @@ const authCtrl = {
 
       const decoded = jwt.verify(activation_token, process.env.ACTIVATION_TOKEN_SECRET);
       if (!decoded)
-        return res.status(403).json({msg: 'Invalid activation token'});
+        return res.status(403).json({msg: 'Invalid activation token.'});
 
       const user = await User.findOne({account: decoded.account});
       if (user)
-        return res.status(400).json({msg: 'Account already exist'});
+        return res.status(400).json({msg: 'Account already exist.'});
 
       const newUser = new User(decoded);
       await newUser.save();
 
       res.status(200).json({msg: 'Your account has been activated successfully.'});
     } catch (err) {
-      return res.status(500).json({msg: err.message});
+      return res.status(500).json({msg: 'Invalid activation token.'});
     }
   },
   login: async(req, res) => {

@@ -1,37 +1,40 @@
 import {
-  Box
+  Box,
+  useToast
 } from '@chakra-ui/react';
 import { useEffect, useCallback } from 'react';
-import { useDispatch } from 'react-redux';
 import { useParams, useNavigate } from 'react-router-dom';
-import { GLOBAL_TYPES } from './../../redux/types/globalTypes';
 import { postDataAPI } from './../../utils/fetchData';
 
 const ActivateAccount = () => {
-  const dispatch = useDispatch();
+  const toast = useToast();
   const navigate = useNavigate();
   const {slug} = useParams();
 
   const activateAccount = useCallback(async() => {
     try {
       const res = await postDataAPI('auth/activate', {activation_token: slug});
-      dispatch({
-        type: GLOBAL_TYPES.ALERT,
-        payload: {
-          success: res.data.msg
-        }
+      await toast({
+        position: 'top-right',
+        title: 'Success.',
+        description: `${res.data.msg}`,
+        status: 'success',
+        duration: 3000,
+        isClosable: true
       });
       navigate('/login');
     } catch (err) {
-      dispatch({
-        type: GLOBAL_TYPES.ALERT,
-        payload: {
-          errors: err.response.data.msg
-        }
+      await toast({
+        position: 'top-right',
+        title: 'Failed.',
+        description: `${err.response.data.msg}`,
+        status: 'error',
+        duration: 3000,
+        isClosable: true
       });
       navigate('/login');
     }
-  }, [dispatch, slug, navigate]);
+  }, [slug, navigate, toast]);
 
   useEffect(() => {
     if (!slug) return;
