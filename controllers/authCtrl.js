@@ -2,7 +2,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const User = require('./../models/User');
 const sendMail = require('./../utils/sendMail');
-const { generateActivationToken } = require('./../utils/generateToken');
+const { generateActivationToken, generateAccessToken, generateRefreshToken } = require('./../utils/generateToken');
 const { checkEmail, checkPhone } = require('./../utils/validator');
 const { sendSms } = require('./../utils/sendSms');
 
@@ -68,7 +68,48 @@ const authCtrl = {
     } catch (err) {
       return res.status(500).json({msg: err.message});
     }
+  },
+  login: async(req, res) => {
+    try {
+      const {account, password} = req.body;
+
+      if (!account || !password)
+        return res.status(400).json({msg: 'Please fill up every field.'});
+
+      const user = await User.findOne({account});
+      if (!user)
+        return res.status(403).json({msg: 'Invalid authentication.'});
+
+      loginUser(user, password, res);
+    } catch (err) {
+      return res.status(500).json({msg: err.message});
+    }
   }
+}
+
+const loginUser = async(user, password, res) => {
+  const isPasswordMatch = await bcrypt.compare(password, user.password);
+
+  if (!isPasswordMatch)
+    return res.status(403).json({msg: 'Invalid authentication.'});
+
+  const accessToken = generateAccessToken({id: user._id});
+  const refreshToken = generateRefreshToken({id: user._id});
+
+  res.cookie('bloggy_rfToken', refreshToken, {
+    httpOnly: true,
+    path: '/api/v1/auth/refresh_token',
+    maxAge: 30 * 24 * 60 * 60 * 1000
+  });
+
+  res.status(200).json({
+    user: {
+      ...user._doc,
+      password: ''
+    },
+    accessToken,
+    msg: `Authenticated as ${user.name}`
+  });
 }
 
 module.exports = authCtrl;
