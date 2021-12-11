@@ -84,3 +84,26 @@ export const refreshToken = () => async(dispatch) => {
     });
   }
 }
+
+export const logout = () => async(dispatch) => {
+  try {
+    await getDataAPI('auth/logout');
+    localStorage.removeItem('logged');
+    dispatch({
+      type: GLOBAL_TYPES.ALERT,
+      payload: {}
+    });
+    
+    dispatch({
+      type: GLOBAL_TYPES.AUTH,
+      payload: {}
+    });
+  } catch (err) {
+    dispatch({
+      type: GLOBAL_TYPES.ALERT,
+      payload: {
+        errors: err.response.data.msg
+      }
+    });
+  }
+}
