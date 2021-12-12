@@ -1,9 +1,20 @@
-import { Box } from '@chakra-ui/react';
-import Article from './../components/global/Article';
+import { Box, Heading, Divider, Flex, Spacer } from '@chakra-ui/react';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { getHomeBlogs } from './../redux/actions/blogActions';
+import ArticleContainer from './../components/home/ArticleContainer';
 import Header from './../components/home/Header';
 import Filter from './../components/home/Filter';
 
-const home = () => {
+const Home = () => {
+  const dispatch = useDispatch();
+  const {homeBlog: category} = useSelector(state => state);
+
+  useEffect(() => {
+    dispatch(getHomeBlogs());
+  }, [dispatch]);
+
   return (
     <>
       <Header />
@@ -11,33 +22,22 @@ const home = () => {
       <Box
         p={{ base: '15px 35px', md: '15px 100px' }}
       >
-        <Article
-          category='html'
-          title='Lorem ipsum dolor sit amet'
-          description='Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet.'
-          author='Lorem Ipsum'
-          date='24 June 2020'
-          image='https://i.natgeofe.com/n/3861de2a-04e6-45fd-aec8-02e7809f9d4e/02-cat-training-NationalGeographic_1484324_square.jpg'
-        />
-        <Article
-          category='html'
-          title='Lorem ipsum dolor sit amet'
-          description='Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet.'
-          author='Lorem Ipsum'
-          date='24 June 2020'
-          image='https://i.natgeofe.com/n/3861de2a-04e6-45fd-aec8-02e7809f9d4e/02-cat-training-NationalGeographic_1484324_square.jpg'
-        />
-        <Article
-          category='html'
-          title='Lorem ipsum dolor sit amet'
-          description='Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet.'
-          author='Lorem Ipsum'
-          date='24 June 2020'
-          image='https://i.natgeofe.com/n/3861de2a-04e6-45fd-aec8-02e7809f9d4e/02-cat-training-NationalGeographic_1484324_square.jpg'
-        />
+        {
+          category.map(cat => (
+            <Box key={cat._id}>
+              <Flex alignItems='center'>
+                <Heading fontSize='27px'>{cat.name}</Heading>
+                <Spacer />
+                {cat.count > 4 && <Link to='/'>See more</Link>}
+              </Flex>
+              <Divider bg='white' m='20px 0' />
+              <ArticleContainer blogs={cat.blogs} />
+            </Box>
+          ))
+        }
       </Box>
     </>
   )
 }
 
-export default home;
+export default Home;
