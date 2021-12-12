@@ -33,15 +33,8 @@ export const getCategory = () => async(dispatch) => {
   }
 }
 
-export const createCategory = (data, token) => {
+export const createCategory = (data, token) => async(dispatch) => {
   try {
-    dispatch({
-      type: GLOBAL_TYPES.ALERT,
-      payload: {
-        loading: true
-      }
-    });
-
     const res = await postDataAPI('category', data, token);
     dispatch({
       type: CATEGORY_TYPES.CREATE_CATEGORY,
@@ -66,13 +59,6 @@ export const createCategory = (data, token) => {
 
 export const updateCategory = (data, id, token) => async(dispatch) => {
   try {
-    dispatch({
-      type: GLOBAL_TYPES.ALERT,
-      payload: {
-        loading: true
-      }
-    });
-
     const res = await patchDataAPI(`category/${id}`, data, token);
     dispatch({
       type: CATEGORY_TYPES.UPDATE_CATEGORY,
@@ -97,13 +83,6 @@ export const updateCategory = (data, id, token) => async(dispatch) => {
 
 export const deleteCategory = (id, token) => async(dispatch) => {
   try {
-    dispatch({
-      type: GLOBAL_TYPES.ALERT,
-      payload: {
-        loading: true
-      }
-    });
-
     const res = await deleteDataAPI(`category/${id}`, token);
     dispatch({
       type: CATEGORY_TYPES.DELETE_CATEGORY,

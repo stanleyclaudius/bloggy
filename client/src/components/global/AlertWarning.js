@@ -7,12 +7,28 @@ import {
   AlertDialogOverlay,
   Button
 } from '@chakra-ui/react';
-import { useRef } from 'react';
+import { useState, useRef } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { deleteCategory } from './../../redux/actions/categoryActions';
 
-const AlertWarning = ({onDelete, setOnDelete}) => {
+const AlertWarning = ({onDelete, setOnDelete, category, setSelectedCategory}) => {
+  const [loading, setLoading] = useState(false);
   const cancelRef = useRef();
+
+  const dispatch = useDispatch();
+  const {auth} = useSelector(state => state);
   
-  const onClose = () => setOnDelete(false);
+  const onClose = () => {
+    setSelectedCategory({});
+    setOnDelete(false);
+  }
+
+  const handleDelete = async() => {
+    setLoading(true);
+    await dispatch(deleteCategory(category._id, auth.token));
+    setLoading(false);
+    onClose();
+  }
 
   return (
     <AlertDialog
@@ -32,7 +48,7 @@ const AlertWarning = ({onDelete, setOnDelete}) => {
             <Button ref={cancelRef} onClick={onClose} mr='3'>
               Cancel
             </Button>
-            <Button colorScheme='red'>
+            <Button isLoading={loading ? true : false} loadingText='Loading' colorScheme='red' onClick={handleDelete}>
               Delete
             </Button>
           </AlertDialogFooter>

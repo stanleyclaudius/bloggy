@@ -9,3 +9,5 @@ router.route('/')
 router.route('/:id')
   .patch(isAuthenticated, authorizeRoles('admin'), categoryCtrl.updateCategory)
   .delete(isAuthenticated, authorizeRoles('admin'), categoryCtrl.deleteCategory);
+
+module.exports = router;

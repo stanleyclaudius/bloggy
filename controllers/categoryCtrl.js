@@ -38,7 +38,7 @@ const categoryCtrl = {
     try {
       const {name, description} = req.body;
 
-      if (!name || !category)
+      if (!name || !description)
         return res.status(400).json({msg: 'Please fill up every field.'});
 
       const category = await Category.findOneAndUpdate({_id: req.params.id}, {name, description}, {new: true});
