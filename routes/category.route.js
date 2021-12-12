@@ -1,10 +1,11 @@
 const router = require('express').Router();
 const categoryCtrl = require('./../controllers/categoryCtrl');
+const { isAuthenticated, authorizeRoles } = require('./../middlewares/auth');
 
 router.route('/')
   .get(categoryCtrl.getCategory)
-  .post(categoryCtrl.createCategory);
+  .post(isAuthenticated, authorizeRoles('admin'), categoryCtrl.createCategory);
 
 router.route('/:id')
-  .patch(categoryCtrl.updateCategory)
-  .delete(categoryCtrl.deleteCategory);
+  .patch(isAuthenticated, authorizeRoles('admin'), categoryCtrl.updateCategory)
+  .delete(isAuthenticated, authorizeRoles('admin'), categoryCtrl.deleteCategory);
