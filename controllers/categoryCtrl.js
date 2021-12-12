@@ -41,8 +41,11 @@ const categoryCtrl = {
       if (!name || !category)
         return res.status(400).json({msg: 'Please fill up every field.'});
 
-      await Category.findOneAndUpdate({_id: req.params.id}, {name, description}, {new: true});
-      res.status(200).json({msg: `Category with ID ${req.params.id} has been updated.`});
+      const category = await Category.findOneAndUpdate({_id: req.params.id}, {name, description}, {new: true});
+      res.status(200).json({
+        category,
+        msg: `Category with ID ${req.params.id} has been updated.`
+      });
     } catch (err) {
       return res.status(500).json({msg: err.message});
     }
