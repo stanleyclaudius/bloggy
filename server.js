@@ -18,6 +18,7 @@ app.use(morgan('dev'));
 app.use(cookieParser());
 
 app.use('/api/v1/auth', require('./routes/auth.route'));
+app.use('/api/v1/category', require('./routes/category.route'));
 
 connectDB();
 app.listen(process.env.PORT, () => console.log(`Server is running on PORT ${process.env.PORT}`));
