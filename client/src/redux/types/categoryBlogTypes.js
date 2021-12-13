@@ -1,0 +1,3 @@
+export const CATEGORY_BLOG_TYPES = {
+  GET_BLOGS: 'GET_BLOGS_BY_CATEGORY'
+};

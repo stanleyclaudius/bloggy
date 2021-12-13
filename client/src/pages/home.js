@@ -11,7 +11,6 @@ import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { getHomeBlogs } from './../redux/actions/blogActions';
-import { getCategory } from './../redux/actions/categoryActions';
 import ArticleContainer from './../components/home/ArticleContainer';
 import Header from './../components/home/Header';
 import Filter from './../components/home/Filter';
@@ -23,7 +22,6 @@ const Home = () => {
   const {homeBlog: blogCategory, alert, category} = useSelector(state => state);
 
   useEffect(() => {
-    dispatch(getCategory());
     dispatch(getHomeBlogs(filter));
   }, [dispatch, filter]);
 
@@ -53,7 +51,7 @@ const Home = () => {
                     <Flex alignItems='center'>
                       <Heading fontSize='27px'>{cat.name}</Heading>
                       <Spacer />
-                      {cat.count > 4 && <Link to='/'>See more</Link>}
+                      {cat.count > 4 && <Link to={`/blogs/${cat.name}`}>See more</Link>}
                     </Flex>
                     <Divider bg='white' m='20px 0' />
                     <ArticleContainer blogs={cat.blogs} />
