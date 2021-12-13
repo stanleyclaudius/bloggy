@@ -16,8 +16,22 @@ import {
 import { FaSearch } from 'react-icons/fa';
 import { IoFilterSharp } from 'react-icons/io5';
 
-const Filter = () => {
+const Filter = ({category, filter, setFilter}) => {
   const { isOpen, onToggle } = useDisclosure();
+
+  const handleChooseCategory = cat => {
+    setFilter(filter => {
+      if (!filter.find(item => item._id === cat._id)) {
+        return [...filter, cat];
+      } else {
+        return filter.filter(item => item._id !== cat._id);
+      }
+    });
+  }
+
+  const handleRemoveCategory = id => {
+    setFilter(filter => filter.filter(item => item._id !== id));
+  }
 
   return (
     <Box
@@ -65,40 +79,43 @@ const Filter = () => {
           color='white'
           spacing='15px'
         >
-          <Tag
-            size='lg'
-            borderRadius='full'
-            variant='solid'
-            bg='gray.600'
-            cursor='pointer'
-            opacity='0.5'
-            transition='200ms'
-            _hover={{ opacity: '1' }}
-          >
-            <TagLabel>HTML</TagLabel>
-          </Tag>
+          {
+            category.map(cat => (
+              <Tag
+                key={cat._id}
+                size='lg'
+                borderRadius='full'
+                variant='solid'
+                bg='gray.600'
+                cursor='pointer'
+                opacity='0.5'
+                transition='200ms'
+                _hover={{ opacity: '1' }}
+                onClick={() => handleChooseCategory(cat)}
+              >
+                <TagLabel>{cat.name}</TagLabel>
+              </Tag>
+            ))
+          }
         </Wrap>
       </Collapse>
       <Divider mt='20px' />
-      <HStack mt='20px' spacing='15px'>
-        <Tag
-          size='lg'
-          borderRadius='full'
-          variant='solid'
-          bg='green.500'
-        >
-          <TagLabel>HTML</TagLabel>
-          <TagCloseButton />
-        </Tag>
-        <Tag
-          size='lg'
-          borderRadius='full'
-          variant='solid'
-          bg='green.500'
-        >
-          <TagLabel>HTML</TagLabel>
-          <TagCloseButton />
-        </Tag>
+      <HStack mt={filter?.length !== 0 ? '20px' : '0'} spacing='15px'>
+        {
+          filter.map(item => (
+            <Tag
+              key={item._id}
+              size='lg'
+              borderRadius='full'
+              variant='solid'
+              bg='green.500'
+              onClick={() => handleRemoveCategory(item._id)}
+            >
+              <TagLabel>{item.name}</TagLabel>
+              <TagCloseButton />
+            </Tag>
+          ))
+        }
       </HStack>
     </Box>
   );

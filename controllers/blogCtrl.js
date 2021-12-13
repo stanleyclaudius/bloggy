@@ -4,8 +4,12 @@ const mongoose = require('mongoose');
 const blogCtrl = {
   getHomeBlogs: async(req, res) => {
     const categoryQuery = [];
-    for (let i = 0; i < req.query.category?.length; i++) {
-      categoryQuery.push(mongoose.Types.ObjectId(req.query.category[i]));
+    if (typeof req.query.category === 'string') {
+      categoryQuery.push(mongoose.Types.ObjectId(req.query.category))
+    } else {
+      for (let i = 0; i < req.query.category?.length; i++) {
+        categoryQuery.push(mongoose.Types.ObjectId(req.query.category[i]));
+      }
     }
 
     const aggregation = [
