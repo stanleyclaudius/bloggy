@@ -46,7 +46,7 @@ export const getHomeBlogs = filter => async(dispatch) => {
   }
 }
 
-export const getCategoryBlogs = id => async(dispatch) => {
+export const getCategoryBlogs = (id, page='?page=1') => async(dispatch) => {
   try {
     dispatch({
       type: GLOBAL_TYPES.ALERT,
@@ -55,7 +55,7 @@ export const getCategoryBlogs = id => async(dispatch) => {
       }
     });
 
-    const res = await getDataAPI(`blog/category/${id}`);
+    const res = await getDataAPI(`blog/category/${id}${page}`);
     dispatch({
       type: CATEGORY_BLOG_TYPES.GET_BLOGS,
       payload: res.data

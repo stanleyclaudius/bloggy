@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { getCategoryBlogs } from './../../redux/actions/blogActions';
 import Article from './../../components/global/Article';
+import Pagination from './../../components/global/Pagination';
 
 const BlogsCategory = () => {
   const [categoryId, setCategoryId] = useState('');
@@ -11,6 +12,11 @@ const BlogsCategory = () => {
   const {slug} = useParams();
   const dispatch = useDispatch();
   const {category, categoryBlog, alert} = useSelector(state => state);
+
+  const handlePagination = num => {
+    const page = `?page=${num}`;
+    dispatch(getCategoryBlogs(categoryId._id, page));
+  }
 
   useEffect(() => {
     const id = category.find(item => item.name === slug);
@@ -53,6 +59,10 @@ const BlogsCategory = () => {
           )
         }
       </Box>
+      <Pagination
+        page={categoryBlog.totalPage}
+        callback={handlePagination}
+      />
     </Box>
   );
 }
