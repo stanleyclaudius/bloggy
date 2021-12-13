@@ -6,4 +6,6 @@ router.route('/')
   .get(blogCtrl.getHomeBlogs)
   .post(isAuthenticated, blogCtrl.createBlog);
 
+router.route('/category/:id').get(blogCtrl.getCategoryBlogs);
+
 module.exports = router;

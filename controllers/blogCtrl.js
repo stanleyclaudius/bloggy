@@ -1,6 +1,13 @@
 const Blog = require('./../models/Blog');
 const mongoose = require('mongoose');
 
+const Pagination = (req) => {
+  const page = req.query.page * 1 || 1;
+  const limit = req.query.limit * 1 || 4;
+  const skip = (page - 1) * limit;
+  return {page, limit, skip};
+}
+
 const blogCtrl = {
   getHomeBlogs: async(req, res) => {
     const categoryQuery = [];
@@ -65,6 +72,66 @@ const blogCtrl = {
       const blogs = await Blog.aggregate(aggregation);
 
       res.status(200).json({blogs});
+    } catch (err) {
+      return res.status(500).json({msg: err.message});
+    }
+  },
+  getCategoryBlogs: async(req, res) => {
+    const {limit, skip} = Pagination(req);
+    try {
+      const blogs = await Blog.aggregate([
+        {
+          $facet: {
+            totalData: [
+              {
+                $match: {category: mongoose.Types.ObjectId(req.params.id)}
+              },
+              {
+                $lookup: {
+                  "from": "users",
+                  "let": {user_id: "$user"},
+                  "pipeline": [
+                    {$match: {$expr: {$eq: ["$_id", "$$user_id"]}}},
+                    {$project: {password: 0, role: 0, type: 0, createdAt: 0, updatedAt: 0}}
+                  ],
+                  "as": "user"
+                }
+              },
+              {$unwind: "$user"},
+              {$sort: {createdAt: -1}},
+              {$skip: skip},
+              {$limit: limit}
+            ],
+            totalCount: [
+              {
+                $match: {category: mongoose.Types.ObjectId(req.params.id)}
+              },
+              { $count: "count" }
+            ]
+          }
+        },
+        {
+          $project: {
+            count: {$arrayElemAt: ["$totalCount.count", 0]},
+            totalData: 1
+          }
+        }
+      ]);
+
+      const blogsData = blogs[0].totalData;
+      const blogsCount = blogs[0].count;
+
+      let totalPage = 0;
+      if (blogsCount % limit === 0) {
+        totalPage = blogsCount / limit;
+      } else {
+        totalPage = Math.floor(blogsCount / limit) + 1;
+      }
+
+      res.status(200).json({
+        blogs: blogsData,
+        totalPage
+      });
     } catch (err) {
       return res.status(500).json({msg: err.message});
     }
