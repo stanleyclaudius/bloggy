@@ -15,7 +15,7 @@ const Pagination = ({page, callback}) => {
       <Flex>
         {
           [...Array(page)].map((_, i) => (
-            <Button key={i} onClick={() => handlePagination(i+1)}>{i+1}</Button>
+            <Button key={i} bg={currPage === i + 1 && 'orange.400'} onClick={() => handlePagination(i+1)}>{i+1}</Button>
           ))
         }
       </Flex>
