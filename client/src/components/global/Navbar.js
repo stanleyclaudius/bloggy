@@ -119,6 +119,7 @@ const Navbar = () => {
                       icon={<FaUser />}
                       _hover={{ bg: 'gray.600' }}
                       _active={{ bg: 'gray.600' }}
+                      onClick={() => navigate(`/profile/${auth.user?._id}`)}
                     >
                       Profile
                     </MenuItem>
@@ -227,6 +228,7 @@ const Navbar = () => {
                         icon={<FaUser />}
                         _hover={{ bg: 'gray.600' }}
                         _active={{ bg: 'gray.600' }}
+                        onClick={() => navigate(`/profile/${auth.user?._id}`)}
                       >
                         Profile
                       </MenuItem>
