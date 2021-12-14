@@ -1,0 +1,3 @@
+export const USER_TYPES = {
+  GET_USER_PROFILE: 'GET_USER_PROFILE'
+};
