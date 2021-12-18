@@ -1,0 +1,3 @@
+export const BLOG_DETAIL_TYPES = {
+  GET_BLOG_DETAIL: 'GET_BLOG_DETAIL'
+};

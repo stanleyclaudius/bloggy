@@ -227,6 +227,19 @@ const blogCtrl = {
     } catch (err) {
       return res.status(500).json({msg: err.message});
     }
+  },
+  getBlogById: async(req, res) => {
+    try {
+      const blog = await Blog.findOne({_id: req.params.id})
+        .populate('user', '-password -role -type -createdAt -updatedAt');
+
+      if (!blog)
+        return res.status(404).json({msg: 'Blog not found.'});
+      
+      return res.status(200).json({blog});
+    } catch (err) {
+      return res.status(500).json({msg: err.message});
+    }
   }
 }
 

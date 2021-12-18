@@ -6,6 +6,7 @@ import category from './categoryReducer';
 import homeBlog from './homeBlogReducer';
 import categoryBlog from './categoryBlogReducer';
 import userBlog from './userBlogReducer';
+import blogDetail from './blogDetailReducer';
 
 export default combineReducers({
   auth,
@@ -14,5 +15,6 @@ export default combineReducers({
   category,
   homeBlog,
   categoryBlog,
-  userBlog
+  userBlog,
+  blogDetail
 });

@@ -1,6 +1,7 @@
 import { HOME_BLOG_TYPES } from './../types/homeBlogTypes';
 import { CATEGORY_BLOG_TYPES } from './../types/categoryBlogTypes';
 import { USER_BLOG_TYPES } from './../types/userBlogTypes';
+import { BLOG_DETAIL_TYPES } from './../types/blogDetailTypes';
 import { GLOBAL_TYPES } from './../types/globalTypes';
 import { getDataAPI, postDataAPI } from './../../utils/fetchData';
 import { uploadImage } from './../../utils/imageHandler';
@@ -92,6 +93,37 @@ export const getUserBlogs = (id, num=1) => async(dispatch) => {
     dispatch({
       type: USER_BLOG_TYPES.GET_USER_BLOGS,
       payload: res.data
+    });
+
+    dispatch({
+      type: GLOBAL_TYPES.ALERT,
+      payload: {
+        loading: false
+      }
+    });
+  } catch (err) {
+    dispatch({
+      type: GLOBAL_TYPES.ALERT,
+      payload: {
+        errors: err.response.data.msg
+      }
+    });
+  }
+}
+
+export const getBlogById = id => async(dispatch) => {
+  try {
+    dispatch({
+      type: GLOBAL_TYPES.ALERT,
+      payload: {
+        loading: true
+      }
+    });
+
+    const res = await getDataAPI(`blog/${id}`);
+    dispatch({
+      type: BLOG_DETAIL_TYPES.GET_BLOG_DETAIL,
+      payload: res.data.blog
     });
 
     dispatch({
