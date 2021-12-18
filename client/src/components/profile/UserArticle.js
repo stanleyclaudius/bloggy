@@ -1,33 +1,59 @@
-import { Box } from '@chakra-ui/react';
+import { Box, Center, Spinner } from '@chakra-ui/react';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { getUserBlogs } from './../../redux/actions/blogActions';
 import Article from './../global/Article';
+import Pagination from './../global/Pagination';
 
-const UserArticle = () => {
+const UserArticle = ({id}) => {
+  const dispatch = useDispatch();
+  const {alert, userBlog} = useSelector(state => state);
+
+  const handlePagination = num => {
+    dispatch(getUserBlogs(id, num));
+  }
+
+  useEffect(() => {
+    if (!id) return;
+    dispatch(getUserBlogs(id));
+  }, [dispatch, id]);
+
   return (
     <Box>
-      <Article
-        category='html'
-        title='Lorem ipsum dolor sit amet'
-        author='Lorem Ipsum'
-        date='24 June 2020'
-        image='https://i.natgeofe.com/n/3861de2a-04e6-45fd-aec8-02e7809f9d4e/02-cat-training-NationalGeographic_1484324_square.jpg'
-        isProfile={true}
-      />
-      <Article
-        category='html'
-        title='Lorem ipsum dolor sit amet'
-        author='Lorem Ipsum'
-        date='24 June 2020'
-        image='https://i.natgeofe.com/n/3861de2a-04e6-45fd-aec8-02e7809f9d4e/02-cat-training-NationalGeographic_1484324_square.jpg'
-        isProfile={true}
-      />
-      <Article
-        category='html'
-        title='Lorem ipsum dolor sit amet'
-        author='Lorem Ipsum'
-        date='24 June 2020'
-        image='https://i.natgeofe.com/n/3861de2a-04e6-45fd-aec8-02e7809f9d4e/02-cat-training-NationalGeographic_1484324_square.jpg'
-        isProfile={true}
-      />
+      {
+        alert.loading
+        ? (
+          <Center>
+            <Spinner size='xl' />
+          </Center>
+        )
+        : (
+          <>
+            {
+              userBlog.blogs?.map(blog => (
+                <Article
+                  key={blog._id}
+                  id={blog._id}
+                  category={blog.category.name}
+                  title={blog.title}
+                  author={blog.user}
+                  date={new Date(blog.createdAt).toLocaleDateString()}
+                  image={blog.thumbnail}
+                  isProfile={true}
+                />
+              ))
+            }
+          </>
+        )
+      }
+
+      {
+        userBlog.totalPage > 1 &&
+        <Pagination
+          page={userBlog.totalPage}
+          callback={handlePagination}
+        />
+      }
     </Box>
   );
 }

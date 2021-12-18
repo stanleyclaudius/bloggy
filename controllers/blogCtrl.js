@@ -159,6 +159,74 @@ const blogCtrl = {
     } catch (err) {
       return res.status(500).json({msg: err.message});
     }
+  },
+  getBlogsByUser: async(req, res) => {
+    const {limit, skip} = Pagination(req);
+    try {
+      const data = await Blog.aggregate([
+        {
+          $facet: {
+            totalData: [
+              { $match: {user: mongoose.Types.ObjectId(req.params.id)} },
+              {
+                $lookup: {
+                  "from": "users",
+                  "let": {user_id: "$user"},
+                  "pipeline": [
+                    { $match: { $expr: { $eq: ["$_id", "$$user_id"] } } },
+                    { $project: {password: 0, role: 0, type: 0, createdAt: 0, updatedAt: 0} }
+                  ],
+                  "as": "user"
+                }
+              },
+              {$unwind: "$user"},
+              {
+                $lookup: {
+                  "from": "categories",
+                  "let": {category_id: "$category"},
+                  "pipeline": [
+                    { $match: { $expr: { $eq: ["$_id", "$$category_id"] } } },
+                    { $project: { name: 1 } }
+                  ],
+                  "as": "category"
+                }
+              },
+              {$unwind: "$category"},
+              {$sort: {createdAt: -1}},
+              {$skip: skip},
+              {$limit: limit}
+            ],
+            totalCount: [
+              { $match: { user: mongoose.Types.ObjectId(req.params.id) } },
+              { $count: 'count' }
+            ]
+          }
+        },
+        {
+          $project: {
+            count: {$arrayElemAt: ["$totalCount.count", 0]},
+            totalData: 1
+          }
+        }
+      ]);
+
+      const blogsData = data[0].totalData;
+      const blogsCount = data[0].count;
+
+      let totalPage = 0;
+      if (blogsCount % limit === 0) {
+        totalPage = blogsCount / limit;
+      } else {
+        totalPage = Math.floor(blogsCount / limit) + 1;
+      }
+      
+      res.status(200).json({
+        blogs: blogsData,
+        totalPage
+      });
+    } catch (err) {
+      return res.status(500).json({msg: err.message});
+    }
   }
 }
 
