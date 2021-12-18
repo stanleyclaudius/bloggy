@@ -100,40 +100,43 @@ const Navbar = () => {
             {
               auth.token
               ? (
-                <Menu>
-                  <MenuButton
-                    as={Button}
-                    bg='transparent'
-                    _hover={{ bg: 'transparent' }}
-                    _active={{ bg: 'transparent' }}
-                    _focus={{ outline: 'none' }}
-                  >
-                    <Avatar size='sm' name={auth.user.name} src={auth.user.avatar} />
-                  </MenuButton>
-                  <MenuList
-                    zIndex='2'
-                    bg='gray.700'
-                    borderColor='gray.600'
-                  >
-                    <MenuItem
-                      icon={<FaUser />}
-                      _hover={{ bg: 'gray.600' }}
-                      _active={{ bg: 'gray.600' }}
-                      onClick={() => navigate(`/profile/${auth.user?._id}`)}
+                <>
+                  <Link to='/create_blog'>Create Blog</Link>
+                  <Menu>
+                    <MenuButton
+                      as={Button}
+                      bg='transparent'
+                      _hover={{ bg: 'transparent' }}
+                      _active={{ bg: 'transparent' }}
+                      _focus={{ outline: 'none' }}
                     >
-                      Profile
-                    </MenuItem>
-                    <MenuDivider />
-                    <MenuItem
-                      icon={<IoLogOut />}
-                      _hover={{ bg: 'gray.600' }}
-                      _active={{ bg: 'gray.600' }}
-                      onClick={handleLogout}
+                      <Avatar size='sm' name={auth.user.name} src={auth.user.avatar} />
+                    </MenuButton>
+                    <MenuList
+                      zIndex='2'
+                      bg='gray.700'
+                      borderColor='gray.600'
                     >
-                      Logout
-                    </MenuItem>
-                  </MenuList>
-                </Menu>
+                      <MenuItem
+                        icon={<FaUser />}
+                        _hover={{ bg: 'gray.600' }}
+                        _active={{ bg: 'gray.600' }}
+                        onClick={() => navigate(`/profile/${auth.user?._id}`)}
+                      >
+                        Profile
+                      </MenuItem>
+                      <MenuDivider />
+                      <MenuItem
+                        icon={<IoLogOut />}
+                        _hover={{ bg: 'gray.600' }}
+                        _active={{ bg: 'gray.600' }}
+                        onClick={handleLogout}
+                      >
+                        Logout
+                      </MenuItem>
+                    </MenuList>
+                  </Menu>
+                </>
               )
               : (
                 <Button
@@ -207,42 +210,47 @@ const Navbar = () => {
               {
                 auth.token
                 ? (
-                  <Menu>
-                    <MenuButton
-                      as={Button}
-                      bg='transparent'
-                      mt='15px'
-                      p='0'
-                      _hover={{ bg: 'transparent' }}
-                      _active={{ bg: 'transparent' }}
-                      _focus={{ outline: 'none' }}
-                    >
-                      <Avatar size='md' name={auth.user.name} src={auth.user.avatar} />
-                    </MenuButton>
-                    <MenuList
-                      zIndex='2'
-                      bg='gray.700'
-                      borderColor='gray.600'
-                    >
-                      <MenuItem
-                        icon={<FaUser />}
-                        _hover={{ bg: 'gray.600' }}
-                        _active={{ bg: 'gray.600' }}
-                        onClick={() => navigate(`/profile/${auth.user?._id}`)}
+                  <>
+                    <Box mt='15px'>
+                      <Link to='/create_blog'>Create Blog</Link>
+                    </Box>
+                    <Menu>
+                      <MenuButton
+                        as={Button}
+                        bg='transparent'
+                        mt='20px'
+                        p='0'
+                        _hover={{ bg: 'transparent' }}
+                        _active={{ bg: 'transparent' }}
+                        _focus={{ outline: 'none' }}
                       >
-                        Profile
-                      </MenuItem>
-                      <MenuDivider />
-                      <MenuItem
-                        icon={<IoLogOut />}
-                        _hover={{ bg: 'gray.600' }}
-                        _active={{ bg: 'gray.600' }}
-                        onClick={handleLogout}
+                        <Avatar size='md' name={auth.user.name} src={auth.user.avatar} />
+                      </MenuButton>
+                      <MenuList
+                        zIndex='2'
+                        bg='gray.700'
+                        borderColor='gray.600'
                       >
-                        Logout
-                      </MenuItem>
-                    </MenuList>
-                  </Menu>
+                        <MenuItem
+                          icon={<FaUser />}
+                          _hover={{ bg: 'gray.600' }}
+                          _active={{ bg: 'gray.600' }}
+                          onClick={() => navigate(`/profile/${auth.user?._id}`)}
+                        >
+                          Profile
+                        </MenuItem>
+                        <MenuDivider />
+                        <MenuItem
+                          icon={<IoLogOut />}
+                          _hover={{ bg: 'gray.600' }}
+                          _active={{ bg: 'gray.600' }}
+                          onClick={handleLogout}
+                        >
+                          Logout
+                        </MenuItem>
+                      </MenuList>
+                    </Menu>
+                  </>
                 )
                 : (
                   <Button

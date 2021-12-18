@@ -6,6 +6,8 @@ export const uploadImage = async(image, type) => {
     formData.append("upload_preset", "rxtjobdd");
   } else if (type === 'blogs') {
     formData.append("upload_preset", "jwgyqapk");
+  } else if (type === 'thumbnail') {
+    formData.append("upload_preset", "vbbsnwdg");
   }
 
   formData.append("cloud_name", "dpef9sjqt");

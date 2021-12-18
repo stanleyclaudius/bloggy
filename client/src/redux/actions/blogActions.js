@@ -1,7 +1,8 @@
 import { HOME_BLOG_TYPES } from './../types/homeBlogTypes';
 import { CATEGORY_BLOG_TYPES } from './../types/categoryBlogTypes';
 import { GLOBAL_TYPES } from './../types/globalTypes';
-import { getDataAPI } from './../../utils/fetchData';
+import { getDataAPI, postDataAPI } from './../../utils/fetchData';
+import { uploadImage } from './../../utils/imageHandler';
 
 export const getHomeBlogs = filter => async(dispatch) => {
   let url = 'blog';
@@ -65,6 +66,36 @@ export const getCategoryBlogs = (id, page='?page=1') => async(dispatch) => {
       type: GLOBAL_TYPES.ALERT,
       payload: {
         loading: false
+      }
+    });
+  } catch (err) {
+    dispatch({
+      type: GLOBAL_TYPES.ALERT,
+      payload: {
+        errors: err.response.data.msg
+      }
+    });
+  }
+}
+
+export const createBlog = (data, token) => async(dispatch) => {
+  try {
+    dispatch({
+      type: GLOBAL_TYPES.ALERT,
+      payload: {
+        loading: true
+      }
+    });
+
+    const thumbnail = await uploadImage(data.thumbnail, 'thumbnail');
+    data.thumbnail = thumbnail.secure_url;
+
+    const res = await postDataAPI('blog', data, token);
+
+    dispatch({
+      type: GLOBAL_TYPES.ALERT,
+      payload: {
+        success: res.data.msg
       }
     });
   } catch (err) {
