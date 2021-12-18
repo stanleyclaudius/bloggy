@@ -18,13 +18,16 @@ const userCtrl = {
   updateProfile: async(req, res) => {
     try {
       const {id} = req.params;
-      const {name, password} = req.body;
+      const {name} = req.body;
 
       if (!name)
         return res.status(400).json({msg: 'Name field can\'t be empty.'});
 
-      if (password) {
-        const newPassword = await bcrypt.hash(password, 12);
+      if (req.body.password) {
+        if (req.user.type !== 'register') {
+          return res.status(403).json({msg: `${req.user.type} login can't update their password.`});
+        }
+        const newPassword = await bcrypt.hash(req.body.password, 12);
         req.body.password = newPassword;
       }
 

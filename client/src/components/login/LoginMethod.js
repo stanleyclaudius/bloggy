@@ -27,7 +27,7 @@ const LoginMethod = ({isSmsLogin, setIsSmsLogin}) => {
     <Box width='100%' mb={{ base: '40px', md: '0' }}>
       <Box mb='25px'>
         <GoogleLogin
-          client_id='644315342100-ipbpodgl4s8j2aheqd8k9qvc8f8hahau.apps.googleusercontent.com'
+          client_id='186802643480-fi4c86nsgoh6fchus95e0ru1g971ejv4.apps.googleusercontent.com'
           cookiepolicy='single_host_origin'
           onSuccess={onGoogleSuccess}
         />
