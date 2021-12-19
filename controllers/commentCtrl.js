@@ -89,6 +89,21 @@ const commentCtrl = {
     } catch (err) {
       return res.status(500).json({msg: err.message});
     }
+  },
+  updateComment: async(req, res) => {
+    try {
+      const comment = await Comment.findOneAndUpdate({
+        _id: req.params.id,
+        user: req.user._id
+      }, {content: req.body.content}, {new: true});
+
+      res.status(200).json({
+        msg: 'Comment has been updated successfully.',
+        comment
+      });
+    } catch (err) {
+      return res.status(500).json({msg: err.message});
+    }
   }
 }
 

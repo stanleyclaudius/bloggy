@@ -1,10 +1,10 @@
-import { Box, Button } from '@chakra-ui/react';
-import { useState } from 'react';
+import { Box, Text, Flex, Button } from '@chakra-ui/react';
+import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { GLOBAL_TYPES } from './../../redux/types/globalTypes';
 import CommentQuill from './../editor/CommentQuill';
 
-const ReplyInput = ({callback}) => {
+const ReplyInput = ({callback, edit, setEdit}) => {
   const [body, setBody] = useState('');
 
   const dispatch = useDispatch();
@@ -23,18 +23,33 @@ const ReplyInput = ({callback}) => {
     setBody(undefined);
   }
 
+  useEffect(() => {
+    if (edit) {
+      setBody(edit.content);
+    }
+
+    return () => setBody('');
+  }, [edit]);
+
   return (
     <Box mb='10'>
       <CommentQuill body={body} setBody={setBody} />
-      <Box textAlign='right'>
+      <Flex justifyContent='space-between' alignItems='center' mt='4'>
+        <Text
+          onClick={() => setEdit('')}
+          cursor='pointer'
+        >
+          Cancel
+        </Text>
         <Button
-          mt='4'
           bg='orange.400'
           _hover={{ bg: 'orange.600' }}
           _active={{ bg: 'orange.600' }}
           onClick={handleSubmit}
-        >Comment</Button>
-      </Box>
+        >
+          Comment
+        </Button>
+      </Flex>
     </Box>
   );
 }

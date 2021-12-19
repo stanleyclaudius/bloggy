@@ -17,6 +17,11 @@ const commentReducer = (state = initialState, action) => {
         data: action.payload.comments,
         totalPage: action.payload.totalPage
       };
+    case COMMENT_TYPES.UPDATE_COMMENT:
+      return {
+        ...state,
+        data: state.data.map(item => item._id === action.payload._id ? {...item, content: action.payload.content} : item)
+      };
     default:
       return state;
   }
