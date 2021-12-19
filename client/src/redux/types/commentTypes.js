@@ -1,0 +1,3 @@
+export const COMMENT_TYPES = {
+  CREATE_COMMENT: 'CREATE_COMMENT'
+};

@@ -7,17 +7,33 @@ import {
   Center,
   Spinner
 } from '@chakra-ui/react';
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getBlogById } from './../../redux/actions/blogActions';
+import { createComment } from './../../redux/actions/commentActions';
 import Comment from './../../components/comment/Comment';
+import ReplyInput from './../../components/comment/ReplyInput';
 
 const BlogDetail = () => {
+  const [showComments, setShowComments] = useState([]);
   const {slug: id} = useParams();
 
   const dispatch = useDispatch();
-  const {alert, blogDetail} = useSelector(state => state);
+  const {alert, auth, blogDetail} = useSelector(state => state);
+
+  const handleSubmit = content => {
+    const data = {
+      content,
+      user: auth.user,
+      blog_id: blogDetail._id,
+      blog_user_id: blogDetail.user,
+      createdAt: new Date().toISOString()
+    };
+
+    setShowComments([data, ...showComments]);
+    dispatch(createComment(data, auth.token));
+  }
 
   useEffect(() => {
     if (!id) return;
@@ -49,7 +65,13 @@ const BlogDetail = () => {
             <Box mt='30px'>
               <Heading fontSize='25px'>Comments</Heading>
               <Divider bg='white' m='20px 0' />
-              <Comment />
+              {auth.token && <ReplyInput callback={handleSubmit} />}
+
+              {
+                showComments.map(comm => (
+                  <Comment key={comm._id} comment={comm} />
+                ))
+              }
             </Box>
           </Box>
         )

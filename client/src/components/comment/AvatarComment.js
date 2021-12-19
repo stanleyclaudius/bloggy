@@ -1,8 +1,8 @@
 import { Avatar } from '@chakra-ui/react';
 
-const AvatarComment = () => {
+const AvatarComment = ({avatar}) => {
   return (
-    <Avatar size='md' name='Avatar' src='' />
+    <Avatar size='md' name='Avatar' src={avatar} />
   );
 }
 

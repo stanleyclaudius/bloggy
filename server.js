@@ -21,6 +21,7 @@ app.use('/api/v1/auth', require('./routes/auth.route'));
 app.use('/api/v1/category', require('./routes/category.route'));
 app.use('/api/v1/blog', require('./routes/blog.route'));
 app.use('/api/v1/user', require('./routes/user.route'));
+app.use('/api/v1/comment', require('./routes/comment.route'));
 
 connectDB();
 app.listen(process.env.PORT, () => console.log(`Server is running on PORT ${process.env.PORT}`));

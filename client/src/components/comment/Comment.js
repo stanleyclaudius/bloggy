@@ -2,11 +2,11 @@ import { HStack } from '@chakra-ui/react';
 import AvatarComment from './AvatarComment';
 import CommentList from './CommentList';
 
-const Comment = () => {
+const Comment = ({comment}) => {
   return (
-    <HStack alignItems='flex-start'>
-      <AvatarComment />
-      <CommentList />
+    <HStack alignItems='flex-start' mb='7'>
+      <AvatarComment avatar={comment.user?.avatar} />
+      <CommentList comment={comment} />
     </HStack>
   );
 }
