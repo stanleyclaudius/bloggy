@@ -2,7 +2,7 @@ import { Box, Button, Text, Flex, IconButton, HStack } from "@chakra-ui/react";
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { FaEdit, FaTrash } from 'react-icons/fa';
-import { updateComment, replyComment } from './../../redux/actions/commentActions';
+import { updateComment, replyComment, deleteComment } from './../../redux/actions/commentActions';
 import ReplyInput from './../comment/ReplyInput';
 
 const CommentList = ({comment, showReply, setShowReply, children}) => {
@@ -33,10 +33,15 @@ const CommentList = ({comment, showReply, setShowReply, children}) => {
     setOnReply(false);
   }
 
-  const additionalMenu = () => {
+  const handleDelete = id => {
+    dispatch(deleteComment(comment, id, auth.token));
+  }
+
+  const additionalMenu = id => {
     return (
       <>
         <IconButton
+          onClick={() => handleDelete(id)}
           bg='red.400'
           aria-label='Delete Comment'
           icon={<FaTrash />}
@@ -78,9 +83,10 @@ const CommentList = ({comment, showReply, setShowReply, children}) => {
                   {
                     comment.blog_user_id === auth.user?._id
                     ? comment.user._id === auth.user?._id
-                      ? additionalMenu()
+                      ? additionalMenu(comment._id)
                       : (
                         <IconButton
+                          onClick={() => handleDelete(comment._id)}
                           bg='red.400'
                           aria-label='Delete Comment'
                           icon={<FaTrash />}
@@ -89,7 +95,7 @@ const CommentList = ({comment, showReply, setShowReply, children}) => {
                           isRound
                         />
                       )
-                    : comment.user._id === auth.user?._id && additionalMenu()
+                    : comment.user._id === auth.user?._id && additionalMenu(comment._id)
                   }
                   <Button
                     size='sm'

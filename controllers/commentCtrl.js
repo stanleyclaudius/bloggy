@@ -168,6 +168,26 @@ const commentCtrl = {
     } catch (err) {
       return res.status(500).json({msg: err.message});
     }
+  },
+  deleteComment: async(req, res) => {
+    try {
+      const comment = await Comment.findOneAndDelete({_id: req.params.id});
+
+      if (!comment)
+        return res.status(404).json({msg: 'Comment not found.'});
+
+      if (comment.comment_root) {
+        await Comment.findOneAndUpdate({_id: comment.comment_root}, {
+          $pull: { reply: comment._id }
+        })
+      } else {
+        await Comment.deleteMany({_id: { $in: comment.reply }});
+      }
+
+      res.status(200).json({msg: 'Comment deleted.'});
+    } catch (err) {
+      return res.status(500).json({msg: err.message});
+    }
   }
 }
 

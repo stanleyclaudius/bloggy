@@ -34,6 +34,23 @@ const commentReducer = (state = initialState, action) => {
           : item
         ))
       };
+    case COMMENT_TYPES.DELETE_COMMENT:
+      return {
+        ...state,
+        data: state.data.filter(item => item._id !== action.payload._id)
+      };
+    case COMMENT_TYPES.DELETE_REPLY:
+      return {
+        ...state,
+        data: state.data.map(item => (
+          item._id === action.payload.comment_root
+          ? {
+            ...item,
+            reply: item.reply.filter(rep => rep._id !== action.payload._id)
+          }
+          : item
+        ))
+      };
     default:
       return state;
   }

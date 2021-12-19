@@ -8,6 +8,7 @@ router.route('/reply').post(isAuthenticated, commentCtrl.replyComment);
 
 router.route('/:id')
   .get(commentCtrl.getCommentsByBlog)
-  .patch(isAuthenticated, commentCtrl.updateComment);
+  .patch(isAuthenticated, commentCtrl.updateComment)
+  .delete(isAuthenticated, commentCtrl.deleteComment);
 
 module.exports = router;
