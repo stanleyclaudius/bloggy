@@ -18,7 +18,7 @@ const commentCtrl = {
         {
           $facet: {
             totalData: [
-              { $match: { blog_id: mongoose.Types.ObjectId(req.params.id) } },
+              { $match: { blog_id: mongoose.Types.ObjectId(req.params.id), comment_root: { $exists: false } } },
               {
                 $lookup: {
                   "from": "users",
@@ -31,12 +31,46 @@ const commentCtrl = {
                 }
               },
               { $unwind: "$user" },
+              {
+                $lookup: {
+                  "from": "comments",
+                  "let": {cm_id: "$reply"},
+                  "pipeline": [
+                    { $match: { $expr: { $in: ["$_id", "$$cm_id"] } } },
+                    {
+                      $lookup: {
+                        "from": "users",
+                        "let": {user_id: "$user"},
+                        "pipeline": [
+                          { $match: { $expr: { $eq: ["$_id", "$$user_id"] } } },
+                          { $project: { name: 1, avatar: 1 } }
+                        ],
+                        "as": "user"
+                      }
+                    },
+                    { $unwind: "$user" },
+                    {
+                      $lookup: {
+                        "from": "users",
+                        "let": { user_id: "$reply_user" },
+                        "pipeline": [
+                          { $match: { $expr: { $eq: ["$_id", "$$user_id"] } } },
+                          { $project: { name: 1, avatar: 1 } }
+                        ], 
+                        "as": "reply_user"
+                      }
+                    },
+                    { $unwind: '$reply_user' }
+                  ],
+                  "as": "reply"
+                }
+              },
               { $sort: { createdAt: -1 } },
               { $skip: skip },
               { $limit: limit }
             ],
             totalCount: [
-              { $match: { blog_id: mongoose.Types.ObjectId(req.params.id) } },
+              { $match: { blog_id: mongoose.Types.ObjectId(req.params.id), comment_root: { $exists: false } } },
               { $count: 'count' }
             ]
           }
@@ -100,6 +134,36 @@ const commentCtrl = {
       res.status(200).json({
         msg: 'Comment has been updated successfully.',
         comment
+      });
+    } catch (err) {
+      return res.status(500).json({msg: err.message});
+    }
+  },
+  replyComment: async(req, res) => {
+    try {
+      const {blog_id, blog_user_id, content, reply_user, comment_root} = req.body;
+
+      if (!content)
+        return res.status(400).json({msg: err.message});
+
+      const newReply = new Comment({
+        user: req.user._id,
+        blog_id,
+        blog_user_id,
+        content,
+        reply_user: reply_user._id,
+        comment_root
+      });
+
+      await Comment.findOneAndUpdate({_id: comment_root}, {
+        $push: { reply: newReply._id }
+      }, {new: true});
+
+      await newReply.save();
+
+      res.status(200).json({
+        msg: 'Reply success.',
+        comment: newReply
       });
     } catch (err) {
       return res.status(500).json({msg: err.message});

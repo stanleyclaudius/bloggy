@@ -30,7 +30,7 @@ export const createComment = (data, auth) => async(dispatch) => {
       type: GLOBAL_TYPES.ALERT,
       payload: {}
     });
-    
+
     const res = await postDataAPI('comment', data, auth.token);
     dispatch({
       type: COMMENT_TYPES.CREATE_COMMENT,
@@ -72,6 +72,38 @@ export const updateComment = (comment, content, token) => async(dispatch) => {
       }
     });
     
+    dispatch({
+      type: GLOBAL_TYPES.ALERT,
+      payload: {
+        success: res.data.msg
+      }
+    });
+  } catch (err) {
+    dispatch({
+      type: GLOBAL_TYPES.ALERT,
+      payload: {
+        errors: err.response.data.msg
+      }
+    });
+  }
+}
+
+export const replyComment = (data, token) => async(dispatch) => {
+  try {
+    dispatch({
+      type: GLOBAL_TYPES.ALERT,
+      payload: {}
+    });
+
+    const res = await postDataAPI(`comment/reply`, data, token);
+    dispatch({
+      type: COMMENT_TYPES.REPLY_COMMENT,
+      payload: {
+        ...data,
+        _id: res.data.comment._id
+      }
+    });
+
     dispatch({
       type: GLOBAL_TYPES.ALERT,
       payload: {

@@ -1,11 +1,11 @@
 import { Box, Button, Text, Flex, IconButton, HStack } from "@chakra-ui/react";
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { FaEdit } from 'react-icons/fa';
-import { updateComment } from './../../redux/actions/commentActions';
+import { FaEdit, FaTrash } from 'react-icons/fa';
+import { updateComment, replyComment } from './../../redux/actions/commentActions';
 import ReplyInput from './../comment/ReplyInput';
 
-const CommentList = ({comment}) => {
+const CommentList = ({comment, showReply, setShowReply, children}) => {
   const [onReply, setOnReply] = useState(false);
   const [edit, setEdit] = useState('');
 
@@ -15,6 +15,47 @@ const CommentList = ({comment}) => {
   const handleEdit = content => {
     dispatch(updateComment(comment, content, auth.token));
     setEdit('');
+  }
+
+  const handleReply = body => {
+    const data = {
+      user: auth.user,
+      blog_id: comment.blog_id,
+      blog_user_id: comment.blog_user_id,
+      content: body,
+      reply_user: comment.user,
+      comment_root: comment.comment_root || comment._id,
+      createdAt: new Date().toISOString()
+    };
+
+    setShowReply([data, ...showReply]);
+    dispatch(replyComment(data, auth.token));
+    setOnReply(false);
+  }
+
+  const additionalMenu = () => {
+    return (
+      <>
+        <IconButton
+          bg='red.400'
+          aria-label='Delete Comment'
+          icon={<FaTrash />}
+          _hover={{ bg: 'red.600' }}
+          _active={{ bg: 'red.600' }}
+          isRound
+        />
+
+        <IconButton
+          onClick={() => setEdit(comment)}
+          bg='orange.400'
+          aria-label='Edit Comment'
+          icon={<FaEdit />}
+          _hover={{ bg: 'orange.600' }}
+          _active={{ bg: 'orange.600' }}
+          isRound
+        />
+      </>
+    );
   }
 
   return (
@@ -34,15 +75,22 @@ const CommentList = ({comment}) => {
               <Text dangerouslySetInnerHTML={{ __html: comment.content }} />
               <Flex mt='20px' justifyContent='space-between' alignItems='center'>
                 <HStack>
-                  <IconButton
-                    onClick={() => setEdit(comment)}
-                    bg='orange.400'
-                    aria-label='Edit Comment'
-                    icon={<FaEdit />}
-                    _hover={{ bg: 'orange.600' }}
-                    _active={{ bg: 'orange.600' }}
-                    isRound
-                  />
+                  {
+                    comment.blog_user_id === auth.user?._id
+                    ? comment.user._id === auth.user?._id
+                      ? additionalMenu()
+                      : (
+                        <IconButton
+                          bg='red.400'
+                          aria-label='Delete Comment'
+                          icon={<FaTrash />}
+                          _hover={{ bg: 'red.600' }}
+                          _active={{ bg: 'red.600' }}
+                          isRound
+                        />
+                      )
+                    : comment.user._id === auth.user?._id && additionalMenu()
+                  }
                   <Button
                     size='sm'
                     bg='orange.400'
@@ -63,10 +111,12 @@ const CommentList = ({comment}) => {
       {
         onReply && (
           <Box mt='5'>
-            <ReplyInput />
+            <ReplyInput callback={handleReply} />
           </Box>
         )
       }
+
+      {children}
     </Box>
   );
 }

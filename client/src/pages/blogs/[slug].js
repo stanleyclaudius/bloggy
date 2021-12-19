@@ -46,10 +46,11 @@ const BlogsCategory = () => {
                 categoryBlog.blogs?.map(blog => (
                   <Article
                     key={blog._id}
+                    id={blog._id}
                     category={slug}
                     title={blog.title}
                     description={blog.description}
-                    author={blog.user?.name}
+                    author={blog.user}
                     date={new Date(blog.createdAt).toLocaleDateString()}
                     image='https://i.natgeofe.com/n/3861de2a-04e6-45fd-aec8-02e7809f9d4e/02-cat-training-NationalGeographic_1484324_square.jpg'
                   />
