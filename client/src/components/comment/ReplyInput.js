@@ -34,13 +34,16 @@ const ReplyInput = ({callback, edit, setEdit}) => {
   return (
     <Box mb='10'>
       <CommentQuill body={body} setBody={setBody} />
-      <Flex justifyContent='space-between' alignItems='center' mt='4'>
-        <Text
-          onClick={() => setEdit('')}
-          cursor='pointer'
-        >
-          Cancel
-        </Text>
+      <Flex justifyContent={`${edit ? 'space-between' : 'flex-end'}`} alignItems='center' mt='4'>
+        {
+          edit &&
+          <Text
+            onClick={() => setEdit('')}
+            cursor='pointer'
+          >
+            Cancel
+          </Text>
+        }
         <Button
           bg='orange.400'
           _hover={{ bg: 'orange.600' }}

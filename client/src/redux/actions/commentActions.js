@@ -26,6 +26,11 @@ export const getComments = (id, page = 1) => async(dispatch) => {
 
 export const createComment = (data, auth) => async(dispatch) => {
   try {
+    dispatch({
+      type: GLOBAL_TYPES.ALERT,
+      payload: {}
+    });
+    
     const res = await postDataAPI('comment', data, auth.token);
     dispatch({
       type: COMMENT_TYPES.CREATE_COMMENT,
@@ -53,6 +58,11 @@ export const createComment = (data, auth) => async(dispatch) => {
 
 export const updateComment = (comment, content, token) => async(dispatch) => {
   try {
+    dispatch({
+      type: GLOBAL_TYPES.ALERT,
+      payload: {}
+    });
+
     const res = await patchDataAPI(`comment/${comment._id}`, {content}, token);
     dispatch({
       type: COMMENT_TYPES.UPDATE_COMMENT,
