@@ -7,20 +7,22 @@ import {
   Center,
   Spinner
 } from '@chakra-ui/react';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getBlogById } from './../../redux/actions/blogActions';
-import { createComment } from './../../redux/actions/commentActions';
+import { createComment, getComments } from './../../redux/actions/commentActions';
 import Comment from './../../components/comment/Comment';
 import ReplyInput from './../../components/comment/ReplyInput';
+import Pagination from './../../components/global/Pagination';
 
 const BlogDetail = () => {
+  const [loading, setLoading] = useState(false);
   const [showComments, setShowComments] = useState([]);
   const {slug: id} = useParams();
 
   const dispatch = useDispatch();
-  const {alert, auth, blogDetail} = useSelector(state => state);
+  const {alert, auth, comment, blogDetail} = useSelector(state => state);
 
   const handleSubmit = content => {
     const data = {
@@ -32,13 +34,28 @@ const BlogDetail = () => {
     };
 
     setShowComments([data, ...showComments]);
-    dispatch(createComment(data, auth.token));
+    dispatch(createComment(data, auth));
+  }
+
+  const fetchComments = useCallback(async(page = 1) => {
+    setLoading(true);
+    await dispatch(getComments(id, page));
+    setLoading(false);
+  }, [dispatch, id]);
+
+  const handlePagination = page => {
+    fetchComments(page);
   }
 
   useEffect(() => {
     if (!id) return;
     dispatch(getBlogById(id));
-  }, [dispatch, id]);
+    fetchComments();
+  }, [dispatch, id, fetchComments]);
+
+  useEffect(() => {
+    setShowComments(comment.data);
+  }, [comment]);
 
   return (
     <>
@@ -68,9 +85,29 @@ const BlogDetail = () => {
               {auth.token && <ReplyInput callback={handleSubmit} />}
 
               {
-                showComments.map(comm => (
-                  <Comment key={comm._id} comment={comm} />
-                ))
+                loading
+                ? (
+                  <Center>
+                    <Spinner size='xl' />
+                  </Center>
+                )
+                : (
+                  <>
+                    {
+                      showComments.map(comm => (
+                        <Comment key={comm._id} comment={comm} />
+                      ))
+                    }
+                  </>
+                )
+              }
+
+              {
+                comment.totalPage > 1 &&
+                <Pagination
+                  page={comment.totalPage}
+                  callback={handlePagination}
+                />
               }
             </Box>
           </Box>

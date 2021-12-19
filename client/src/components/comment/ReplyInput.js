@@ -20,7 +20,7 @@ const ReplyInput = ({callback}) => {
     }
 
     callback(body);
-    setBody('');
+    setBody(undefined);
   }
 
   return (
