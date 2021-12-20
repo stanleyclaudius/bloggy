@@ -32,13 +32,6 @@ export const createComment = (data, auth) => async(dispatch) => {
     });
 
     const res = await postDataAPI('comment', data, auth.token);
-    dispatch({
-      type: COMMENT_TYPES.CREATE_COMMENT,
-      payload: {
-        ...res.data.comment,
-        user: auth.user
-      }
-    });
 
     dispatch({
       type: GLOBAL_TYPES.ALERT,

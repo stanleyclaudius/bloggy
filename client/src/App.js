@@ -6,6 +6,7 @@ import { refreshToken } from './redux/actions/authActions';
 import { getCategory } from './redux/actions/categoryActions';
 import io from 'socket.io-client';
 import PageRender from './PageRender';
+import SocketClient from './SocketClient';
 import Navbar from './components/global/Navbar';
 import Alert from './components/global/Alert';
 import Home from './pages/home';
@@ -29,6 +30,7 @@ const App = () => {
 
   return (
     <Router>
+      <SocketClient />
       <Navbar />
       <Alert />
       <Routes>

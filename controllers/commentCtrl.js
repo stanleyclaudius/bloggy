@@ -1,4 +1,5 @@
 const Comment = require('./../models/Comment');
+const io = require('./../server');
 const mongoose = require('mongoose');
 
 const Pagination = req => {
@@ -114,6 +115,14 @@ const commentCtrl = {
         blog_id,
         blog_user_id
       });
+
+      const data = {
+        ...newComment._doc,
+        user: req.user,
+        createdAt: new Date().toISOString()
+      };
+      io.to(blog_id).emit('createComment', data);
+
       await newComment.save();
 
       res.status(200).json({
