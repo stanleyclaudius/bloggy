@@ -65,9 +65,9 @@ export const updateComment = (comment, content, token) => async(dispatch) => {
 
     const res = await patchDataAPI(`comment/${comment._id}`, {content}, token);
     dispatch({
-      type: COMMENT_TYPES.UPDATE_COMMENT,
+      type: comment.comment_root ? COMMENT_TYPES.UPDATE_REPLY : COMMENT_TYPES.UPDATE_COMMENT,
       payload: {
-        _id: comment._id,
+        ...comment,
         content
       }
     });
@@ -82,7 +82,7 @@ export const updateComment = (comment, content, token) => async(dispatch) => {
     dispatch({
       type: GLOBAL_TYPES.ALERT,
       payload: {
-        errors: err.response.data.msg
+        errors: err
       }
     });
   }

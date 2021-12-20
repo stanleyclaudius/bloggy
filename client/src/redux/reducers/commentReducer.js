@@ -22,6 +22,22 @@ const commentReducer = (state = initialState, action) => {
         ...state,
         data: state.data.map(item => item._id === action.payload._id ? {...item, content: action.payload.content} : item)
       };
+    case COMMENT_TYPES.UPDATE_REPLY:
+      return {
+        ...state,
+        data: state.data.map(item => (
+          item._id === action.payload.comment_root
+          ? {
+            ...item,
+            reply: item.reply.map(rep => (
+              rep._id === action.payload._id
+              ? action.payload
+              : rep
+            ))
+          }
+          : item
+        ))
+      };
     case COMMENT_TYPES.REPLY_COMMENT:
       return {
         ...state,
