@@ -8,6 +8,7 @@ import categoryBlog from './categoryBlogReducer';
 import userBlog from './userBlogReducer';
 import blogDetail from './blogDetailReducer';
 import comment from './commentReducer';
+import socket from './socketReducer';
 
 export default combineReducers({
   auth,
@@ -18,5 +19,6 @@ export default combineReducers({
   categoryBlog,
   userBlog,
   blogDetail,
-  comment
+  comment,
+  socket
 });

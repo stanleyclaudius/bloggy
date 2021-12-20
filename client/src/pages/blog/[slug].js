@@ -22,7 +22,7 @@ const BlogDetail = () => {
   const {slug: id} = useParams();
 
   const dispatch = useDispatch();
-  const {alert, auth, comment, blogDetail} = useSelector(state => state);
+  const {alert, auth, comment, socket, blogDetail} = useSelector(state => state);
 
   const handleSubmit = content => {
     const data = {
@@ -56,6 +56,14 @@ const BlogDetail = () => {
   useEffect(() => {
     setShowComments(comment.data);
   }, [comment]);
+
+  useEffect(() => {
+    if (!id || !socket) return;
+    socket.emit('joinRoom', id);
+    return () => {
+      socket.emit('outRoom', id);
+    }
+  }, [socket, id]);
 
   return (
     <>
