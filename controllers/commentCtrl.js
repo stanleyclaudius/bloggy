@@ -211,6 +211,8 @@ const commentCtrl = {
       } else {
         await Comment.deleteMany({_id: { $in: comment.reply }});
       }
+    
+      io.to(`${comment.blog_id}`).emit('deleteComment', comment);
 
       res.status(200).json({msg: 'Comment deleted.'});
     } catch (err) {

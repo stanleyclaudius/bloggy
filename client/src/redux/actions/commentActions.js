@@ -99,7 +99,7 @@ export const replyComment = (data, token) => async(dispatch) => {
   }
 }
 
-export const deleteComment = (comment, id, token) => async(dispatch) => {
+export const deleteComment = (id, token) => async(dispatch) => {
   try {
     dispatch({
       type: GLOBAL_TYPES.ALERT,
@@ -107,10 +107,6 @@ export const deleteComment = (comment, id, token) => async(dispatch) => {
     });
 
     const res = await deleteDataAPI(`comment/${id}`, token);
-    dispatch({
-      type: comment.comment_root ? COMMENT_TYPES.DELETE_REPLY : COMMENT_TYPES.DELETE_COMMENT,
-      payload: comment
-    })
 
     dispatch({
       type: GLOBAL_TYPES.ALERT,

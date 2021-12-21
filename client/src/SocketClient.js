@@ -56,6 +56,21 @@ const SocketClient = () => {
     });
   }, [dispatch, socket]);
 
+  useEffect(() => {
+    if (!socket) return;
+    socket.on('deleteComment', data => {
+      dispatch({
+        type: GLOBAL_TYPES.ALERT,
+        payload: {}
+      });
+
+      dispatch({
+        type: data.comment_root ? COMMENT_TYPES.DELETE_REPLY : COMMENT_TYPES.DELETE_COMMENT,
+        payload: data
+      });
+    });
+  });
+
   return (
     <div></div>
   );

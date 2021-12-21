@@ -34,7 +34,7 @@ const CommentList = ({comment, showReply, setShowReply, children}) => {
   }
 
   const handleDelete = id => {
-    dispatch(deleteComment(comment, id, auth.token));
+    dispatch(deleteComment(id, auth.token));
   }
 
   const additionalMenu = id => {
