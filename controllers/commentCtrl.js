@@ -176,6 +176,17 @@ const commentCtrl = {
         $push: { reply: newReply._id }
       }, {new: true});
 
+      const data = {
+        user: req.user,
+        blog_id,
+        blog_user_id,
+        content,
+        reply_user: reply_user._id,
+        comment_root,
+        _id: newReply._id
+      }
+      io.to(blog_id).emit('replyComment', data);
+
       await newReply.save();
 
       res.status(200).json({

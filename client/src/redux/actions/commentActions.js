@@ -82,13 +82,6 @@ export const replyComment = (data, token) => async(dispatch) => {
     });
 
     const res = await postDataAPI(`comment/reply`, data, token);
-    dispatch({
-      type: COMMENT_TYPES.REPLY_COMMENT,
-      payload: {
-        ...data,
-        _id: res.data.comment._id
-      }
-    });
 
     dispatch({
       type: GLOBAL_TYPES.ALERT,
