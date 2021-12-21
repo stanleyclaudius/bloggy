@@ -240,6 +240,21 @@ const blogCtrl = {
     } catch (err) {
       return res.status(500).json({msg: err.message});
     }
+  },
+  udpateBlog: async(req, res) => {
+    try {
+      const blog = await Blog.findOneAndUpdate({
+        _id: req.params.id,
+        user: req.user._id
+      },  req.body);
+
+      if (!blog)
+        return res.status(404).json({msg: 'Update failed.'});
+
+      res.status(200).json({msg: 'Blog updated.'});
+    } catch (err) {
+      return res.status(500).json({msg: err.message});
+    }
   }
 }
 

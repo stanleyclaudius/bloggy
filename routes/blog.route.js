@@ -6,7 +6,10 @@ router.route('/')
   .get(blogCtrl.getHomeBlogs)
   .post(isAuthenticated, blogCtrl.createBlog);
 
-router.route('/:id').get(blogCtrl.getBlogById);
+router.route('/:id')
+  .get(blogCtrl.getBlogById)
+  .patch(isAuthenticated, blogCtrl.udpateBlog);
+
 router.route('/user/:id').get(blogCtrl.getBlogsByUser);
 router.route('/category/:id').get(blogCtrl.getCategoryBlogs);
 

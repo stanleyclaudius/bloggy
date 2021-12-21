@@ -3,7 +3,7 @@ import { CATEGORY_BLOG_TYPES } from './../types/categoryBlogTypes';
 import { USER_BLOG_TYPES } from './../types/userBlogTypes';
 import { BLOG_DETAIL_TYPES } from './../types/blogDetailTypes';
 import { GLOBAL_TYPES } from './../types/globalTypes';
-import { getDataAPI, postDataAPI } from './../../utils/fetchData';
+import { getDataAPI, postDataAPI, patchDataAPI } from './../../utils/fetchData';
 import { uploadImage } from './../../utils/imageHandler';
 
 export const getHomeBlogs = filter => async(dispatch) => {
@@ -156,6 +156,38 @@ export const createBlog = (data, token) => async(dispatch) => {
 
     const res = await postDataAPI('blog', data, token);
 
+    dispatch({
+      type: GLOBAL_TYPES.ALERT,
+      payload: {
+        success: res.data.msg
+      }
+    });
+  } catch (err) {
+    dispatch({
+      type: GLOBAL_TYPES.ALERT,
+      payload: {
+        errors: err.response.data.msg
+      }
+    });
+  }
+}
+
+export const updateBlog = (data, id, token) => async(dispatch) => {
+  try {
+    dispatch({
+      type: GLOBAL_TYPES.ALERT,
+      payload: {
+        loading: true
+      }
+    });
+    
+    let thumbnail = ''
+    if (typeof data.thumbnail !== 'string') {
+      thumbnail = await uploadImage(data.thumbnail, 'thumbnail');
+      data.thumbnail = thumbnail.secure_url;
+    }
+
+    const res = await patchDataAPI(`blog/${id}`, data, token);
     dispatch({
       type: GLOBAL_TYPES.ALERT,
       payload: {

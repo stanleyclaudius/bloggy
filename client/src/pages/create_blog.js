@@ -13,8 +13,9 @@ import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { getDataAPI } from './../utils/fetchData';
-import { createBlog } from './../redux/actions/blogActions';
+import { createBlog, updateBlog } from './../redux/actions/blogActions';
 import { GLOBAL_TYPES } from './../redux/types/globalTypes';
+import { isContentChange } from './../utils/validator';
 import ReactQuill from './../components/editor/ReactQuill';
 
 const CreateBlog = ({id}) => {
@@ -26,6 +27,7 @@ const CreateBlog = ({id}) => {
   });
   const [body, setBody] = useState('');
   const [thumbnailPreview, setThumbnailPreview] = useState('');
+  const [oldData, setOldData] = useState({});
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -91,7 +93,22 @@ const CreateBlog = ({id}) => {
       ...blogData,
       content: body
     };
-    await dispatch(createBlog(data, auth.token));
+
+    if (id) {
+      if (!isContentChange(data, oldData)) {
+        await dispatch(updateBlog(data, id, auth.token));
+      } else {
+        return dispatch({
+          type: GLOBAL_TYPES.ALERT,
+          payload: {
+            errors: 'Nothing changed on the blog.'
+          }
+        })
+      }
+    } else {
+      await dispatch(createBlog(data, auth.token));
+    }
+
     navigate(`/profile/${auth.user?._id}`);
   }
 
@@ -101,14 +118,9 @@ const CreateBlog = ({id}) => {
     const fetchBlogData = async() => {
       await getDataAPI(`blog/${id}`)
         .then(res => {
-          setBlogData({
-            title: res.data.blog.title,
-            description: res.data.blog.description,
-            thumbnail: res.data.blog.thumbnail,
-            category: res.data.blog.category
-          });
+          setBlogData(res.data.blog);
+          setOldData(res.data.blog);
           setBody(res.data.blog.content);
-          setThumbnailPreview(res.data.blog.thumbnail);
         })
         .catch(err => {
           console.log(err);
@@ -132,7 +144,7 @@ const CreateBlog = ({id}) => {
               d='flex'
             >
               {
-                thumbnailPreview && 
+                (thumbnailPreview || id) && 
                 <Box
                   w='250px'
                   h='120px'
@@ -145,6 +157,8 @@ const CreateBlog = ({id}) => {
                     src={
                       id
                       ? thumbnailPreview
+                        ? URL.createObjectURL(thumbnailPreview)
+                        : blogData.thumbnail
                       : thumbnailPreview
                         ? URL.createObjectURL(thumbnailPreview)
                         : ''
@@ -209,7 +223,9 @@ const CreateBlog = ({id}) => {
           bg='orange.400'
           _hover={{ bg: 'orange.600' }}
           _active={{ bg: 'orange.600' }}
-        >Submit</Button>
+        >
+          {id ? 'Update' : 'Submit'}
+        </Button>
       </Box>
     </Box>
   );
