@@ -8,13 +8,29 @@ import {
   Box
 } from '@chakra-ui/react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { FaEdit, FaTrash } from 'react-icons/fa';
+import { deleteBlog } from './../../redux/actions/blogActions';
+import { GLOBAL_TYPES } from './../../redux/types/globalTypes';
 
 const Article = ({id, category, title, description, author, date, image, isProfile}) => {
   const navigate = useNavigate();
 
+  const dispatch = useDispatch();
   const { auth } = useSelector(state => state);
+
+  const handleDelete = () => {
+    if (auth.user?._id !== author._id) {
+      return dispatch({
+        type: GLOBAL_TYPES.ALERT,
+        payload: {
+          errors: 'Invalid authentication'
+        }
+      });
+    }
+
+    dispatch(deleteBlog(id, auth.token));
+  }
 
   return (
     <HStack
@@ -46,6 +62,7 @@ const Article = ({id, category, title, description, author, date, image, isProfi
               <IconButton
                 aria-label="Delete Article"
                 icon={<FaTrash />}
+                onClick={handleDelete}
               />
             </>
           }

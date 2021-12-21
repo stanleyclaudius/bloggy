@@ -8,7 +8,8 @@ router.route('/')
 
 router.route('/:id')
   .get(blogCtrl.getBlogById)
-  .patch(isAuthenticated, blogCtrl.udpateBlog);
+  .delete(isAuthenticated, blogCtrl.deleteBlog)
+  .patch(isAuthenticated, blogCtrl.updateBlog);
 
 router.route('/user/:id').get(blogCtrl.getBlogsByUser);
 router.route('/category/:id').get(blogCtrl.getCategoryBlogs);

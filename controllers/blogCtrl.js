@@ -1,4 +1,5 @@
 const Blog = require('./../models/Blog');
+const Comment = require('./../models/Comment');
 const mongoose = require('mongoose');
 
 const Pagination = (req) => {
@@ -241,7 +242,7 @@ const blogCtrl = {
       return res.status(500).json({msg: err.message});
     }
   },
-  udpateBlog: async(req, res) => {
+  updateBlog: async(req, res) => {
     try {
       const blog = await Blog.findOneAndUpdate({
         _id: req.params.id,
@@ -252,6 +253,23 @@ const blogCtrl = {
         return res.status(404).json({msg: 'Update failed.'});
 
       res.status(200).json({msg: 'Blog updated.'});
+    } catch (err) {
+      return res.status(500).json({msg: err.message});
+    }
+  },
+  deleteBlog: async(req, res) => {
+    try {
+      const blog = await Blog.findOneAndDelete({
+        _id: req.params.id,
+        user: req.user._id
+      });
+
+      if (!blog)
+        return res.status(404).json({msg: 'Delete failed.'});
+
+      await Comment.deleteMany({blog_id: req.params.id});
+
+      res.status(200).json({msg: 'Blog deleted.'});
     } catch (err) {
       return res.status(500).json({msg: err.message});
     }
