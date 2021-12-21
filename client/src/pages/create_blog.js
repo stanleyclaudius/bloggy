@@ -9,14 +9,15 @@ import {
   Textarea,
   Button
 } from '@chakra-ui/react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { getDataAPI } from './../utils/fetchData';
 import { createBlog } from './../redux/actions/blogActions';
 import { GLOBAL_TYPES } from './../redux/types/globalTypes';
 import ReactQuill from './../components/editor/ReactQuill';
 
-const CreateBlog = () => {
+const CreateBlog = ({id}) => {
   const [blogData, setBlogData] = useState({
     title: '',
     description: '',
@@ -94,6 +95,29 @@ const CreateBlog = () => {
     navigate(`/profile/${auth.user?._id}`);
   }
 
+  useEffect(() => {
+    if (!id) return;
+
+    const fetchBlogData = async() => {
+      await getDataAPI(`blog/${id}`)
+        .then(res => {
+          setBlogData({
+            title: res.data.blog.title,
+            description: res.data.blog.description,
+            thumbnail: res.data.blog.thumbnail,
+            category: res.data.blog.category
+          });
+          setBody(res.data.blog.content);
+          setThumbnailPreview(res.data.blog.thumbnail);
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    }
+
+    fetchBlogData();
+  }, [id]);
+
   return (
     <Box p={{ base: '30px 35px', md: '30px 100px' }}>
       <Grid
@@ -118,7 +142,13 @@ const CreateBlog = () => {
                   mr='20px'
                 >
                   <Image
-                    src={thumbnailPreview ? URL.createObjectURL(thumbnailPreview) : ''}
+                    src={
+                      id
+                      ? thumbnailPreview
+                      : thumbnailPreview
+                        ? URL.createObjectURL(thumbnailPreview)
+                        : ''
+                    }
                     alt={`Bloggy - ${blogData.title}`}
                     w='100%'
                     h='100%'
@@ -154,7 +184,7 @@ const CreateBlog = () => {
           </FormControl>
           <FormControl mt='5'>
             <FormLabel>Category</FormLabel>
-            <Select name='category' onChange={handleChange}>
+            <Select name='category' value={blogData.category} onChange={handleChange}>
               <option value="">- Select Category -</option>
               {
                 category.map(item => (
@@ -167,7 +197,7 @@ const CreateBlog = () => {
         <Box>
           <FormControl>
             <FormLabel>Content</FormLabel>
-            <ReactQuill setBody={setBody} />
+            <ReactQuill body={body} setBody={setBody} />
           </FormControl>
         </Box>
       </Grid>

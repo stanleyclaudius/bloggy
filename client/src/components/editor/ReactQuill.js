@@ -24,7 +24,7 @@ const container = [
   ['clean', 'link', 'image', 'video']
 ];
 
-const Quill = ({setBody}) => {
+const Quill = ({body, setBody}) => {
   const quillRef = useRef();
   const modules = {toolbar: {container}};
 
@@ -61,6 +61,7 @@ const Quill = ({setBody}) => {
         modules={modules}
         placeholder="Write content ..."
         ref={quillRef}
+        value={body}
         onChange={e => setBody(e)}
       />
     </Box>

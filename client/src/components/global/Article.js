@@ -4,11 +4,18 @@ import {
   Spacer,
   Image,
   Text,
+  IconButton,
   Box
 } from '@chakra-ui/react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { FaEdit, FaTrash } from 'react-icons/fa';
 
 const Article = ({id, category, title, description, author, date, image, isProfile}) => {
+  const navigate = useNavigate();
+
+  const { auth } = useSelector(state => state);
+
   return (
     <HStack
       bg='gray.700'
@@ -28,6 +35,20 @@ const Article = ({id, category, title, description, author, date, image, isProfi
         </Link>
         <Text pb='12px'>{description}</Text>
         <HStack spacing='20px'>
+          {
+            isProfile && (author._id === auth.user?._id) &&
+            <>
+              <IconButton
+                aria-label="Edit Article"
+                icon={<FaEdit />}
+                onClick={() => navigate(`/update_blog/${id}`)}
+              />
+              <IconButton
+                aria-label="Delete Article"
+                icon={<FaTrash />}
+              />
+            </>
+          }
           <Text>
             By <Link to={`/profile/${author._id}`} style={{ color: '#63B3ED' }}>{author.name}</Link>
           </Text>
