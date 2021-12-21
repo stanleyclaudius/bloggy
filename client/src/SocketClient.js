@@ -24,6 +24,23 @@ const SocketClient = () => {
     return () => socket.off('createComment');
   }, [dispatch, socket]);
 
+  useEffect(() => {
+    if (!socket) return;
+    socket.on('updateComment', data => {
+      dispatch({
+        type: GLOBAL_TYPES.ALERT,
+        payload: {}
+      });
+
+      dispatch({
+        type: data.comment_root ? COMMENT_TYPES.UPDATE_REPLY : COMMENT_TYPES.UPDATE_COMMENT,
+        payload: data
+      });
+    });
+
+    return () => socket.off('updateComment');
+  }, [dispatch, socket]);
+
   return (
     <div></div>
   );

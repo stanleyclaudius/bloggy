@@ -56,14 +56,7 @@ export const updateComment = (comment, content, token) => async(dispatch) => {
       payload: {}
     });
 
-    const res = await patchDataAPI(`comment/${comment._id}`, {content}, token);
-    dispatch({
-      type: comment.comment_root ? COMMENT_TYPES.UPDATE_REPLY : COMMENT_TYPES.UPDATE_COMMENT,
-      payload: {
-        ...comment,
-        content
-      }
-    });
+    const res = await patchDataAPI(`comment/${comment._id}`, {data: comment, content}, token);
     
     dispatch({
       type: GLOBAL_TYPES.ALERT,

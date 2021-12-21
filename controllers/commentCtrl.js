@@ -140,6 +140,14 @@ const commentCtrl = {
         user: req.user._id
       }, {content: req.body.content}, {new: true});
 
+      const data = {
+        ...req.body.data,
+        content: req.body.content,
+        user: req.user
+      };
+
+      io.to(data.blog_id).emit('updateComment', data);
+
       res.status(200).json({
         msg: 'Comment has been updated successfully.',
         comment
