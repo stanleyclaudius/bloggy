@@ -40,7 +40,9 @@ const Navbar = () => {
   const {auth} = useSelector(state => state);
 
   const handleLogout = () => {
-    dispatch(logout());
+    if (!auth.token) return;
+    
+    dispatch(logout(auth.token));
     toast({
       position: 'top-right',
       title: 'Success.',

@@ -1,5 +1,6 @@
 import { GLOBAL_TYPES } from './../types/globalTypes';
 import { getDataAPI, postDataAPI } from './../../utils/fetchData';
+import { checkTokenValidity } from './../../utils/checkTokenValidity';
 
 export const register = data => async(dispatch) => {
   try {
@@ -85,9 +86,12 @@ export const refreshToken = () => async(dispatch) => {
   }
 }
 
-export const logout = () => async(dispatch) => {
+export const logout = token => async(dispatch) => {
+  const tokenValidityResult = await checkTokenValidity(token, dispatch);
+  const access_token = tokenValidityResult ? tokenValidityResult : token;
+
   try {
-    await getDataAPI('auth/logout');
+    await getDataAPI('auth/logout', access_token);
     localStorage.removeItem('logged');
     dispatch({
       type: GLOBAL_TYPES.ALERT,

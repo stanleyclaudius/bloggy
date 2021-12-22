@@ -2,6 +2,7 @@ import { GLOBAL_TYPES } from './../types/globalTypes';
 import { USER_TYPES } from './../types/userTypes';
 import { getDataAPI, patchDataAPI } from './../../utils/fetchData';
 import { uploadImage } from './../../utils/imageHandler';
+import { checkTokenValidity } from './../../utils/checkTokenValidity';
 
 export const getUserProfile = id => async(dispatch) => {
   try {
@@ -21,6 +22,9 @@ export const getUserProfile = id => async(dispatch) => {
 }
 
 export const updateProfile = (data, id, token) => async(dispatch) => {
+  const tokenValidityResult = await checkTokenValidity(token, dispatch);
+  const access_token = tokenValidityResult ? tokenValidityResult : token;
+
   try {
     dispatch({
       type: GLOBAL_TYPES.ALERT,
@@ -34,7 +38,7 @@ export const updateProfile = (data, id, token) => async(dispatch) => {
       data.avatar = res.secure_url;
     }
 
-    const res = await patchDataAPI(`user/${id}`, data, token);
+    const res = await patchDataAPI(`user/${id}`, data, access_token);
     dispatch({
       type: GLOBAL_TYPES.AUTH,
       payload: {

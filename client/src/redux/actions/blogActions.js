@@ -5,6 +5,7 @@ import { BLOG_DETAIL_TYPES } from './../types/blogDetailTypes';
 import { GLOBAL_TYPES } from './../types/globalTypes';
 import { getDataAPI, postDataAPI, patchDataAPI, deleteDataAPI } from './../../utils/fetchData';
 import { uploadImage } from './../../utils/imageHandler';
+import { checkTokenValidity } from './../../utils/checkTokenValidity';
 
 export const getHomeBlogs = filter => async(dispatch) => {
   let url = 'blog';
@@ -143,6 +144,9 @@ export const getBlogById = id => async(dispatch) => {
 }
 
 export const createBlog = (data, token) => async(dispatch) => {
+  const tokenValidityResult = await checkTokenValidity(token, dispatch);
+  const access_token = tokenValidityResult ? tokenValidityResult : token;
+
   try {
     dispatch({
       type: GLOBAL_TYPES.ALERT,
@@ -154,7 +158,7 @@ export const createBlog = (data, token) => async(dispatch) => {
     const thumbnail = await uploadImage(data.thumbnail, 'thumbnail');
     data.thumbnail = thumbnail.secure_url;
 
-    const res = await postDataAPI('blog', data, token);
+    const res = await postDataAPI('blog', data, access_token);
 
     dispatch({
       type: GLOBAL_TYPES.ALERT,
@@ -173,6 +177,9 @@ export const createBlog = (data, token) => async(dispatch) => {
 }
 
 export const updateBlog = (data, id, token) => async(dispatch) => {
+  const tokenValidityResult = await checkTokenValidity(token, dispatch);
+  const access_token = tokenValidityResult ? tokenValidityResult : token;
+
   try {
     dispatch({
       type: GLOBAL_TYPES.ALERT,
@@ -187,7 +194,7 @@ export const updateBlog = (data, id, token) => async(dispatch) => {
       data.thumbnail = thumbnail.secure_url;
     }
 
-    const res = await patchDataAPI(`blog/${id}`, data, token);
+    const res = await patchDataAPI(`blog/${id}`, data, access_token);
     dispatch({
       type: GLOBAL_TYPES.ALERT,
       payload: {
@@ -205,13 +212,16 @@ export const updateBlog = (data, id, token) => async(dispatch) => {
 }
 
 export const deleteBlog = (id, token) => async(dispatch) => {
+  const tokenValidityResult = await checkTokenValidity(token, dispatch);
+  const access_token = tokenValidityResult ? tokenValidityResult : token;
+
   try {
     dispatch({
       type: GLOBAL_TYPES.ALERT,
       payload: {}
     });
 
-    const res = await deleteDataAPI(`blog/${id}`, token);
+    const res = await deleteDataAPI(`blog/${id}`, access_token);
     dispatch({
       type: USER_BLOG_TYPES.DELETE_USER_BLOG,
       payload: id

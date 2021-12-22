@@ -1,6 +1,7 @@
 import { CATEGORY_TYPES } from './../types/categoryTypes';
 import { GLOBAL_TYPES } from './../types/globalTypes';
 import { getDataAPI, postDataAPI, patchDataAPI, deleteDataAPI } from './../../utils/fetchData';
+import { checkTokenValidity } from './../../utils/checkTokenValidity';
 
 export const getCategory = () => async(dispatch) => {
   try {
@@ -34,13 +35,16 @@ export const getCategory = () => async(dispatch) => {
 }
 
 export const createCategory = (data, token) => async(dispatch) => {
+  const tokenValidityResult = await checkTokenValidity(token, dispatch);
+  const access_token = tokenValidityResult ? tokenValidityResult : token;
+
   try {
     dispatch({
       type: GLOBAL_TYPES.ALERT,
       payload: {}
     });
     
-    const res = await postDataAPI('category', data, token);
+    const res = await postDataAPI('category', data, access_token);
     dispatch({
       type: CATEGORY_TYPES.CREATE_CATEGORY,
       payload: res.data.category
@@ -63,13 +67,16 @@ export const createCategory = (data, token) => async(dispatch) => {
 }
 
 export const updateCategory = (data, id, token) => async(dispatch) => {
+  const tokenValidityResult = await checkTokenValidity(token, dispatch);
+  const access_token = tokenValidityResult ? tokenValidityResult : token;
+
   try {
     dispatch({
       type: GLOBAL_TYPES.ALERT,
       payload: {}
     });
 
-    const res = await patchDataAPI(`category/${id}`, data, token);
+    const res = await patchDataAPI(`category/${id}`, data, access_token);
     dispatch({
       type: CATEGORY_TYPES.UPDATE_CATEGORY,
       payload: res.data.category
@@ -92,13 +99,16 @@ export const updateCategory = (data, id, token) => async(dispatch) => {
 }
 
 export const deleteCategory = (id, token) => async(dispatch) => {
+  const tokenValidityResult = await checkTokenValidity(token, dispatch);
+  const access_token = tokenValidityResult ? tokenValidityResult : token;
+
   try {
     dispatch({
       type: GLOBAL_TYPES.ALERT,
       payload: {}
     });
 
-    const res = await deleteDataAPI(`category/${id}`, token);
+    const res = await deleteDataAPI(`category/${id}`, access_token);
     dispatch({
       type: CATEGORY_TYPES.DELETE_CATEGORY,
       payload: id
