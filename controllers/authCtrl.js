@@ -95,6 +95,10 @@ const authCtrl = {
         path: '/api/v1/auth/refresh_token'
       });
 
+      await User.findOneAndUpdate({_id: req.user._id}, {
+        rf_token: ''
+      });
+
       res.status(200).json({msg: 'Logout successfully.'});
     } catch (err) {
       return res.status(500).json({msg: err.message});
@@ -110,11 +114,20 @@ const authCtrl = {
       if (!decoded.id)
         return res.status(403).json({msg: 'Invalid authentication.'});
       
-      const user = await User.findOne({_id: decoded.id});
+      const user = await User.findOne({_id: decoded.id}).select('-password +rf_token');
       if (!user)
         return res.status(404).json({msg: 'User not found.'});
 
+      if (rfToken !== user.rf_token)
+        return res.status(403).json({msg: 'Invalid authentication.'});
+
       const accessToken = generateAccessToken({id: user._id});
+      const refreshToken = generateRefreshToken({id: user._id}, res);
+
+      await User.findOneAndUpdate({_id: user._id}, {
+        rf_token: refreshToken
+      });
+
       res.status(200).json({
         user: {
           ...user._doc,
@@ -240,12 +253,10 @@ const loginUser = async(user, password, res) => {
     return res.status(403).json({msg});
 
   const accessToken = generateAccessToken({id: user._id});
-  const refreshToken = generateRefreshToken({id: user._id});
+  const refreshToken = generateRefreshToken({id: user._id}, res);
 
-  res.cookie('bloggy_rfToken', refreshToken, {
-    httpOnly: true,
-    path: '/api/v1/auth/refresh_token',
-    maxAge: 30 * 24 * 60 * 60 * 1000
+  await User.findOneAndUpdate({_id: user._id}, {
+    rf_token: refreshToken
   });
 
   res.status(200).json({
@@ -261,16 +272,12 @@ const loginUser = async(user, password, res) => {
 const registerUser = async(user, res) => {
   try {
     const newUser = new User(user);
-    await newUser.save();
 
     const accessToken = generateAccessToken({id: newUser._id});
-    const refreshToken = generateRefreshToken({id: newUser._id});
+    const refreshToken = generateRefreshToken({id: newUser._id}, res);
 
-    res.cookie('bloggy_rfToken', refreshToken, {
-      httpOnly: true,
-      path: '/api/v1/auth/refresh_token',
-      maxAge: 30 * 24 * 60 * 60 * 1000
-    });
+    newUser.rf_token = refreshToken;
+    await newUser.save();
     
     res.status(200).json({
       user: {

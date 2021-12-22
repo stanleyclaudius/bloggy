@@ -5,9 +5,17 @@ module.exports.generateActivationToken = payload => {
 }
 
 module.exports.generateAccessToken = payload => {
-  return jwt.sign(payload, process.env.ACCESS_TOKEN_SECRET, {expiresIn: '7d'});
+  return jwt.sign(payload, process.env.ACCESS_TOKEN_SECRET, {expiresIn: '15s'});
 }
 
-module.exports.generateRefreshToken = payload => {
-  return jwt.sign(payload, process.env.REFRESH_TOKEN_SECRET, {expiresIn: '30d'});
+module.exports.generateRefreshToken = (payload, res) => {
+  const refreshToken = jwt.sign(payload, process.env.REFRESH_TOKEN_SECRET, {expiresIn: '30d'});
+
+  res.cookie('bloggy_rfToken', refreshToken, {
+    httpOnly: true,
+    path: '/api/v1/auth/refresh_token',
+    maxAge: 30 * 24 * 60 * 60 * 1000
+  });
+  
+  return refreshToken;
 }
