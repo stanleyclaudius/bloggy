@@ -3,6 +3,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 import ReduxProvider from './redux/store';
+import './styles/dist/output.css';
 
 const config = {
   initialColorMode: 'dark'

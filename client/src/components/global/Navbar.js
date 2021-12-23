@@ -1,27 +1,27 @@
-import {
-  Box,
-  Avatar,
-  Heading,
-  HStack,
-  VStack,
-  Spacer,
-  Flex,
-  Icon,
-  Drawer,
-  Button,
-  DrawerOverlay,
-  DrawerBody,
-  DrawerContent,
-  DrawerCloseButton,
-  Menu,
-  MenuButton,
-  MenuList,
-  MenuItem,
-  MenuDivider,
-  Collapse,
-  useDisclosure,
-  createStandaloneToast
-} from '@chakra-ui/react';
+// import {
+//   Box,
+//   Avatar,
+//   Heading,
+//   HStack,
+//   VStack,
+//   Spacer,
+//   Flex,
+//   Icon,
+//   Drawer,
+//   Button,
+//   DrawerOverlay,
+//   DrawerBody,
+//   DrawerContent,
+//   DrawerCloseButton,
+//   Menu,
+//   MenuButton,
+//   MenuList,
+//   MenuItem,
+//   MenuDivider,
+//   Collapse,
+//   useDisclosure,
+//   createStandaloneToast
+// } from '@chakra-ui/react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { logout } from './../../redux/actions/authActions';
@@ -31,11 +31,11 @@ import { FaUser } from 'react-icons/fa';
 import { IoLogOut } from 'react-icons/io5';
 
 const Navbar = () => {
-  const { isOpen, onOpen, onClose } = useDisclosure();
-  const { isOpen: isOpenMenu, onToggle } = useDisclosure();
+  // const { isOpen, onOpen, onClose } = useDisclosure();
+  // const { isOpen: isOpenMenu, onToggle } = useDisclosure();
 
-  const toast = createStandaloneToast();
-  const navigate = useNavigate();
+  // const toast = createStandaloneToast();
+  // const navigate = useNavigate();
   const dispatch = useDispatch();
   const {auth} = useSelector(state => state);
 
@@ -43,19 +43,20 @@ const Navbar = () => {
     if (!auth.token) return;
     
     dispatch(logout(auth.token));
-    toast({
-      position: 'top-right',
-      title: 'Success.',
-      description: 'User sign out.',
-      status: 'success',
-      duration: 3000,
-      isClosable: true
-    });
+    // toast({
+    //   position: 'top-right',
+    //   title: 'Success.',
+    //   description: 'User sign out.',
+    //   status: 'success',
+    //   duration: 3000,
+    //   isClosable: true
+    // });
   }
 
   return (
     <>
-      <Flex
+      <div className="bg-red-600">Test with tailwindcss</div>
+      {/* <Flex
         p={{ base: '15px 35px', md: '15px 100px' }}
         color='white'
         alignItems='center'
@@ -270,7 +271,7 @@ const Navbar = () => {
             </Box>
           </DrawerBody>
         </DrawerContent>
-      </Drawer>
+      </Drawer> */}
     </>
   );
 }
