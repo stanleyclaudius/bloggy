@@ -15,7 +15,11 @@ const Home = () => {
   const {homeBlog: blogCategory, alert, category} = useSelector(state => state);
 
   useEffect(() => {
-    dispatch(getHomeBlogs(filter));
+    const delayDebounce = setTimeout(() => {
+      dispatch(getHomeBlogs(filter));
+    }, 1000);
+
+    return () => clearTimeout(delayDebounce);
   }, [dispatch, filter]);
 
   return (
