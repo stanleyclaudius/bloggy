@@ -28,12 +28,12 @@ const Home = () => {
   return (
     <>
       <Header />
-      <Filter
+      {/* <Filter
         category={category}
         filter={filter}
         setFilter={setFilter}
-      />
-      <Box
+      /> */}
+      {/* <Box
         p={{ base: '15px 35px', md: '15px 100px' }}
       >
         {
@@ -61,7 +61,7 @@ const Home = () => {
             </>
           )
         }
-      </Box>
+      </Box> */}
     </>
   )
 }

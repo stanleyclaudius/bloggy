@@ -1,6 +1,7 @@
 @import
   './config',
-  './navbar';
+  './navbar',
+  './home/header';
 
 a {
   text-decoration: none;
@@ -51,4 +52,9 @@ button {
     border-radius: 50%;
     object-fit: cover;
   }
+}
+
+.container {
+  width: 88%;
+  margin: auto;
 }
