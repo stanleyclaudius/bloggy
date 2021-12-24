@@ -24,11 +24,11 @@ const Header = () => {
         zIndex='-1'
         d={{ base: 'none', sm: 'block' }}
       >
-        <Image
+        {/* <Image
           src={`${process.env.PUBLIC_URL}/images/squareliquid.png`}
           alt='Bloggy'
           width={{ base: '200px', md: '300px', sm: '150px' }}
-        />
+        /> */}
       </Box>
       <Heading fontSize='60px' pb='20px'>Bloggy</Heading>
       <Text textAlign='center' fontSize='18px'>Place where you can find and read article for free to improve your knowledge</Text>
@@ -39,11 +39,11 @@ const Header = () => {
         zIndex='-1'
         d={{ base: 'none', sm: 'block' }}
       >
-        <Image
+        {/* <Image
           src={`${process.env.PUBLIC_URL}/images/circleliquid.png`}
           alt='Bloggy'
           width={{ base: '300px', md: '450px', sm: '220px' }}
-        />
+        /> */}
       </Box>
     </VStack>
   );

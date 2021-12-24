@@ -1,23 +1,14 @@
-import { ChakraProvider, extendTheme } from '@chakra-ui/react';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 import ReduxProvider from './redux/store';
-import './styles/dist/output.css';
-
-const config = {
-  initialColorMode: 'dark'
-}
-
-const theme = extendTheme({config});
+import './styles/css/main.css';
 
 ReactDOM.render(
   <React.StrictMode>
-    <ChakraProvider theme={theme}>
-      <ReduxProvider>
-        <App />
-      </ReduxProvider>
-    </ChakraProvider>
+    <ReduxProvider>
+      <App />
+    </ReduxProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );

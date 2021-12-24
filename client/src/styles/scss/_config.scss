@@ -1,0 +1,25 @@
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600&display=swap');
+
+$primary-color: #303030;
+$secondary-color: #5B5B5B;
+$ternary-color: #7e7e7e;
+$accent-color: #FF8642;
+$accent-hover: #d36b2e;
+$light-blue: rgb(26, 174, 228);
+
+html, body {
+  background: $primary-color;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Source Sans Pro', sans-serif;
+}
+
+@mixin mediaDesktop {
+  @media (min-width: 700px) {
+    @content;
+  }
+}
