@@ -1,12 +1,3 @@
-import {
-  Box,
-  Heading,
-  Center,
-  Divider,
-  Flex,
-  Spinner,
-  Spacer
-} from '@chakra-ui/react';
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -28,11 +19,11 @@ const Home = () => {
   return (
     <>
       <Header />
-      {/* <Filter
+      <Filter
         category={category}
         filter={filter}
         setFilter={setFilter}
-      /> */}
+      />
       {/* <Box
         p={{ base: '15px 35px', md: '15px 100px' }}
       >

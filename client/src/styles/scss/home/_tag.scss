@@ -1,0 +1,24 @@
+.tag {
+  border-radius: 50px;
+  padding: 10px 12px;
+  background: $secondary-color;
+  color: #fff;
+  width: fit-content;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  cursor: pointer;
+
+  &.active {
+    background: rgb(63, 186, 88);
+
+    &:hover{
+      background: rgb(45, 145, 65);
+    }
+  }
+
+  &:hover {
+    background: $ternary-color;
+  }
+}
