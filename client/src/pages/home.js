@@ -17,13 +17,39 @@ const Home = () => {
   }, [dispatch, filter]);
 
   return (
-    <>
+    <div className='container'>
       <Header />
       <Filter
         category={category}
         filter={filter}
         setFilter={setFilter}
       />
+      <div className='home'>
+        {
+          alert.loading
+          ? 'Loading ...'
+          : (
+            <>
+              {
+                blogCategory.map(item => (
+                  <div key={item._id}>
+                    <div className='blogCategory'>
+                      <h2 className='blogCategory--title'>{item.name}</h2>
+                      {
+                        item.count > 4 &&
+                        <Link to={`/blogs/${item.name}`}>
+                          See More
+                        </Link>
+                      }
+                    </div>
+                    <ArticleContainer blogs={item.blogs} />
+                  </div>
+                ))
+              }
+            </>
+          )
+        }
+      </div>
       {/* <Box
         p={{ base: '15px 35px', md: '15px 100px' }}
       >
@@ -53,7 +79,7 @@ const Home = () => {
           )
         }
       </Box> */}
-    </>
+    </div>
   )
 }
 

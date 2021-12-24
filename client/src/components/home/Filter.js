@@ -16,7 +16,7 @@ const Filter = ({category, filter, setFilter}) => {
   }
 
   return (
-    <div className='filter container'>
+    <div className='filter'>
       {
         category.map(item => (
           <Tag

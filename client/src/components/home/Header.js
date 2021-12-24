@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 
 const Header = () => {
   return (
-    <div className='header container'>
+    <div className='header'>
       <div className="header__left">
         <h1>Discover articles with various topic all around the world</h1>
         <p>Bloggy is a place to show and find article or blog from all around the world with the best author's</p>

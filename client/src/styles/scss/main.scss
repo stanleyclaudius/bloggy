@@ -1,9 +1,11 @@
 @import
   './config',
   './navbar',
+  './home/home',
   './home/header',
   './home/filter',
-  './home/tag';
+  './home/tag',
+  './home/articleCard';
 
 a {
   text-decoration: none;

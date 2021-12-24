@@ -1,12 +1,11 @@
-import { Box } from '@chakra-ui/react';
-import Article from './../global/Article';
+import ArticleCard from './ArticleCard';
 
 const ArticleContainer = ({blogs}) => {
   return (
-    <Box>
+    <div className='articleContainer'>
       {
         blogs.map(item => (
-          <Article
+          <ArticleCard
             key={item._id}
             id={item._id}
             category={item.category?.name}
@@ -14,11 +13,11 @@ const ArticleContainer = ({blogs}) => {
             description={item.description}
             author={item.user}
             date={new Date(item.createdAt).toLocaleDateString()}
-            image='https://i.natgeofe.com/n/3861de2a-04e6-45fd-aec8-02e7809f9d4e/02-cat-training-NationalGeographic_1484324_square.jpg'
+            image={item.thumbnail}
           />
         ))
       }
-    </Box>
+    </div>
   );
 }
 
