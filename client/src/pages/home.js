@@ -6,6 +6,7 @@ import ArticleContainer from './../components/home/ArticleContainer';
 import Header from './../components/home/Header';
 import Filter from './../components/home/Filter';
 import Spinner from './../components/global/Spinner';
+import Message from './../components/global/Message';
 
 const Home = () => {
   const [filter, setFilter] = useState([]);
@@ -32,20 +33,30 @@ const Home = () => {
           : (
             <>
               {
-                blogCategory.map(item => (
-                  <div key={item._id}>
-                    <div className='blogCategory'>
-                      <h2 className='blogCategory--title'>{item.name}</h2>
-                      {
-                        item.count > 4 &&
-                        <Link to={`/blogs/${item.name}`}>
-                          See More
-                        </Link>
-                      }
-                    </div>
-                    <ArticleContainer blogs={item.blogs} />
-                  </div>
-                ))
+                blogCategory.length === 0
+                ? (
+                  <Message text="There's no blog found with this category." />
+                )
+                : (
+                  <>
+                    {
+                      blogCategory.map(item => (
+                        <div key={item._id}>
+                          <div className='blogCategory'>
+                            <h2 className='blogCategory--title'>{item.name}</h2>
+                            {
+                              item.count > 4 &&
+                              <Link to={`/blogs/${item.name}`}>
+                                See More
+                              </Link>
+                            }
+                          </div>
+                          <ArticleContainer blogs={item.blogs} />
+                        </div>
+                      ))
+                    }
+                  </>
+                )
               }
             </>
           )

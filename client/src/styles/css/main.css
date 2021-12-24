@@ -266,6 +266,14 @@ html, body {
   }
 }
 
+.message {
+  padding: 10px 15px;
+  background: #ff5858;
+  color: #fff;
+  border-radius: 5px;
+  text-align: center;
+}
+
 .home {
   margin: 30px 0;
 }
