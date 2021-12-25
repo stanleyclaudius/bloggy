@@ -2,10 +2,12 @@ import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { FaEdit, FaTrash } from 'react-icons/fa';
 import { updateComment, replyComment, deleteComment } from './../../redux/actions/commentActions';
+import Warning from './../global/Warning';
 import ReplyInput from './../comment/ReplyInput';
 
 const CommentList = ({comment, showReply, setShowReply, children}) => {
   const [onReply, setOnReply] = useState(false);
+  const [onDelete, setOnDelete] = useState(null);
   const [edit, setEdit] = useState('');
 
   const dispatch = useDispatch();
@@ -33,7 +35,7 @@ const CommentList = ({comment, showReply, setShowReply, children}) => {
   }
 
   const handleDelete = id => {
-    dispatch(deleteComment(id, auth.token));
+    setOnDelete(id);
   }
 
   const additionalMenu = id => {
@@ -102,6 +104,12 @@ const CommentList = ({comment, showReply, setShowReply, children}) => {
       }
 
       {children}
+      
+      <Warning
+        id={onDelete}
+        handleClick={() => dispatch(deleteComment(onDelete, auth.token))}
+        handleClose={() => setOnDelete(null)}
+      />
     </div>
   );
 }
