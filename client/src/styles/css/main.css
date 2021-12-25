@@ -837,6 +837,15 @@ html, body {
   margin: 20px 0 30px 0;
 }
 
+.register p {
+  text-align: center;
+  margin-top: 25px;
+}
+
+.register p a {
+  color: #1aaee4;
+}
+
 .register button {
   background: #FF8642;
   color: #fff;

@@ -9,6 +9,15 @@
   h1 {
     margin: 20px 0 30px 0;
   }
+  
+  p {
+    text-align: center;
+    margin-top: 25px;
+
+    a {
+      color: $light-blue;
+    }
+  }
 
   button {
     background: $accent-color;
