@@ -17,7 +17,7 @@ const Navbar = () => {
 
   const handleLogout = () => {
     if (!auth.token) return;
-    
+    setIsOpenAvatar(false);
     dispatch(logout(auth.token));
   }
 
@@ -57,7 +57,7 @@ const Navbar = () => {
                   <div className='navbar__links--avatar'>
                     <Avatar avatar={auth.user?.avatar} name={auth.user?.name} onClick={() => setIsOpenAvatar(!isOpenAvatar)} />
                     <div className={`navbar__links--avatarDropdown ${isOpenAvatar ? 'active' : ''}`}>
-                      <Link to={`/profile/${auth.user?._id}`}>
+                      <Link to={`/profile/${auth.user?._id}`} onClick={() => setIsOpenAvatar(false)}>
                         <FaUserAlt />
                         Profile
                       </Link>

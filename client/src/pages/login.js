@@ -20,7 +20,7 @@ const Login = () => {
         navigate('/');
       }
     }
-  }, [auth.token, navigate]);
+  }, [auth.token, navigate, queryParams]);
 
   return (
     <div className='login container'>
