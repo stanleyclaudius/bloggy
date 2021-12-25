@@ -121,7 +121,7 @@ html, body {
   margin-top: 20px;
 }
 
-.navbar__links--category {
+.navbar__links--home {
   margin-bottom: 20px;
 }
 
@@ -218,7 +218,7 @@ html, body {
   .navbar__links--close {
     display: none;
   }
-  .navbar__links--category {
+  .navbar__links--home {
     margin-bottom: 0;
   }
   .navbar__links--link {

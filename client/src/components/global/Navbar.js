@@ -48,8 +48,7 @@ const Navbar = () => {
           <AiOutlineClose className='navbar__links--close' onClick={() => setIsOpenSidebar(false)} />
           <div className="clear"></div>
           <div className='navbar__links--link'>
-            <Link onClick={() => setIsOpenSidebar(false)} to='/'>Home</Link>
-            <p className='navbar__links--category'>Category</p>
+            <p className='navbar__links--home'><Link onClick={() => setIsOpenSidebar(false)} to='/'>Home</Link></p>
             {
               auth.token
               ? (
