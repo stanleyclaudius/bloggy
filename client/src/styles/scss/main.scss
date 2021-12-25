@@ -20,7 +20,9 @@
   './comment/replyInput',
   './profile/profile',
   './createBlog/createBlog',
-  './blogs/blogs';
+  './blogs/blogs',
+  './category/category',
+  './category/updateCategory';
 
 a {
   text-decoration: none;
@@ -167,5 +169,29 @@ button {
     margin-top: 5px;
     font-size: 15px;
     display: block;
+  }
+}
+
+table {
+  width: 100%;
+  color: #fff;
+
+  thead {
+    background: $secondary-color;
+
+    th {
+      padding: 6px 10px;
+    }
+  }
+
+  tbody {
+    
+    tr:nth-child(even) {
+      background: $ternary-color;
+    }
+
+    td {
+      padding: 6px 10px;
+    }
   }
 }

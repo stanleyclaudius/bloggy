@@ -44,7 +44,7 @@ const categoryCtrl = {
       const category = await Category.findOneAndUpdate({_id: req.params.id}, {name, description}, {new: true});
       res.status(200).json({
         category,
-        msg: `Category with ID ${req.params.id} has been updated.`
+        msg: `Category ${category.name} has been updated.`
       });
     } catch (err) {
       return res.status(500).json({msg: err.message});
@@ -52,8 +52,8 @@ const categoryCtrl = {
   },
   deleteCategory: async(req, res) => {
     try {
-      await Category.findOneAndDelete({_id: req.params.id});
-      res.status(200).json({msg: `Category with ID ${req.params.id} has been deleted.`});
+      const category = await Category.findOneAndDelete({_id: req.params.id});
+      res.status(200).json({msg: `Category ${category.name} has been deleted.`});
     } catch (err) {
       return res.status(500).json({msg: err.message});
     }

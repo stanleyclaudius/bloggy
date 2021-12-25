@@ -1,21 +1,10 @@
-import {
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalCloseButton,
-  ModalBody,
-  ModalFooter,
-  Button,
-  FormControl,
-  FormLabel,
-  Input
-} from '@chakra-ui/react';
 import { useState, useEffect } from 'react';
+import { AiOutlineClose } from 'react-icons/ai';
 import { useDispatch, useSelector } from 'react-redux';
-import { updateCategory } from '../../redux/actions/categoryActions';
+import { updateCategory } from './../../redux/actions/categoryActions';
+import { GLOBAL_TYPES } from './../../redux/types/globalTypes';
 
-const UpdateCategory = ({isOpen, onClose, category, setSelectedCategory}) => {
+const UpdateCategory = ({category, setCategory}) => {
   const [loading, setLoading] = useState(false);
   const [categoryData, setCategoryData] = useState({
     name: '',
@@ -26,9 +15,8 @@ const UpdateCategory = ({isOpen, onClose, category, setSelectedCategory}) => {
   const {auth} = useSelector(state => state);
   
   const handleClose = () => {
-    onClose();
-    setSelectedCategory({});
     setCategoryData({name: '', description: ''});
+    setCategory(null);
   }
 
   const handleChange = e => {
@@ -38,6 +26,15 @@ const UpdateCategory = ({isOpen, onClose, category, setSelectedCategory}) => {
 
   const handleUpdate = async e => {
     e.preventDefault();
+    if (!categoryData.name || !categoryData.description) {
+      return dispatch({
+        type: GLOBAL_TYPES.ALERT,
+        payload: {
+          errors: 'Please filled every field.'
+        }
+      });
+    }
+
     if (category.name === categoryData.name && category.description === categoryData.description) {
       handleClose();
       return;
@@ -57,42 +54,33 @@ const UpdateCategory = ({isOpen, onClose, category, setSelectedCategory}) => {
   }, [category]);
 
   return (
-    <Modal
-      isOpen={isOpen}
-      onClose={handleClose}
-    >
-      <ModalOverlay />
-      <ModalContent>
-        <ModalHeader>Update Category</ModalHeader>
-        <ModalCloseButton />
-        <ModalBody>
-          <FormControl>
-            <FormLabel>Category Name</FormLabel>
-            <Input bg='gray.700' name='name' value={categoryData.name} onChange={handleChange} />
-          </FormControl>
-          <FormControl mt='20px'>
-            <FormLabel>Category Description</FormLabel>
-            <Input bg='gray.700' name='description' value={categoryData.description} onChange={handleChange} />
-          </FormControl>
-        </ModalBody>
-        <ModalFooter>
-          <Button variant='ghost' mr='3' onClick={onClose}>
-            Close
-          </Button>
-          <Button
-            isLoading={loading ? true : false}
-            loadingText='Loading'
-            variant='solid'
-            bg='orange.400'
-            _hover={{ bg: 'orange.600' }}
-            _active={{ bg: 'orange.600' }}
-            onClick={handleUpdate}
-          >
-            Save Changes
-          </Button>
-        </ModalFooter>
-      </ModalContent>
-    </Modal>
+    <div className={`updateCategory ${category && 'active'}`}>
+      <div className={`updateCategory__box ${category && 'active'}`}>
+        <div className="updateCategory__header">
+          Edit Category
+          <AiOutlineClose onClick={handleClose} />
+        </div>
+        <div className="updateCategory__content">
+          <form onSubmit={handleUpdate}>
+            <div className="inputGroup">
+              <label htmlFor="name">Category Name</label>
+              <input type="text" name="name" id="name" value={categoryData.name} onChange={handleChange} autoComplete='off' />
+            </div>
+            <div className="inputGroup">
+              <label htmlFor="description">Category Description</label>
+              <input type="text" name="description" id="description" value={categoryData.description} onChange={handleChange} autoComplete='off' />
+            </div>
+            <button
+              type="submit"
+              disabled={loading ? true : false}
+              className={loading && 'disabled'}
+            >
+              {loading ? 'Loading ...' : 'Submit'}
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
   );
 }
 

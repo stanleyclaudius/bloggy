@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { GiHamburgerMenu } from 'react-icons/gi';
+import { MdOutlineAccountTree } from 'react-icons/md';
 import { FaSearch, FaUserAlt, FaSignOutAlt } from 'react-icons/fa';
 import { AiOutlineClose } from 'react-icons/ai';
 import { logout } from './../../redux/actions/authActions';
@@ -61,6 +62,13 @@ const Navbar = () => {
                         <FaUserAlt />
                         Profile
                       </Link>
+                      {
+                        auth.user?.role === 'admin' &&
+                        <Link to='/category' onClick={() => setIsOpenAvatar(false)}>
+                          <MdOutlineAccountTree />
+                          Category
+                        </Link>
+                      }
                       <Link to='/' onClick={handleLogout}>
                         <FaSignOutAlt />
                         logout

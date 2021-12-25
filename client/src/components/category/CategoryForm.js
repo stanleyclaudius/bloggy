@@ -1,10 +1,3 @@
-import {
-  Box,
-  FormControl,
-  FormLabel,
-  Input,
-  Button
-} from '@chakra-ui/react';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { createCategory } from './../../redux/actions/categoryActions';
@@ -33,27 +26,23 @@ const CategoryForm = () => {
   }
 
   return (
-    <Box as='form' onSubmit={handleSubmit}>
-      <FormControl>
-        <FormLabel>Category Name</FormLabel>
-        <Input bg='gray.700' name='name' value={categoryData.name} onChange={handleChange} autoComplete='off' />
-      </FormControl>
-      <FormControl mt='20px'>
-        <FormLabel>Category Description</FormLabel>
-        <Input bg='gray.700' name='description' value={categoryData.description} onChange={handleChange} autoComplete='off' />
-      </FormControl>
-      <Button
-        isLoading={loading ? true : false}
-        loadingText='Loading'
-        type='submit'
-        bg='orange.400'
-        mt='20px'
-        _hover={{ bg: 'orange.600' }}
-        _active={{ bg: 'orange.600' }}
+    <form className='categoryForm' onSubmit={handleSubmit}>
+      <div className="inputGroup">
+        <label htmlFor="name">Category Name</label>
+        <input type="text" name="name" id="name" value={categoryData.name} onChange={handleChange} autoComplete='off' />
+      </div>
+      <div className="inputGroup">
+        <label htmlFor="description">Category Description</label>
+        <input type="text" name="description" id="description" value={categoryData.description} onChange={handleChange} autoComplete='off' />
+      </div>
+      <button
+        className={loading && 'disabled'}
+        type="submit"
+        disabled={loading ? true : false}
       >
-        Submit
-      </Button>
-    </Box>
+        {loading ? 'Loading ...' : 'Submit'}
+      </button>
+    </form>
   );
 }
 

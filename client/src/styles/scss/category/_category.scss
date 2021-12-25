@@ -1,0 +1,55 @@
+.category {
+  width: 100%;
+  max-width: 500px;
+  margin-top: 30px !important;
+
+  .warning {
+    color: #fff;
+  }
+
+  &Form {
+    color: #fff;
+
+    button {
+      width: 80px;
+      height: 35px;
+      line-height: 35px;
+      background: $accent-color;
+      color: #fff;
+
+      &.disabled {
+        background: $dark-accent;
+
+        &:hover {
+          background: $dark-accent;
+        }
+      }
+
+      &:hover {
+        background: $accent-hover;
+      }
+    }
+  }
+
+  &Table {
+    margin-top: 30px;
+
+    tr td:last-child svg {
+      margin-right: 10px;
+      cursor: pointer;
+      transition: transform 200ms;
+
+      &:hover {
+        transform: scale(1.12);
+      }
+
+      &:first-child {
+        color: rgb(255, 142, 66);
+      }
+
+      &:last-child {
+        color: rgb(255, 59, 59);
+      }
+    }
+  }
+}
