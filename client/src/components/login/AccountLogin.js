@@ -1,17 +1,9 @@
-import {
-  Box,
-  FormControl,
-  FormLabel,
-  InputGroup,
-  Input,
-  InputRightElement,
-  Button
-} from '@chakra-ui/react';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { GLOBAL_TYPES } from './../../redux/types/globalTypes';
 import { login } from './../../redux/actions/authActions';
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
 
 const AccountLogin = () => {
   const [userData, setUserData] = useState({
@@ -42,40 +34,29 @@ const AccountLogin = () => {
   }
 
   return (
-    <Box width='100%' as='form' onSubmit={handleSubmit}>
-      <FormControl id='account'>
-        <FormLabel>Email or Phone number</FormLabel>
-        <Input autoComplete='off' bg='gray.700' borderColor='gray.600' name='account' value={userData.account} onChange={handleChange} />
-      </FormControl>
-      <FormControl mt='20px' id='password'>
-        <FormLabel>Password</FormLabel>
-        <InputGroup>
-          <Input type={showPassword ? 'text' : 'password'} bg='gray.700' borderColor='gray.600' name='password' value={userData.password} onChange={handleChange} />
-          <InputRightElement mr='7px'>
-            <Button
-              h='1.75rem'
-              size='sm'
-              bg='gray.600'
-              onClick={() => setShowPassword(!showPassword)}
-            >
-              {showPassword ? 'Hide' : 'Show'}
-            </Button>
-          </InputRightElement>
-        </InputGroup>
-        <Link to='/' style={{ display: 'block', marginTop: '5px', fontSize: '15px', color: '#63B3ED' }}>Forgot Password?</Link>
-      </FormControl>
-      <Button
-        isLoading={alert.loading ? true : false}
-        loadingText='Loading'
-        mt='25px'
-        bg='orange.400'
-        _hover={{ bg: 'orange.600' }}
-        _active={{ bg: 'orange.600' }}
-        type='submit'
-      >
-        Sign In
-      </Button>
-    </Box>
+    <form className='accountLogin' onSubmit={handleSubmit}>
+      <div className="inputGroup">
+        <label htmlFor="account">Email or Phone number</label>
+        <input type="text" name="account" id="account" value={userData.account} onChange={handleChange} autoComplete='off' />
+      </div>
+      <div className="inputGroup">
+        <label htmlFor="password">Password</label>
+        <div>
+          <div className="inputGroup--password">
+            <input type={showPassword ? 'text' : 'password'} name="password" id="password" value={userData.password} onChange={handleChange} />
+            {
+              showPassword
+              ? <FaEyeSlash onClick={() => setShowPassword(false)} />
+              : <FaEye onClick={() => setShowPassword(true)} />
+            }
+          </div>
+          <Link to='/' className='forgetPassword'>Forget password?</Link>
+        </div>
+      </div>
+      <button type="submit" className={`${alert.loading ? 'disabled' : ''}`} disabled={alert.loading ? true : false}>
+        {alert.loading ? 'Loading...' : 'Sign In'}
+      </button>
+    </form>
   );
 }
 

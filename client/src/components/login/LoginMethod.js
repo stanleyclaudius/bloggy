@@ -1,4 +1,3 @@
-import { Box, Button } from '@chakra-ui/react';
 import { FaSms } from 'react-icons/fa';
 import { BsKeyFill } from 'react-icons/bs';
 import { MdAccountCircle } from 'react-icons/md';
@@ -24,45 +23,36 @@ const LoginMethod = ({isSmsLogin, setIsSmsLogin}) => {
   }
 
   return (
-    <Box width='100%' mb={{ base: '40px', md: '0' }}>
-      <Box mb='25px'>
+    <div className='loginMethod'>
+      <div>
         <GoogleLogin
           client_id='186802643480-fi4c86nsgoh6fchus95e0ru1g971ejv4.apps.googleusercontent.com'
           cookiepolicy='single_host_origin'
           onSuccess={onGoogleSuccess}
         />
-      </Box>
+      </div>
 
-      <Box mb='25px'>
+      <div>
         <FacebookLogin
           appId='485087349580137'
           onSuccess={onFacebookSuccess}
         />
-      </Box>
+      </div>
 
-      <Button
-        leftIcon={isSmsLogin ? <BsKeyFill /> : <FaSms />}
-        width='100%'
-        bg='teal.600'
-        mb='25px'
-        _hover={{ bg: 'teal.700' }}
-        _active={{ bg: 'teal.700' }}
-        onClick={() => setIsSmsLogin(!isSmsLogin)}
-      >
+      <button onClick={() => setIsSmsLogin(!isSmsLogin)}>
+        {
+          isSmsLogin
+          ? <BsKeyFill />
+          : <FaSms />
+        }
         Sign in with {isSmsLogin ? 'Bloggy Account' : 'SMS'}
-      </Button>
+      </button>
 
-      <Button
-        leftIcon={<MdAccountCircle />}
-        width='100%'
-        bg='teal.600'
-        _hover={{ bg: 'teal.700' }}
-        _active={{ bg: 'teal.700' }}
-        onClick={() => navigate('/register')}
-      >
+      <button onClick={() => navigate('/register')}>
+        <MdAccountCircle />
         Register new account
-      </Button>
-    </Box>
+      </button>
+    </div>
   );
 }
 

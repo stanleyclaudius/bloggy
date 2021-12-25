@@ -79,7 +79,7 @@ html, body {
   background: #303030;
   width: 170px;
   height: 100vh;
-  z-index: 20;
+  z-index: 99;
   padding: 20px 15px;
   -webkit-transition: right 300ms;
   transition: right 300ms;
@@ -500,6 +500,171 @@ html, body {
   color: #1aaee4;
 }
 
+.login {
+  color: #fff;
+  padding-bottom: 20px;
+}
+
+.login h1 {
+  text-align: center;
+}
+
+.login__content {
+  margin-top: 25px;
+}
+
+.accountLogin {
+  margin-top: 35px;
+}
+
+.accountLogin button {
+  background: #FF8642;
+  width: 80px;
+  height: 35px;
+  line-height: 35px;
+  color: #fff;
+}
+
+.accountLogin button.disabled {
+  background: #9d562d;
+}
+
+.accountLogin button.disabled:hover {
+  background: #9d562d;
+}
+
+.accountLogin button:hover {
+  background: #d36b2e;
+}
+
+.loginMethod > * + * {
+  margin-top: 20px;
+}
+
+.loginMethod button {
+  border-radius: 0;
+  width: 100%;
+  height: 40px;
+  background: #1aaee4;
+  color: #fff;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.loginMethod button svg {
+  margin-right: 10px;
+}
+
+@media (min-width: 700px) {
+  .login {
+    padding: 0 100px 20px 100px;
+  }
+  .login h1 {
+    margin-top: 30px;
+  }
+  .login__content {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    gap: 70px;
+    margin-top: 50px;
+  }
+  .loginMethod,
+  .accountLogin {
+    -webkit-box-flex: 1;
+        -ms-flex: 1;
+            flex: 1;
+  }
+  .accountLogin {
+    margin-top: 0;
+  }
+}
+
+.verifyModal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.8);
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  padding: 0 20px;
+  opacity: 0;
+  pointer-events: none;
+  -webkit-transition: opacity 300ms;
+  transition: opacity 300ms;
+}
+
+.verifyModal.active {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.verifyModal__box {
+  width: 100%;
+  max-width: 450px;
+  background: #303030;
+  border-radius: 5px;
+  -webkit-transform: translateY(-80px);
+          transform: translateY(-80px);
+  -webkit-transition: -webkit-transform 300ms 200ms;
+  transition: -webkit-transform 300ms 200ms;
+  transition: transform 300ms 200ms;
+  transition: transform 300ms 200ms, -webkit-transform 300ms 200ms;
+}
+
+.verifyModal__box.active {
+  -webkit-transform: translateY(0);
+          transform: translateY(0);
+}
+
+.verifyModal__header {
+  border-bottom: 1px solid #595959;
+  padding: 15px 20px;
+}
+
+.verifyModal__footer {
+  padding: 20px;
+}
+
+.verifyModal__footer button {
+  background: #FF8642;
+  width: 80px;
+  height: 35px;
+  line-height: 35px;
+  color: #fff;
+}
+
+.verifyModal__footer button.disabled {
+  background: #9d562d;
+}
+
+.verifyModal__footer button.disabled:hover {
+  background: #9d562d;
+}
+
+.verifyModal__footer button:hover {
+  background: #d36b2e;
+}
+
 a {
   text-decoration: none;
   color: #fff;
@@ -557,5 +722,81 @@ button {
 .container {
   width: 88%;
   margin: auto;
+}
+
+.inputGroup {
+  margin-bottom: 20px;
+}
+
+.inputGroup input {
+  width: 100%;
+  border-radius: 6px;
+  height: 40px;
+  background: #5B5B5B;
+  border: none;
+  outline: none;
+  margin-top: 10px;
+  text-indent: 10px;
+  color: #fff;
+}
+
+.inputGroup input:focus {
+  outline: 2px solid #1aaee4;
+  outline-offset: -2px;
+}
+
+.inputGroup--phone {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.inputGroup--phone div {
+  background: #7e7e7e;
+  border-top-left-radius: 6px;
+  border-bottom-left-radius: 6px;
+  margin-top: 10px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  padding: 0 15px;
+}
+
+.inputGroup--phone input {
+  border-top-right-radius: 6px;
+  border-bottom-right-radius: 6px;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.inputGroup--password {
+  position: relative;
+}
+
+.inputGroup--password input {
+  padding-right: 35px;
+}
+
+.inputGroup--password svg {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  -webkit-transform: translateY(-3px);
+          transform: translateY(-3px);
+  color: #7e7e7e;
+  cursor: pointer;
+}
+
+.inputGroup .forgetPassword {
+  color: #1aaee4;
+  margin-top: 5px;
+  font-size: 15px;
+  display: block;
 }
 /*# sourceMappingURL=main.css.map */

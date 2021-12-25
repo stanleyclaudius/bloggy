@@ -7,7 +7,9 @@
   './home/header',
   './home/filter',
   './home/tag',
-  './home/articleCard';
+  './home/articleCard',
+  './login/login',
+  './login/verifyModal';
 
 a {
   text-decoration: none;
@@ -63,4 +65,71 @@ button {
 .container {
   width: 88%;
   margin: auto;
+}
+
+.inputGroup {
+  margin-bottom: 20px;
+
+  input {
+    width: 100%;
+    border-radius: 6px;
+    height: 40px;
+    background: $secondary-color;
+    border: none;
+    outline: none;
+    margin-top: 10px;
+    text-indent: 10px;
+    color: #fff;
+
+    &:focus {
+      outline: 2px solid $light-blue;
+      outline-offset: -2px;
+    }
+  }
+
+  &--phone {
+    display: flex;
+
+    div {
+      background: $ternary-color;
+      border-top-left-radius: 6px;
+      border-bottom-left-radius: 6px;
+      margin-top: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 15px;
+    }
+
+    input {
+      border-top-right-radius: 6px;
+      border-bottom-right-radius: 6px;
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
+    }
+  }
+
+  &--password {
+    position: relative;
+
+    input {
+      padding-right: 35px;
+    }
+
+    svg {
+      position: absolute;
+      top: 50%;
+      right: 10px;
+      transform: translateY(-3px);
+      color: $ternary-color;
+      cursor: pointer;
+    }
+  }
+
+  .forgetPassword {
+    color: $light-blue;
+    margin-top: 5px;
+    font-size: 15px;
+    display: block;
+  }
 }

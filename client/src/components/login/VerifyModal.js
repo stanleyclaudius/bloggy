@@ -1,21 +1,8 @@
-import {
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalBody,
-  ModalFooter,
-  ModalCloseButton,
-  FormControl,
-  FormLabel,
-  Input,
-  Button
-} from '@chakra-ui/react';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { verifyOtp } from './../../redux/actions/authActions';
 
-const VerifyModal = ({isOpen, onClose, phone}) => {
+const VerifyModal = ({isOpenModal, phone}) => {
   const [pin, setPin] = useState('');
   const [loading, setLoading] = useState(false);
   
@@ -29,32 +16,24 @@ const VerifyModal = ({isOpen, onClose, phone}) => {
   }
   
   return (
-    <Modal isOpen={isOpen} onClose={onClose}>
-      <ModalOverlay>
-        <ModalContent>
-          <ModalHeader>OTP Verification</ModalHeader>
-          <ModalCloseButton />
-          <ModalBody>
-            <FormControl>
-              <FormLabel>OTP Code</FormLabel>
-              <Input value={pin} onChange={e => setPin(e.target.value)} />
-            </FormControl>
-          </ModalBody>
-          <ModalFooter>
-            <Button
-              isLoading={loading ? true : false}
-              loadingText='Loading'
-              bg='orange.400'
-              _hover={{ bg: 'orange.600' }}
-              _active={{ bg: 'orange.600' }}
-              onClick={handleSubmit}
-            >
-              Verify
-            </Button>
-          </ModalFooter>
-        </ModalContent>
-      </ModalOverlay>
-    </Modal>
+    <div className={`verifyModal ${isOpenModal ? 'active' : ''}`}>
+      <div className={`verifyModal__box ${isOpenModal ? 'active' : ''}`}>
+        <div className="verifyModal__header">
+          <h2>OTP Verification</h2>
+        </div>
+        <div className="verifyModal__footer">
+          <form onSubmit={handleSubmit}>
+            <div className="inputGroup">
+              <label htmlFor="pin">OTP Code</label>
+              <input type="text" name="pin" id="pin" value={pin} onChange={e => setPin(e.target.value)} />
+            </div>
+            <button className={`${loading ? 'disabled' : ''}`} disabled={loading ? true : false} type="submit">
+              {loading ? 'Loading ...' : 'Submit'}
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
   );
 }
 
