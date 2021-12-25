@@ -435,6 +435,15 @@ html, body {
   padding: 15px;
   color: #fff;
   gap: 20px;
+  -webkit-transition: -webkit-transform 200ms;
+  transition: -webkit-transform 200ms;
+  transition: transform 200ms;
+  transition: transform 200ms, -webkit-transform 200ms;
+}
+
+.article:hover {
+  -webkit-transform: scale(1.02);
+          transform: scale(1.02);
 }
 
 .article:not(:last-child) {
@@ -1326,6 +1335,17 @@ html, body {
   .createBlog .ql-toolbar.ql-snow + .ql-container.ql-snow {
     height: 350px;
   }
+}
+
+.blogsByCategory {
+  margin-top: 30px !important;
+  padding-bottom: 20px;
+}
+
+.blogsByCategory__title {
+  text-align: center;
+  color: #fff;
+  margin-bottom: 25px;
 }
 
 a {

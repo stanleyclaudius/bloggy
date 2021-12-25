@@ -5,6 +5,11 @@
   padding: 15px;
   color: #fff;
   gap: 20px;
+  transition: transform 200ms;
+
+  &:hover {
+    transform: scale(1.02);
+  }
 
   &:not(:last-child) {
     margin-bottom: 30px;

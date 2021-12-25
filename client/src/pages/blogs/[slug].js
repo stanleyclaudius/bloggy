@@ -1,10 +1,10 @@
-import { Box, Heading, Divider, Center, Spinner } from '@chakra-ui/react';
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { getCategoryBlogs } from './../../redux/actions/blogActions';
 import Article from './../../components/global/Article';
 import Pagination from './../../components/global/Pagination';
+import Spinner from './../../components/global/Spinner';
 
 const BlogsCategory = () => {
   const [categoryId, setCategoryId] = useState('');
@@ -29,16 +29,13 @@ const BlogsCategory = () => {
   }, [dispatch, categoryId]);
 
   return (
-    <Box p={{ base: '20px 35px', md: '20px 100px' }}>
-      <Heading textAlign='center' mb='5' size='lg'>{slug} Articles</Heading>
-      <Divider bg='white' mb='6' />
-      <Box>
+    <div className='blogsByCategory container'>
+      <h1 className='blogsByCategory__title'>{slug} Articles</h1>
+      <div>
         {
           alert.loading
           ? (
-            <Center>
-              <Spinner size='xl' />
-            </Center>
+            <Spinner />
           )
           : (
             <>
@@ -59,12 +56,16 @@ const BlogsCategory = () => {
             </>
           )
         }
-      </Box>
-      <Pagination
-        page={categoryBlog.totalPage}
-        callback={handlePagination}
-      />
-    </Box>
+      </div>
+
+      {
+        categoryBlog.totalPage > 1 &&
+        <Pagination
+          page={categoryBlog.totalPage}
+          callback={handlePagination}
+        />
+      }
+    </div>
   );
 }
 

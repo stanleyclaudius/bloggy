@@ -35,8 +35,16 @@ const Article = ({id, category, title, description, author, date, image, isProfi
         </Link>
         <p className='article__description'>
           {
-            description.length > 90
-            ? description.slice(0, 90) + ' ...'
+            isProfile
+            ? (
+              <>
+                {
+                  description.length > 90
+                  ? description.slice(0, 90) + ' ...'
+                  : description
+                }
+              </>
+            )
             : description
           }
         </p>
