@@ -1,4 +1,3 @@
-import { Box } from '@chakra-ui/react';
 import { useEffect, useRef, useCallback } from 'react';
 import { uploadImage } from './../../utils/imageHandler';
 import ReactQuill from 'react-quill';
@@ -55,7 +54,7 @@ const Quill = ({body, setBody}) => {
   }, [handleChangeImage]);
 
   return (
-    <Box>
+    <div>
       <ReactQuill
         theme='snow'
         modules={modules}
@@ -64,7 +63,7 @@ const Quill = ({body, setBody}) => {
         value={body}
         onChange={e => setBody(e)}
       />
-    </Box>
+    </div>
   );
 }
 

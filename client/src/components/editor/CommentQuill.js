@@ -1,4 +1,3 @@
-import { Box } from '@chakra-ui/react';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 
@@ -14,14 +13,14 @@ const CommentQuill = ({body, setBody}) => {
   const modules = {toolbar: {container}};
 
   return (
-    <Box>
+    <div>
       <ReactQuill
         theme='snow'
         modules={modules}
         onChange={e => setBody(e)}
         value={body}
       />
-    </Box>
+    </div>
   );
 }
 
