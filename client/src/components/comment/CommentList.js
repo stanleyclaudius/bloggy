@@ -1,4 +1,3 @@
-import { Box, Button, Text, Flex, IconButton, HStack } from "@chakra-ui/react";
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { FaEdit, FaTrash } from 'react-icons/fa';
@@ -40,32 +39,20 @@ const CommentList = ({comment, showReply, setShowReply, children}) => {
   const additionalMenu = id => {
     return (
       <>
-        <IconButton
-          onClick={() => handleDelete(id)}
-          bg='red.400'
-          aria-label='Delete Comment'
-          icon={<FaTrash />}
-          _hover={{ bg: 'red.600' }}
-          _active={{ bg: 'red.600' }}
-          isRound
-        />
+        <button className='commentList__delete' onClick={() => handleDelete(id)}>
+          <FaTrash />
+        </button>
 
-        <IconButton
-          onClick={() => setEdit(comment)}
-          bg='orange.400'
-          aria-label='Edit Comment'
-          icon={<FaEdit />}
-          _hover={{ bg: 'orange.600' }}
-          _active={{ bg: 'orange.600' }}
-          isRound
-        />
+        <button className='commentList__edit' onClick={() => setEdit(comment)}>
+          <FaEdit />
+        </button>
       </>
     );
   }
 
   return (
-    <Box width='100%'>
-      <Box border='1px' borderColor='gray.500' borderRadius='7px' width='100%' padding='15px'>
+    <div className='commentList'>
+      <div>
         {
           edit
           ? (
@@ -76,54 +63,46 @@ const CommentList = ({comment, showReply, setShowReply, children}) => {
             />
           )
           : (
-            <>
-              <Text dangerouslySetInnerHTML={{ __html: comment.content }} />
-              <Flex mt='20px' justifyContent='space-between' alignItems='center'>
-                <HStack>
+            <div className='commentList__content'>
+              <div dangerouslySetInnerHTML={{ __html: comment.content }} />
+              <div className='commentList__utilBtn'>
+                <div>
                   {
                     comment.blog_user_id === auth.user?._id
                     ? comment.user._id === auth.user?._id
                       ? additionalMenu(comment._id)
                       : (
-                        <IconButton
-                          onClick={() => handleDelete(comment._id)}
-                          bg='red.400'
-                          aria-label='Delete Comment'
-                          icon={<FaTrash />}
-                          _hover={{ bg: 'red.600' }}
-                          _active={{ bg: 'red.600' }}
-                          isRound
-                        />
+                        <button className='commentList__delete' onClick={() => handleDelete(comment._id)}>
+                          <FaTrash />
+                        </button>
                       )
                     : comment.user._id === auth.user?._id && additionalMenu(comment._id)
                   }
-                  <Button
-                    size='sm'
-                    bg='orange.400'
-                    _hover={{ bg: 'orange.600' }}
-                    _active={{ bg: 'orange.600' }}
-                    onClick={() => setOnReply(!onReply)}
-                  >
-                    Reply
-                  </Button>
-                </HStack>
-                <Text fontSize='14px'>{new Date(comment.createdAt).toLocaleString()}</Text>
-              </Flex>
-            </>
+
+                  {
+                    auth.token && 
+                    <button onClick={() => setOnReply(!onReply)}>
+                      Reply
+                    </button>
+                  }
+                </div>
+                <p>{new Date(comment.createdAt).toLocaleString()}</p>
+              </div>
+            </div>
           )
         }
-      </Box>
+      </div>
 
       {
         onReply && (
-          <Box mt='5'>
+          <div mt='5'>
             <ReplyInput callback={handleReply} />
-          </Box>
+          </div>
         )
       }
 
       {children}
-    </Box>
+    </div>
   );
 }
 

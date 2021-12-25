@@ -1,4 +1,3 @@
-import { Box, Text, Flex, Button } from '@chakra-ui/react';
 import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { GLOBAL_TYPES } from './../../redux/types/globalTypes';
@@ -32,28 +31,20 @@ const ReplyInput = ({callback, edit, setEdit}) => {
   }, [edit]);
 
   return (
-    <Box mb='10'>
+    <div style={{ marginBottom: `${!edit && '40px'}` }} className='replyInput'>
       <CommentQuill body={body} setBody={setBody} />
-      <Flex justifyContent={`${edit ? 'space-between' : 'flex-end'}`} alignItems='center' mt='4'>
+      <div className='replyInput__utilBtn'>
         {
           edit &&
-          <Text
-            onClick={() => setEdit('')}
-            cursor='pointer'
-          >
+          <p style={{ cursor: 'pointer' }} onClick={() => setEdit('')}>
             Cancel
-          </Text>
+          </p>
         }
-        <Button
-          bg='orange.400'
-          _hover={{ bg: 'orange.600' }}
-          _active={{ bg: 'orange.600' }}
-          onClick={handleSubmit}
-        >
+        <button onClick={handleSubmit}>
           Comment
-        </Button>
-      </Flex>
-    </Box>
+        </button>
+      </div>
+    </div>
   );
 }
 

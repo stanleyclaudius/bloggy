@@ -17,6 +17,7 @@ html, body {
   position: -webkit-sticky;
   position: sticky;
   top: 0;
+  z-index: 99;
   background: #303030;
 }
 
@@ -702,6 +703,192 @@ html, body {
 }
 
 .register button:hover {
+  background: #d36b2e;
+}
+
+.blogDetail {
+  color: #fff;
+  padding: 20px 0;
+}
+
+.blogDetail h1 {
+  text-align: center;
+}
+
+.blogDetail__info {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+  margin: 20px 0;
+}
+
+.blogDetail__info p a {
+  color: #1aaee4;
+}
+
+.blogDetail__info > * + * {
+  margin-left: 30px;
+}
+
+.blogDetail__comment {
+  margin-top: 30px;
+}
+
+.blogDetail__comment h2 {
+  margin-bottom: 30px;
+}
+
+.comment {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+  gap: 30px;
+}
+
+.comment .avatar {
+  cursor: pointer;
+  -webkit-transition: -webkit-transform 200ms;
+  transition: -webkit-transform 200ms;
+  transition: transform 200ms;
+  transition: transform 200ms, -webkit-transform 200ms;
+}
+
+.comment .avatar:hover {
+  -webkit-transform: scale(1.1);
+          transform: scale(1.1);
+}
+
+.commentList {
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  margin-bottom: 20px;
+}
+
+.commentList .ql-toolbar {
+  background: #fff;
+}
+
+.commentList .ql-toolbar.ql-snow + .ql-container.ql-snow {
+  height: 100px !important;
+}
+
+.commentList__content {
+  border: 1px solid #5B5B5B;
+  border-radius: 5px;
+  padding: 15px;
+}
+
+.commentList__utilBtn {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  margin-top: 25px;
+}
+
+.commentList__utilBtn button {
+  background: #FF8642;
+  color: #fff;
+  width: 50px;
+  height: 25px;
+  line-height: 25px;
+  font-size: 14px;
+}
+
+.commentList__utilBtn button:hover {
+  background: #d36b2e;
+}
+
+.commentList__utilBtn div {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  gap: 10px;
+}
+
+.commentList__delete {
+  background: #ff3b3b !important;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  width: -webkit-fit-content !important;
+  width: -moz-fit-content !important;
+  width: fit-content !important;
+  padding: 0 10px;
+}
+
+.commentList__edit {
+  background: #2a8cf5 !important;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  width: -webkit-fit-content !important;
+  width: -moz-fit-content !important;
+  width: fit-content !important;
+  padding: 0 10px;
+}
+
+.replyInput .ql-toolbar {
+  background: #fff;
+}
+
+.replyInput .ql-toolbar.ql-snow + .ql-container.ql-snow {
+  height: 150px;
+}
+
+.replyInput__utilBtn {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.replyInput__utilBtn button {
+  background: #FF8642;
+  color: #fff;
+  width: 80px;
+  height: 30px;
+  line-height: 30px;
+}
+
+.replyInput__utilBtn button:hover {
   background: #d36b2e;
 }
 

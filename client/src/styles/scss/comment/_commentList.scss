@@ -1,0 +1,62 @@
+.commentList {
+  flex: 1;
+  margin-bottom: 20px;
+
+  .ql-toolbar {
+    background: #fff;
+  }
+
+  .ql-toolbar.ql-snow + .ql-container.ql-snow {
+    height: 100px !important;
+  }
+
+  &__content {
+    border: 1px solid $secondary-color;
+    border-radius: 5px;
+    padding: 15px;
+  }
+
+  &__utilBtn {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 25px;
+
+    button {
+      background: $accent-color;
+      color: #fff;
+      width: 50px;
+      height: 25px;
+      line-height: 25px;
+      font-size: 14px;
+
+      &:hover {
+        background: $accent-hover;
+      }
+    }
+
+    div {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+  }
+
+  &__delete {
+    background: rgb(255, 59, 59) !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: fit-content !important;
+    padding: 0 10px;
+  }
+
+  &__edit {
+    background: rgb(42, 140, 245) !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: fit-content !important;
+    padding: 0 10px;
+  }
+}

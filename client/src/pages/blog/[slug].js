@@ -1,12 +1,3 @@
-import {
-  Box,
-  Heading,
-  Divider,
-  Text,
-  HStack,
-  Center,
-  Spinner
-} from '@chakra-ui/react';
 import { useState, useEffect, useCallback } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
@@ -15,6 +6,7 @@ import { createComment, getComments } from './../../redux/actions/commentActions
 import Comment from './../../components/comment/Comment';
 import ReplyInput from './../../components/comment/ReplyInput';
 import Pagination from './../../components/global/Pagination';
+import Spinner from './../../components/global/Spinner';
 
 const BlogDetail = () => {
   const [loading, setLoading] = useState(false);
@@ -70,34 +62,24 @@ const BlogDetail = () => {
       {
         alert.loading
         ? (
-          <Center>
-            <Spinner size='xl' />
-          </Center>
+          <Spinner />
         )
         : (
-          <Box p={{ base: '40px 35px', md: '40px 100px' }}>
-            <Heading size='lg' textAlign='center'>{blogDetail.title}</Heading>
-            <Divider m='20px 0 10px 0' bg='white' />
-            <HStack spacing='20px' justifyContent='flex-end' fontStyle='italic' mb='20px'>
-              <Text>By <Link to={`/profile/${blogDetail.user?._id}`} style={{ color: '#63B3ED' }}>{blogDetail.user?.name}</Link></Text>
-              <Text>{new Date(blogDetail.createdAt).toLocaleString()}</Text>
-            </HStack>
-            <Box
-              as='div'
-              dangerouslySetInnerHTML={{ __html: blogDetail.content }}
-            >
-            </Box>
-            <Box mt='30px'>
-              <Heading fontSize='25px'>Comments</Heading>
-              <Divider bg='white' m='20px 0' />
+          <div className='blogDetail container'>
+            <h1>{blogDetail.title}</h1>
+            <div className='blogDetail__info'>
+              <p>By: <Link to={`/profile/${blogDetail.user?._id}`}>{blogDetail.user?.name}</Link></p>
+              <p>{new Date(blogDetail.createdAt).toLocaleString()}</p>
+            </div>
+            <div dangerouslySetInnerHTML={{ __html: blogDetail.content }} />
+            <div className='blogDetail__comment'>
+              <h2>Comments</h2>
               {auth.token && <ReplyInput callback={handleSubmit} />}
 
               {
                 loading
                 ? (
-                  <Center>
-                    <Spinner size='xl' />
-                  </Center>
+                  <Spinner />
                 )
                 : (
                   <>
@@ -117,8 +99,8 @@ const BlogDetail = () => {
                   callback={handlePagination}
                 />
               }
-            </Box>
-          </Box>
+            </div>
+          </div>
         )
       }
     </>

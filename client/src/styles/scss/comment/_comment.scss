@@ -1,0 +1,14 @@
+.comment {
+  display: flex;
+  align-items: flex-start;
+  gap: 30px;
+
+  .avatar {
+    cursor: pointer;
+    transition: transform 200ms;
+
+    &:hover {
+      transform: scale(1.1);
+    }
+  }
+}
