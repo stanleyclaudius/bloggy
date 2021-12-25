@@ -15,8 +15,8 @@ const ArticleCard = ({id, title, description, author, date, image}) => {
         <div className="articleCard__description">
           <p>
             {
-              description.length > 80
-              ? description.slice(0, 80) + ' ...'
+              description.length > 70
+              ? description.slice(0, 70) + ' ...'
               : description
             }
           </p>
