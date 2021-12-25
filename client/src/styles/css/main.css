@@ -904,6 +904,16 @@ html, body {
   margin-bottom: 30px;
 }
 
+.blogDetail__loginLink {
+  margin-bottom: 30px;
+  margin-top: -20px;
+}
+
+.blogDetail__loginLink a {
+  color: #1aaee4;
+  text-decoration: underline;
+}
+
 .comment {
   display: -webkit-box;
   display: -ms-flexbox;

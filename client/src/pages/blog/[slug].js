@@ -74,7 +74,13 @@ const BlogDetail = () => {
             <div dangerouslySetInnerHTML={{ __html: blogDetail.content }} />
             <div className='blogDetail__comment'>
               <h2>Comments</h2>
-              {auth.token && <ReplyInput callback={handleSubmit} />}
+              {
+                auth.token
+                ? <ReplyInput callback={handleSubmit} />
+                : (
+                  <p className='blogDetail__loginLink'><Link to={`/login?blog=${blogDetail._id}`}>Login</Link> to post your comment.</p>
+                )
+              }
 
               {
                 loading

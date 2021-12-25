@@ -6,6 +6,7 @@ import AccountLogin from './../components/login/AccountLogin';
 import SmsLogin from './../components/login/SmsLogin';
 
 const Login = () => {
+  const queryParams = new URLSearchParams(window.location.search);
   const [isSmsLogin, setIsSmsLogin] = useState(false);
 
   const navigate = useNavigate();
@@ -13,7 +14,11 @@ const Login = () => {
 
   useEffect(() => {
     if (auth.token) {
-      navigate('/');
+      if (queryParams.get('blog')) {
+        navigate(`/blog/${queryParams.get('blog')}`);
+      } else {
+        navigate('/');
+      }
     }
   }, [auth.token, navigate]);
 

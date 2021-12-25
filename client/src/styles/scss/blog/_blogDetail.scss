@@ -28,4 +28,14 @@
       margin-bottom: 30px;
     }
   }
+
+  &__loginLink {
+    margin-bottom: 30px;
+    margin-top: -20px;
+
+    a {
+      color: $light-blue;
+      text-decoration: underline;
+    }
+  }
 }
