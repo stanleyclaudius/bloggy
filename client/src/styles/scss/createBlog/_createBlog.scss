@@ -1,0 +1,81 @@
+.createBlog {
+  margin-top: 20px !important;
+  color: #fff;
+  padding-bottom: 30px;
+
+  &__avatar {
+    display: flex;
+    gap: 30px;
+
+    img {
+      width: 150px;
+      height: 150px;
+      border-radius: 5px;
+      object-fit: cover;
+      margin-bottom: 20px;
+    }
+
+    .inputGroup {
+      flex: 1;
+    }
+  }
+
+  &__right {
+    margin-top: 30px;
+    
+    label {
+      display: block;
+      margin-bottom: 15px;
+    }
+
+    .ql-toolbar {
+      background: #fff;
+    }
+  
+    .ql-toolbar.ql-snow + .ql-container.ql-snow {
+      height: 400px;
+    }
+  }
+
+  .createBlog__submit {
+    background: $accent-color;
+    color: #fff;
+    width: 80px;
+    height: 35px;
+    line-height: 35px;
+    margin-top: 30px;
+    float: right;
+
+    &.disabled {
+      background: $dark-accent;
+
+      &:hover {
+        background: $dark-accent;
+      }
+    }
+
+    &:hover {
+      background: $accent-hover;
+    }
+  }
+}
+
+@include mediaDesktop {
+  .createBlog {
+    display: flex;
+    gap: 50px;
+
+    &__left,
+    &__right {
+      flex: 1;
+    }
+
+    &__right {
+      margin-top: 0;
+    }
+
+    .ql-toolbar.ql-snow + .ql-container.ql-snow {
+      height: 350px;
+    }
+  }
+}

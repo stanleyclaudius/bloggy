@@ -1,14 +1,3 @@
-import {
-  Grid,
-  Box,
-  Input,
-  FormControl,
-  FormLabel,
-  Image,
-  Select,
-  Textarea,
-  Button
-} from '@chakra-ui/react';
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
@@ -52,7 +41,9 @@ const CreateBlog = ({id}) => {
     setBlogData({...blogData, thumbnail: file});
   }
 
-  const handleSubmit = async() => {
+  const handleSubmit = async e => {
+    e.preventDefault();
+    
     if (!blogData.title || !blogData.description || !body || !blogData.thumbnail || !blogData.category) {
       return dispatch({
         type: GLOBAL_TYPES.ALERT,
@@ -131,103 +122,62 @@ const CreateBlog = ({id}) => {
   }, [id]);
 
   return (
-    <Box p={{ base: '30px 35px', md: '30px 100px' }}>
-      <Grid
-        templateColumns="repeat(auto-fit, minmax(400px, 1fr))"
-        gap="10"
-      >
-        <Box>
-          <FormControl>
-            <FormLabel>Thumbnail</FormLabel>
-            <Box
-              justifyContent='space-between'
-              d='flex'
-            >
-              {
-                (thumbnailPreview || id) && 
-                <Box
-                  w='250px'
-                  h='120px'
-                  borderRadius='5px'
-                  border='1px'
-                  borderColor='gray.700'
-                  mr='20px'
-                >
-                  <Image
-                    src={
-                      id
-                      ? thumbnailPreview
-                        ? URL.createObjectURL(thumbnailPreview)
-                        : blogData.thumbnail
-                      : thumbnailPreview
-                        ? URL.createObjectURL(thumbnailPreview)
-                        : ''
-                    }
-                    alt={`Bloggy - ${blogData.title}`}
-                    w='100%'
-                    h='100%'
-                    objectFit='cover'
-                    borderRadius='5px'
-                  />
-                </Box>
+    <form className='createBlog container' onSubmit={handleSubmit}>
+      <div className='createBlog__left'>
+        <div className='createBlog__avatar'>
+          {
+            (thumbnailPreview || id) &&
+            <img
+              src={
+                id
+                ? thumbnailPreview
+                  ? URL.createObjectURL(thumbnailPreview)
+                  : blogData.thumbnail
+                : thumbnailPreview
+                  ? URL.createObjectURL(thumbnailPreview)
+                  : ''
               }
-              <Input 
-                type='file'
-                accept='image/*'
-                onChange={handleChangeImage}
-              />
-            </Box>
-          </FormControl>
-          <FormControl mt='5'>
-            <FormLabel>Title</FormLabel>
-            <Input
-              type='text'
-              name='title'
-              value={blogData.title}
-              onChange={handleChange}
+              alt={`Bloggy - ${blogData.title}`}
             />
-          </FormControl>
-          <FormControl mt='5'>
-            <FormLabel>Description</FormLabel>
-            <Textarea
-              name='description'
-              value={blogData.description}
-              onChange={handleChange}
-              resize='none'
-            />
-          </FormControl>
-          <FormControl mt='5'>
-            <FormLabel>Category</FormLabel>
-            <Select name='category' value={blogData.category} onChange={handleChange}>
-              <option value="">- Select Category -</option>
-              {
-                category.map(item => (
-                  <option key={item._id} value={item._id}>{item.name}</option>
-                ))
-              }
-            </Select>
-          </FormControl>
-        </Box>
-        <Box>
-          <FormControl>
-            <FormLabel>Content</FormLabel>
-            <ReactQuill body={body} setBody={setBody} />
-          </FormControl>
-        </Box>
-      </Grid>
-      <Box textAlign='right' mt='7'>
-        <Button
-          isLoading={alert.loading ? true : false}
-          loadingText='Loading'
-          onClick={handleSubmit}
-          bg='orange.400'
-          _hover={{ bg: 'orange.600' }}
-          _active={{ bg: 'orange.600' }}
+          }
+          <div className="inputGroup">
+            <label htmlFor="thumbnail">Thumbnail</label>
+            <input type="file" name='thumbnail' id='thumbnail' onChange={handleChangeImage} accept="image/*" />
+          </div>
+        </div>
+        <div className="inputGroup">
+          <label htmlFor="title">Title</label>
+          <input type="text" name="title" id="title" value={blogData.title} onChange={handleChange} />
+        </div>
+        <div className="inputGroup">
+          <label htmlFor="description">Description</label>
+          <textarea name="description" id="description" value={blogData.description} onChange={handleChange} />
+        </div>
+        <div className="inputGroup">
+          <label htmlFor="category">Category</label>
+          <select name="category" id="category" value={blogData.category} onChange={handleChange}>
+            <option value="">- Select Category -</option>
+            {
+              category.map(item => (
+                <option value={item._id}>{item.name}</option>
+              ))
+            }
+          </select>
+        </div>
+      </div>
+      <div className='createBlog__right'>
+        <label htmlFor="content">Content</label>
+        <ReactQuill body={body} setBody={setBody} />
+        <button
+          disabled={alert.loading ? true : false}
+          className={`createBlog__submit ${alert.loading && 'disabled'}`}
+          type="submit"
         >
-          {id ? 'Update' : 'Submit'}
-        </Button>
-      </Box>
-    </Box>
+          {alert.loading ? 'Loading ...' : 'Submit'}
+        </button>
+        <div className="clear"></div>
+      </div>
+    </form>
   );
 }
 

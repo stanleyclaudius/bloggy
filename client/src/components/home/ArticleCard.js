@@ -9,7 +9,7 @@ const ArticleCard = ({id, title, description, author, date, image}) => {
       <div className='articleCard__body'>
         <div className="articleCard__title">
           <Link to={`/blog/${id}`}>
-            <h3>{title}</h3>
+            <h3>{title.length > 17 ? title.slice(0, 17) + ' ...' : title}</h3>
           </Link>
         </div>
         <div className="articleCard__description">

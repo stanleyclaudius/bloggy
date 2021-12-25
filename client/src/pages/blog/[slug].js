@@ -66,7 +66,7 @@ const BlogDetail = () => {
         )
         : (
           <div className='blogDetail container'>
-            <h1>{blogDetail.title}</h1>
+            <h1 className='blogDetail__title'>{blogDetail.title}</h1>
             <div className='blogDetail__info'>
               <p>By: <Link to={`/profile/${blogDetail.user?._id}`}>{blogDetail.user?.name}</Link></p>
               <p>{new Date(blogDetail.createdAt).toLocaleString()}</p>
