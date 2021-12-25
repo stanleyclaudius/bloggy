@@ -1,4 +1,3 @@
-import { Button, HStack, Flex } from '@chakra-ui/react';
 import { useState } from 'react';
 
 const Pagination = ({page, callback}) => {
@@ -10,17 +9,25 @@ const Pagination = ({page, callback}) => {
   }
 
   return (
-    <HStack>
-      <Button onClick={() => handlePagination(currPage - 1)}>&lt;</Button>
-      <Flex>
+    <div className='pagination'>
+      {
+        currPage > 1 &&
+        <button onClick={() => handlePagination(currPage - 1)}>&lt;</button>
+      }
+      
+      <div>
         {
           [...Array(page)].map((_, i) => (
-            <Button key={i} bg={currPage === i + 1 && 'orange.400'} onClick={() => handlePagination(i+1)}>{i+1}</Button>
+            <button key={i} className={currPage === i + 1 && 'active'} onClick={() => handlePagination(i+1)}>{i+1}</button>
           ))
         }
-      </Flex>
-      <Button onClick={() => handlePagination(currPage + 1)}>&gt;</Button>
-    </HStack>
+      </div>
+
+      {
+        currPage !== page &&
+        <button onClick={() => handlePagination(currPage + 1)}>&gt;</button>
+      }
+    </div>
   );
 }
 

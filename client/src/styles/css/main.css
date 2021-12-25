@@ -275,6 +275,54 @@ html, body {
   text-align: center;
 }
 
+.pagination {
+  background: #5B5B5B;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  border-radius: 5px;
+  -webkit-box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+          box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+  margin-top: 10px;
+}
+
+.pagination div button {
+  border-right: 1px solid #7c7c7c;
+  padding: 10px 20px;
+}
+
+.pagination button {
+  background: transparent;
+  padding: 10px 15px;
+  color: #fff;
+  border-radius: 0;
+}
+
+.pagination button.active {
+  background: #FF8642;
+}
+
+.pagination button:not(:last-child) {
+  border-right: 1px solid #7c7c7c;
+}
+
+.pagination button:first-child {
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+
+.pagination button:last-child {
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+
+.pagination button:hover {
+  background: #FF8642;
+}
+
 .home {
   margin: 30px 0;
 }
