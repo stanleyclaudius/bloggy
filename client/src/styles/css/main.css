@@ -665,6 +665,46 @@ html, body {
   background: #d36b2e;
 }
 
+.register {
+  width: 100%;
+  padding: 0 20px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  color: #fff;
+}
+
+.register h1 {
+  margin: 20px 0 30px 0;
+}
+
+.register button {
+  background: #FF8642;
+  color: #fff;
+  width: 80px;
+  height: 35px;
+  line-height: 35px;
+}
+
+.register button.disabled {
+  background: #9d562d;
+}
+
+.register button.disabled:hover {
+  background: #9d562d;
+}
+
+.register button:hover {
+  background: #d36b2e;
+}
+
 a {
   text-decoration: none;
   color: #fff;
