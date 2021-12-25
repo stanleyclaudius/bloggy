@@ -16,7 +16,6 @@ import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AiFillEdit, AiFillDelete } from 'react-icons/ai';
 import { getCategory } from './../../redux/actions/categoryActions';
-import AlertWarning from './../global/AlertWarning';
 import UpdateCategory from './UpdateCategory';
 
 const CategoryTable = () => {
@@ -95,7 +94,6 @@ const CategoryTable = () => {
           </Table>
         )
       }
-      <AlertWarning onDelete={onDelete} setOnDelete={setOnDelete} category={selectedCategory} setSelectedCategory={setSelectedCategory} />
       <UpdateCategory isOpen={isOpen} onClose={onClose} category={selectedCategory} setSelectedCategory={setSelectedCategory} />
     </Box>
   );

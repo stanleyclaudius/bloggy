@@ -6,6 +6,7 @@ import { createBlog, updateBlog } from './../redux/actions/blogActions';
 import { GLOBAL_TYPES } from './../redux/types/globalTypes';
 import { isContentChange } from './../utils/validator';
 import ReactQuill from './../components/editor/ReactQuill';
+import NotFound from './../components/global/NotFound';
 
 const CreateBlog = ({id}) => {
   const [blogData, setBlogData] = useState({
@@ -121,6 +122,7 @@ const CreateBlog = ({id}) => {
     fetchBlogData();
   }, [id]);
 
+  if (!auth.token) return <NotFound />
   return (
     <form className='createBlog container' onSubmit={handleSubmit}>
       <div className='createBlog__left'>

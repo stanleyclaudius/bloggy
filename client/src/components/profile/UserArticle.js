@@ -35,6 +35,7 @@ const UserArticle = ({id}) => {
                   category={blog.category.name}
                   title={blog.title}
                   author={blog.user}
+                  description={blog.description}
                   date={new Date(blog.createdAt).toLocaleDateString()}
                   image={blog.thumbnail}
                   isProfile={true}
