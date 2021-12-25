@@ -1062,6 +1062,88 @@ html, body {
   background: #d36b2e;
 }
 
+.profile {
+  margin-top: 20px !important;
+}
+
+.userProfile {
+  color: #fff;
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  border: 1px solid #ccc;
+  padding: 15px;
+  border-radius: 5px;
+}
+
+.userProfile .avatar {
+  width: 80px;
+  height: 80px;
+  outline: none;
+  -ms-flex-negative: 0;
+      flex-shrink: 0;
+}
+
+.userProfile__avatar {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  gap: 30px;
+  margin-bottom: 15px;
+}
+
+.userProfile__avatar--away {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  margin-bottom: 20px;
+}
+
+.userProfile__avatar .inputGroup {
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+}
+
+.userProfile button {
+  background: #FF8642;
+  width: 80px;
+  height: 35px;
+  line-height: 35px;
+  color: #fff;
+}
+
+.userProfile button.disabled {
+  background: #9d562d !important;
+}
+
+.userProfile button.disabled:hover {
+  background: #9d562d;
+}
+
+.userProfile button:hover {
+  background: #d36b2e;
+}
+
+.userArticle {
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+}
+
+@media (min-width: 700px) {
+  .profile {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    gap: 30px;
+    margin-top: 30px !important;
+  }
+}
+
 a {
   text-decoration: none;
   color: #fff;

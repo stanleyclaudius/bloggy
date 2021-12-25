@@ -1,9 +1,9 @@
-import { Box, Center, Spinner } from '@chakra-ui/react';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUserBlogs } from './../../redux/actions/blogActions';
 import Article from './../global/Article';
 import Pagination from './../global/Pagination';
+import Spinner from './../global/Spinner';
 
 const UserArticle = ({id}) => {
   const dispatch = useDispatch();
@@ -19,13 +19,11 @@ const UserArticle = ({id}) => {
   }, [dispatch, id]);
 
   return (
-    <Box>
+    <div className='userArticle'>
       {
         alert.loading
         ? (
-          <Center>
-            <Spinner size='xl' />
-          </Center>
+          <Spinner />
         )
         : (
           <>
@@ -54,7 +52,7 @@ const UserArticle = ({id}) => {
           callback={handlePagination}
         />
       }
-    </Box>
+    </div>
   );
 }
 

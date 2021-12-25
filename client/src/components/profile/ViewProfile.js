@@ -1,34 +1,22 @@
-import {
-  Box,
-  Avatar,
-  FormControl,
-  FormLabel,
-  Text
-} from '@chakra-ui/react';
+import Avatar from './../global/Avatar';
 
 const ViewProfile = ({name, avatar, account}) => {
   return (
-    <Box
-      border='1px'
-      borderColor='gray.600'
-      borderRadius='7px'
-      padding='20px'
-      alignSelf='flex-start'
-    >
-      <Box textAlign='center'>
-        <Avatar size='2xl' name={name} src={avatar} />
-      </Box>
-      <Box>
-        <FormControl mt='20px'>
-          <FormLabel>Name</FormLabel>
-          <Text bg='gray.700' p='3' borderRadius='6px'>{name}</Text>
-        </FormControl>
-        <FormControl mt='20px'>
-          <FormLabel>Email or Phone Number</FormLabel>
-          <Text bg='gray.700' p='3' borderRadius='6px'>{account}</Text>
-        </FormControl>
-      </Box>
-    </Box>
+    <div className='userProfile'>
+      <div className='userProfile__avatar--away'>
+        <Avatar avatar={avatar} name={name} />
+      </div>
+      <div>
+        <div className="inputGroup">
+          <label htmlFor="name">Name</label>
+          <input type="text" name="name" id="name" value={name} disabled />
+        </div>
+        <div className="inputGroup">
+          <label htmlFor="account">Account</label>
+          <input type="text" name="account" id="account" value={account} disabled />
+        </div>
+      </div>
+    </div>
   );
 }
 

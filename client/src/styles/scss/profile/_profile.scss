@@ -1,0 +1,66 @@
+.profile {
+  margin-top: 20px !important;
+}
+
+.userProfile {
+  color: #fff;
+  flex: 1;
+  border: 1px solid #ccc;
+  padding: 15px;
+  border-radius: 5px;
+
+  .avatar {
+    width: 80px;
+    height: 80px;
+    outline: none;
+    flex-shrink: 0;
+  }
+
+  &__avatar {
+    display: flex;
+    gap: 30px;
+    margin-bottom: 15px;
+
+    &--away {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+
+    .inputGroup {
+      flex: 1;
+    }
+  }
+
+  button {
+    background: $accent-color;
+    width: 80px;
+    height: 35px;
+    line-height: 35px;
+    color: #fff;
+
+    &.disabled {
+      background: $dark-accent !important;
+
+      &:hover {
+        background: $dark-accent;
+      }
+    }
+
+    &:hover {
+      background: $accent-hover;
+    }
+  }
+}
+
+.userArticle {
+  flex: 1;
+}
+
+@include mediaDesktop {
+  .profile {
+    display: flex;
+    gap: 30px;
+    margin-top: 30px !important;
+  }
+}

@@ -1,19 +1,9 @@
-import {
-  Box,
-  Avatar,
-  FormControl,
-  FormLabel,
-  Input,
-  InputGroup,
-  Button,
-  Flex,
-  Text,
-  InputRightElement
-} from '@chakra-ui/react';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { GLOBAL_TYPES } from './../../redux/types/globalTypes';
 import { updateProfile } from './../../redux/actions/userActions';
+import Avatar from './../global/Avatar';
 
 const UserProfile = ({id}) => {
   const [userData, setUserData] = useState({
@@ -50,7 +40,7 @@ const UserProfile = ({id}) => {
 
   const handleSubmit = e => {
     e.preventDefault();    
-    const data = {name: userData.name};
+    const data = {name: userData.name ? userData.name : auth.user?.name};
     if (avatarPreview) {
       data.avatar = userData.avatar;
     }
@@ -70,96 +60,63 @@ const UserProfile = ({id}) => {
   }
 
   return (
-    <Box
-      border='1px'
-      borderColor='gray.600'
-      borderRadius='7px'
-      padding='20px'
-      as='form'
-      onSubmit={handleSubmit}
-    >
-      <Flex
-        justifyContent='space-between'
-      >
+    <form className='userProfile' onSubmit={handleSubmit}>
+      <div className='userProfile__avatar'>
         <Avatar
-          size='2xl'
+          avatar={
+            avatarPreview
+            ? URL.createObjectURL(avatarPreview)
+            : auth.user?.avatar
+          }
           name={auth.user?.name}
-          src={avatarPreview ? URL.createObjectURL(avatarPreview) : auth.user?.avatar}
         />
-        <Box>
-          <Input
-            type='file'
-            accept="image/*"
-            onChange={handleChangeImage}
-          />
-        </Box>
-      </Flex>
-      <Box>
-        <FormControl mt='20px'>
-          <FormLabel>Name</FormLabel>
-          <Input bg='gray.700' name='name' defaultValue={auth.user?.name} onChange={handleChange} />
-        </FormControl>
-        <FormControl mt='20px' mb='20px'>
-          <FormLabel>Email or Phone Number</FormLabel>
-          <Input bg='gray.600' border='1px' borderColor='gray.500' name='account' defaultValue={auth.user?.account} isDisabled />
-        </FormControl>
+        <div className="inputGroup">
+          <label htmlFor="avatar">Avatar</label>
+          <input type="file" name="avatar" id="avatar" accept="image/*" onChange={handleChangeImage} />
+        </div>
+      </div>
+      <div>
+        <div className="inputGroup">
+          <label htmlFor="name">Name</label>
+          <input type="text" id="name" name="name" defaultValue={auth.user?.name} onChange={handleChange} />
+        </div>
+        <div className="inputGroup">
+          <label htmlFor="account">Email or Phone number</label>
+          <input type="text" name="account" id="account" disabled defaultValue={auth.user?.account} style={{ background: "#3c3c3c" }} />
+        </div>
         {
           auth.user?.type !== 'register' && 
-          <Text
-            color='red.400'
-            fontSize='14px'
-            mb='8px'
-          >Change password feature not available for user that login with {auth.user?.type}</Text>
+          <p>
+            Change password feature not available for user that login with {auth.user?.type}
+          </p>
         }
-        <FormControl>
-          <FormLabel>Password</FormLabel>
-          <InputGroup>
-            <Input type={showPassword ? 'text' : 'password'} bg='gray.700' name='password' value={userData.password} onChange={handleChange} isDisabled={auth.user?.type !== 'register' ? true : false} />
+        <div className="inputGroup">
+          <label htmlFor="password">Password</label>
+          <div className="inputGroup--password">
+            <input type={showPassword ? 'text' : 'password'} name="password" id="password" value={userData.password} onChange={handleChange} />
             {
-              auth.user?.type === 'register' &&
-              <InputRightElement mr='7px'>
-                <Button
-                  size='sm'
-                  h='1.75rem'
-                  onClick={() => setShowPassword(!showPassword)}
-                >
-                  {showPassword ? 'Hide' : 'Show'}
-                </Button>
-              </InputRightElement>
+              showPassword
+              ? <FaEyeSlash onClick={() => setShowPassword(false)} />
+              : <FaEye onClick={() => setShowPassword(true)} />
             }
-          </InputGroup>
-        </FormControl>
-        <FormControl mt='20px'>
-          <FormLabel>Confirm Password</FormLabel>
-          <InputGroup>
-            <Input type={showConfirmPassword ? 'text' : 'password'} bg='gray.700' name='confirmPassword' value={userData.confirmPassword} onChange={handleChange} isDisabled={auth.user?.type !== 'register' ? true : false} />
+          </div>
+        </div>
+        <div className="inputGroup">
+          <label htmlFor="confirmPassword">Confirm Password</label>
+          <div className="inputGroup--password">
+            <input type={showConfirmPassword ? 'text' : 'password'} name='confirmPassword' id='confirmPassword' value={userData.confirmPassword} onChange={handleChange} />
             {
-              auth.user?.type === 'register' &&
-              <InputRightElement mr='7px'>
-                <Button
-                  size='sm'
-                  h='1.75rem'
-                  onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                >
-                  {showConfirmPassword ? 'Hide' : 'Show'}
-                </Button>
-              </InputRightElement>
-            } 
-          </InputGroup>
-        </FormControl>
-        <Button
-          isLoading={alert.loading ? true : false}
-          loadingText='Loading'
-          type='submit'
-          bg='orange.400'
-          mt='20px'
-          _hover={{ bg: 'orange.600' }}
-          _active={{ bg: 'orange.600' }}
-        >
-          Update
-        </Button>
-      </Box>
-    </Box>
+              showConfirmPassword
+              ? <FaEyeSlash onClick={() => setShowConfirmPassword(false)} />
+              : <FaEye onClick={() => setShowConfirmPassword(true)} />
+            }
+          </div>
+        </div>
+        <button className={alert.loading && 'disabled'} type='submit' disabled={alert.loading ? true : false}>
+          {alert.loading ? 'Loading ...' : 'Update'}
+        </button>
+      </div>
+    </form>
   );
 }
 
