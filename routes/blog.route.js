@@ -6,6 +6,8 @@ router.route('/')
   .get(blogCtrl.getHomeBlogs)
   .post(isAuthenticated, blogCtrl.createBlog);
 
+router.route('/search').get(blogCtrl.searchBlog);
+
 router.route('/:id')
   .get(blogCtrl.getBlogById)
   .delete(isAuthenticated, blogCtrl.deleteBlog)

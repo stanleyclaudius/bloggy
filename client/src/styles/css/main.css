@@ -40,6 +40,69 @@ html, body {
 
 .navbar__search {
   margin-top: 20px;
+  position: relative;
+}
+
+.navbar__searchContainer {
+  width: 100%;
+  padding: 20px;
+  position: absolute;
+  top: 100%;
+  background: #5B5B5B;
+  border-radius: 5px;
+  margin-top: 20px;
+  max-height: 500px;
+  overflow-y: auto;
+}
+
+.navbar__searchResult {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  background: #707070;
+  border-radius: 5px;
+  padding: 15px;
+  -webkit-transition: -webkit-transform 200ms;
+  transition: -webkit-transform 200ms;
+  transition: transform 200ms;
+  transition: transform 200ms, -webkit-transform 200ms;
+  gap: 20px;
+}
+
+.navbar__searchResult:hover {
+  -webkit-transform: scale(1.02);
+          transform: scale(1.02);
+}
+
+.navbar__searchResult--left {
+  -webkit-box-flex: 2;
+      -ms-flex: 2;
+          flex: 2;
+}
+
+.navbar__searchResult--left h2 {
+  margin-bottom: 12px;
+}
+
+.navbar__searchResult--left h2 a {
+  color: #5599ff;
+}
+
+.navbar__searchResult--left p:not(:last-child) {
+  margin-bottom: 12px;
+}
+
+.navbar__searchResult--right img {
+  width: 120px;
+  height: 120px;
+  -o-object-fit: cover;
+     object-fit: cover;
 }
 
 .navbar__search form {

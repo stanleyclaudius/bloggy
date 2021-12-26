@@ -19,6 +19,56 @@
 
   &__search {
     margin-top: 20px;
+    position: relative;
+
+    &Container {
+      width: 100%;
+      padding: 20px;
+      position: absolute;
+      top: 100%;
+      background: $secondary-color;
+      border-radius: 5px;
+      margin-top: 20px;
+      max-height: 500px;
+      overflow-y: auto;
+    }
+
+    &Result {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: #707070;
+      border-radius: 5px;
+      padding: 15px;
+      transition: transform 200ms;
+      gap: 20px;
+
+      &:hover {
+        transform: scale(1.02);
+      }
+
+      &--left {
+        flex: 2;
+
+        h2 {
+          margin-bottom: 12px;
+          
+          a {
+            color:rgb(85, 153, 255);
+          }
+        }
+        
+        p:not(:last-child) {
+          margin-bottom: 12px;
+        }
+      }
+
+      &--right img {
+        width: 120px;
+        height: 120px;
+        object-fit: cover;
+      }
+    }
 
     form {
       position: relative;
