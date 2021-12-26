@@ -5,6 +5,7 @@ import { getCategoryBlogs } from './../../redux/actions/blogActions';
 import Article from './../../components/global/Article';
 import Pagination from './../../components/global/Pagination';
 import Spinner from './../../components/global/Spinner';
+import NotFound from './../../components/global/NotFound';
 
 const BlogsCategory = () => {
   const [categoryId, setCategoryId] = useState('');
@@ -28,6 +29,7 @@ const BlogsCategory = () => {
     dispatch(getCategoryBlogs(categoryId._id));
   }, [dispatch, categoryId]);
 
+  if (!categoryId) return <NotFound />
   return (
     <div className='blogsByCategory container'>
       <h1 className='blogsByCategory__title'>{slug} Articles</h1>
