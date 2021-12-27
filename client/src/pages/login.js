@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import LoginMethod from './../components/login/LoginMethod';
 import AccountLogin from './../components/login/AccountLogin';
 import SmsLogin from './../components/login/SmsLogin';
 
 const Login = () => {
-  const queryParams = new URLSearchParams(window.location.search);
+  const [queryParams] = useSearchParams();
   const [isSmsLogin, setIsSmsLogin] = useState(false);
 
   const navigate = useNavigate();
