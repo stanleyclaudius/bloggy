@@ -40,7 +40,7 @@ const authCtrl = {
       const url = `${process.env.CLIENT_URL}/active/${activationToken}`;
 
       if (checkEmail(account)) {
-        sendMail(account, url, 'test');
+        sendMail(account, url, 'Account Activation');
         return res.status(200).json({msg: 'Account activation link has been sent to your email. Kindly check your spam folder if not in inbox'});
       } else if (checkPhone(account)) {
         sendSms(account, url);
@@ -254,7 +254,7 @@ const authCtrl = {
       const url = `${process.env.CLIENT_URL}/reset/${accessToken}`;
 
       if (checkEmail(user.account)) {
-        sendMail(user.account, url, 'test');
+        sendMail(user.account, url, 'Reset Password');
         return res.status(200).json({msg: 'Reset password link has been sent to your email. Kindly check your spam folder if not in inbox'});
       } else if (checkPhone(account)) {
         sendSms(user.account, url);

@@ -1826,7 +1826,7 @@ button {
 
 .inputGroup .forgetPassword {
   color: #1aaee4;
-  margin-top: 5px;
+  margin-top: 5px !important;
   font-size: 15px;
   display: block;
 }

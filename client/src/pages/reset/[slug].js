@@ -17,7 +17,7 @@ const ResetPassword = () => {
   const dispatch = useDispatch();
   const {auth, alert} = useSelector(state => state);
 
-  const handleSubmit = e => {
+  const handleSubmit = async e => {
     e.preventDefault();
     if (!password || !confirmPassword)
       return dispatch({
@@ -35,7 +35,8 @@ const ResetPassword = () => {
         }
       });
       
-    dispatch(resetPassword(password, slug));
+    await dispatch(resetPassword(password, slug));
+    navigate('/login');
   }
 
   useEffect(() => {
