@@ -1,5 +1,5 @@
 import { GLOBAL_TYPES } from './../types/globalTypes';
-import { getDataAPI, postDataAPI } from './../../utils/fetchData';
+import { getDataAPI, postDataAPI, patchDataAPI } from './../../utils/fetchData';
 import { checkTokenValidity } from './../../utils/checkTokenValidity';
 
 export const register = data => async(dispatch) => {
@@ -233,6 +233,58 @@ export const verifyOtp = (phone, code) => async(dispatch) => {
         success: res.data.msg
       }
     })
+  } catch (err) {
+    dispatch({
+      type: GLOBAL_TYPES.ALERT,
+      payload: {
+        errors: err.response.data.msg
+      }
+    });
+  }
+}
+
+export const forgetPassword = account => async(dispatch) => {
+  try {
+    dispatch({
+      type: GLOBAL_TYPES.ALERT,
+      payload: {
+        loading: true
+      }
+    });
+
+    const res = await postDataAPI('auth/forget_password', {account});
+    dispatch({
+      type: GLOBAL_TYPES.ALERT,
+      payload: {
+        success: res.data.msg
+      }
+    });
+  } catch (err) {
+    dispatch({
+      type: GLOBAL_TYPES.ALERT,
+      payload: {
+        errors: err.response.data.msg
+      }
+    });
+  }
+}
+
+export const resetPassword = (password, token) => async(dispatch) => {
+  try {
+    dispatch({
+      type: GLOBAL_TYPES.ALERT,
+      payload: {
+        loading: true
+      }
+    });
+
+    const res = await patchDataAPI('auth/reset', {password, token});
+    dispatch({
+      type: GLOBAL_TYPES.ALERT,
+      payload: {
+        success: res.data.msg
+      }
+    });
   } catch (err) {
     dispatch({
       type: GLOBAL_TYPES.ALERT,

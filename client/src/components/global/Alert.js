@@ -12,7 +12,7 @@ const Alert = () => {
     } else if (alert.errors) {
       toast.error(alert.errors);
     }
-  }, [alert]);
+  }, [alert, toast]);
 
   return (
     <div></div>

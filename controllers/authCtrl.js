@@ -236,6 +236,60 @@ const authCtrl = {
     } catch (err) {
       return res.status(500).json({msg: err.message});
     }
+  },
+  forgetPassword: async(req, res) => {
+    try {
+      const {account} = req.body;
+      if (!account)
+        return res.status(400).json({msg: 'Please provide your email or phone number that used to register.'});
+
+      const user = await User.findOne({account});
+      if (!user)
+        return res.status(404).json({msg: 'Account not found.'});
+
+      if (user.type !== 'register')
+        return res.status(400).json({msg: `Account that login using ${user.type} can't used this feature.`});
+
+      const accessToken = generateAccessToken({id: user._id});
+      const url = `${process.env.CLIENT_URL}/reset/${accessToken}`;
+
+      if (checkEmail(user.account)) {
+        sendMail(user.account, url, 'test');
+        return res.status(200).json({msg: 'Reset password link has been sent to your email. Kindly check your spam folder if not in inbox'});
+      } else if (checkPhone(account)) {
+        sendSms(user.account, url);
+        return res.status(200).json({msg: 'Reset password link has been sent to your phone number.'});
+      }
+    } catch (err) {
+      return res.status(500).json({msg: err.message});
+    }
+  },
+  resetPassword: async(req, res) => {
+    try {
+      const {password, token} = req.body;
+
+      if (!password)
+        return res.status(400).json({msg: 'Please provide new password.'});
+
+      const decoded = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
+      if (!decoded)
+        return res.status(403).json({msg: 'Can\'t recognized reset password link.'});
+
+      if (!decoded.id)
+        return res.status(403).json({msg: 'Can\'t recognized reset password link.'});
+
+      const user = await User.findOne({_id: decoded.id});
+      if (!user)
+        return res.status(404).json({msg: 'User not found.'});
+      
+      const newPassword = await bcrypt.hash(password, 12);
+
+      await User.findOneAndUpdate({_id: decoded.id}, {password: newPassword});
+
+      res.status(200).json({msg: 'Password has been changed.'});
+    } catch (err) {
+      return res.status(500).json({msg: err.message});
+    }
   }
 }
 

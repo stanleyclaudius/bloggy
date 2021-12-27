@@ -26,7 +26,7 @@ const LoginMethod = ({isSmsLogin, setIsSmsLogin}) => {
     <div className='loginMethod'>
       <div>
         <GoogleLogin
-          client_id='186802643480-fi4c86nsgoh6fchus95e0ru1g971ejv4.apps.googleusercontent.com'
+          client_id='339838492859-70j6udo1u5m1u2hth6qgc0arga2j8eqa.apps.googleusercontent.com'
           cookiepolicy='single_host_origin'
           onSuccess={onGoogleSuccess}
         />

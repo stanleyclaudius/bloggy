@@ -13,9 +13,6 @@ const CategoryTable = () => {
   const dispatch = useDispatch();
   const {alert, auth, category} = useSelector(state => state);
 
-  const handleUpdate = category => {
-  }
-
   useEffect(() => {
     dispatch(getCategory());
   }, [dispatch]);

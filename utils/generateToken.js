@@ -5,7 +5,7 @@ module.exports.generateActivationToken = payload => {
 }
 
 module.exports.generateAccessToken = payload => {
-  return jwt.sign(payload, process.env.ACCESS_TOKEN_SECRET, {expiresIn: '15s'});
+  return jwt.sign(payload, process.env.ACCESS_TOKEN_SECRET, {expiresIn: '10m'});
 }
 
 module.exports.generateRefreshToken = (payload, res) => {

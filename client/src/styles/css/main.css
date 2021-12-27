@@ -1607,6 +1607,70 @@ html, body {
   background: #d36b2e;
 }
 
+.forgetPassword {
+  color: #fff;
+  width: 100%;
+  max-width: 400px;
+  margin-top: 40px !important;
+}
+
+.forgetPassword h2 {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.forgetPassword button {
+  background: #FF8642;
+  width: 80px;
+  height: 35px;
+  line-height: 35px;
+  color: #fff;
+}
+
+.forgetPassword button.disabled {
+  background: #9d562d;
+}
+
+.forgetPassword button.disabled:hover {
+  background: #9d562d;
+}
+
+.forgetPassword button:hover {
+  background: #d36b2e;
+}
+
+.resetPassword {
+  color: #fff;
+  margin-top: 40px !important;
+  width: 100%;
+  max-width: 400px;
+}
+
+.resetPassword h2 {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.resetPassword button {
+  background: #FF8642;
+  color: #fff;
+  width: 80px;
+  height: 35px;
+  line-height: 35px;
+}
+
+.resetPassword button.disabled {
+  background: #9d562d;
+}
+
+.resetPassword button.disabled:hover {
+  background: #9d562d;
+}
+
+.resetPassword button:hover {
+  background: #d36b2e;
+}
+
 a {
   text-decoration: none;
   color: #fff;

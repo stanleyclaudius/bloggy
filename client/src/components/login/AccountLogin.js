@@ -50,7 +50,7 @@ const AccountLogin = () => {
               : <FaEye onClick={() => setShowPassword(true)} />
             }
           </div>
-          <Link to='/' className='forgetPassword'>Forget password?</Link>
+          <Link to='/forget_password' className='forgetPassword'>Forget password?</Link>
         </div>
       </div>
       <button type="submit" className={`${alert.loading ? 'disabled' : ''}`} disabled={alert.loading ? true : false}>

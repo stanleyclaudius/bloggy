@@ -11,5 +11,7 @@ router.post('/login_sms', authCtrl.smsLogin);
 router.post('/verify_otp', authCtrl.verifyOTP);
 router.get('/logout', isAuthenticated, authCtrl.logout);
 router.get('/refresh_token', authCtrl.refreshToken);
+router.post('/forget_password', authCtrl.forgetPassword);
+router.patch('/reset', authCtrl.resetPassword);
 
 module.exports = router;
