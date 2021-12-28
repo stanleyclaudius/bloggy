@@ -53,7 +53,7 @@ const AccountLogin = () => {
           <Link to='/forget_password' className='forgetPassword'>Forget password?</Link>
         </div>
       </div>
-      <button type="submit" className={`${alert.loading ? 'disabled' : ''}`} disabled={alert.loading ? true : false}>
+      <button type="submit" className={`${alert.loading ? 'disabled' : undefined}`} disabled={alert.loading ? true : false}>
         {alert.loading ? 'Loading...' : 'Sign In'}
       </button>
     </form>

@@ -98,7 +98,7 @@ const Register = () => {
               }
             </div>
           </div>
-          <button className={alert.loading ? 'disabled' : ''} disabled={alert.loading ? true : false} type="submit">
+          <button className={alert.loading ? 'disabled' : undefined} disabled={alert.loading ? true : false} type="submit">
             {alert.loading ? 'Loading ...' : 'Sign Up'}
           </button>
           <p>Already have an account? Click <Link to='/login'>here</Link></p>

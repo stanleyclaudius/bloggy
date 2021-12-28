@@ -36,7 +36,7 @@ const SmsLogin = () => {
             <input type="text" id="phone" name="phone" value={phone} onChange={e => setPhone(e.target.value)} autoComplete='off' />
           </div>
         </div>
-        <button className={`${alert.loading ? 'disabled' : ''}`} disabled={alert.loading ? true : false} type="submit">
+        <button className={`${alert.loading ? 'disabled' : undefined}`} disabled={alert.loading ? true : false} type="submit">
           {alert.loading ? 'Loading ...' : 'Sign In'}
         </button>
       </form>

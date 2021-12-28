@@ -36,7 +36,7 @@ const CategoryForm = () => {
         <input type="text" name="description" id="description" value={categoryData.description} onChange={handleChange} autoComplete='off' />
       </div>
       <button
-        className={loading && 'disabled'}
+        className={loading ? 'disabled' : undefined}
         type="submit"
         disabled={loading ? true : false}
       >

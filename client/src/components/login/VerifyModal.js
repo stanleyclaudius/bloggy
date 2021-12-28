@@ -27,7 +27,7 @@ const VerifyModal = ({isOpenModal, phone}) => {
               <label htmlFor="pin">OTP Code</label>
               <input type="text" name="pin" id="pin" value={pin} onChange={e => setPin(e.target.value)} />
             </div>
-            <button className={`${loading ? 'disabled' : ''}`} disabled={loading ? true : false} type="submit">
+            <button className={`${loading ? 'disabled' : undefined}`} disabled={loading ? true : false} type="submit">
               {loading ? 'Loading ...' : 'Submit'}
             </button>
           </form>

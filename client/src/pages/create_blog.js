@@ -175,7 +175,7 @@ const CreateBlog = ({id}) => {
           <ReactQuill body={body} setBody={setBody} />
           <button
             disabled={alert.loading ? true : false}
-            className={`createBlog__submit ${alert.loading && 'disabled'}`}
+            className={`createBlog__submit ${alert.loading ? 'disabled' : undefined}`}
             type="submit"
           >
             {alert.loading ? 'Loading ...' : 'Submit'}

@@ -73,7 +73,7 @@ const UpdateCategory = ({category, setCategory}) => {
             <button
               type="submit"
               disabled={loading ? true : false}
-              className={loading && 'disabled'}
+              className={loading ? 'disabled' : undefined}
             >
               {loading ? 'Loading ...' : 'Submit'}
             </button>

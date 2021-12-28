@@ -1,3 +1,4 @@
 /client/node_modules
 /config/.env
 /node_modules
+/client/src/constant.js

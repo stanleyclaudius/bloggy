@@ -77,7 +77,7 @@ const ResetPassword = () => {
           <button
             type="submit"
             disabled={alert.loading ? true : false}
-            className={alert.loading && 'disabled'}
+            className={alert.loading ? 'disabled' : undefined}
           >
             {alert.loading ? 'Loading ...' : 'Submit'}
           </button>

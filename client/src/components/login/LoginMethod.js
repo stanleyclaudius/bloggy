@@ -4,6 +4,7 @@ import { MdAccountCircle } from 'react-icons/md';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { googleLogin, facebookLogin } from './../../redux/actions/authActions';
+import { GOOGLE_CLIENT_ID } from './../../constant';
 import GoogleLogin from 'react-google-login-lite';
 import FacebookLogin from 'react-facebook-login-lite';
 
@@ -26,7 +27,7 @@ const LoginMethod = ({isSmsLogin, setIsSmsLogin}) => {
     <div className='loginMethod'>
       <div>
         <GoogleLogin
-          client_id='339838492859-70j6udo1u5m1u2hth6qgc0arga2j8eqa.apps.googleusercontent.com'
+          client_id={GOOGLE_CLIENT_ID}
           cookiepolicy='single_host_origin'
           onSuccess={onGoogleSuccess}
         />
