@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { GLOBAL_TYPES } from './../../redux/types/globalTypes';
 import { resetPassword } from './../../redux/actions/authActions';
+import HeadInfo from './../../utils/HeadInfo';
 
 const ResetPassword = () => {
   const [password, setPassword] = useState('');
@@ -46,40 +47,43 @@ const ResetPassword = () => {
   }, [auth, navigate]);
 
   return (
-    <div className='resetPassword container'>
-      <h2>Reset Password</h2>
-      <form onSubmit={handleSubmit}>
-        <div className="inputGroup">
-          <label htmlFor="password">Password</label>
-          <div className="inputGroup--password">
-            <input type={showPassword ? 'text' : 'password'} name="password" id="password" value={password} onChange={e => setPassword(e.target.value)} />
-            {
-              showPassword
-              ? <FaEyeSlash onClick={() => setShowPassword(false)} />
-              : <FaEye onClick={() => setShowPassword(true)} />
-            }
+    <>
+      <HeadInfo title='Bloggy - Reset Password' />
+      <div className='resetPassword container'>
+        <h2>Reset Password</h2>
+        <form onSubmit={handleSubmit}>
+          <div className="inputGroup">
+            <label htmlFor="password">Password</label>
+            <div className="inputGroup--password">
+              <input type={showPassword ? 'text' : 'password'} name="password" id="password" value={password} onChange={e => setPassword(e.target.value)} />
+              {
+                showPassword
+                ? <FaEyeSlash onClick={() => setShowPassword(false)} />
+                : <FaEye onClick={() => setShowPassword(true)} />
+              }
+            </div>
           </div>
-        </div>
-        <div className="inputGroup">
-          <label htmlFor="confirmPassword">Confirm Password</label>
-          <div className="inputGroup--password">
-            <input type={showConfirmPassword ? 'text' : 'password'} name="confirmPassword" id="confirmPassword" value={confirmPassword} onChange={e => setConfirmPassword(e.target.value)} />
-            {
-              showConfirmPassword
-              ? <FaEyeSlash onClick={() => setShowConfirmPassword(false)} />
-              : <FaEye onClick={() => setShowConfirmPassword(true)} />
-            }
+          <div className="inputGroup">
+            <label htmlFor="confirmPassword">Confirm Password</label>
+            <div className="inputGroup--password">
+              <input type={showConfirmPassword ? 'text' : 'password'} name="confirmPassword" id="confirmPassword" value={confirmPassword} onChange={e => setConfirmPassword(e.target.value)} />
+              {
+                showConfirmPassword
+                ? <FaEyeSlash onClick={() => setShowConfirmPassword(false)} />
+                : <FaEye onClick={() => setShowConfirmPassword(true)} />
+              }
+            </div>
           </div>
-        </div>
-        <button
-          type="submit"
-          disabled={alert.loading ? true : false}
-          className={alert.loading && 'disabled'}
-        >
-          {alert.loading ? 'Loading ...' : 'Submit'}
-        </button>
-      </form>
-    </div>
+          <button
+            type="submit"
+            disabled={alert.loading ? true : false}
+            className={alert.loading && 'disabled'}
+          >
+            {alert.loading ? 'Loading ...' : 'Submit'}
+          </button>
+        </form>
+      </div>
+    </>
   );
 }
 

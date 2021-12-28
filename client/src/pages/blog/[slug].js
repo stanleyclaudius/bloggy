@@ -7,6 +7,7 @@ import Comment from './../../components/comment/Comment';
 import ReplyInput from './../../components/comment/ReplyInput';
 import Pagination from './../../components/global/Pagination';
 import Spinner from './../../components/global/Spinner';
+import HeadInfo from './../../utils/HeadInfo';
 
 const BlogDetail = () => {
   const [loading, setLoading] = useState(false);
@@ -59,6 +60,7 @@ const BlogDetail = () => {
 
   return (
     <>
+      <HeadInfo title={`Bloggy - ${blogDetail.title}`} />
       {
         alert.loading
         ? (

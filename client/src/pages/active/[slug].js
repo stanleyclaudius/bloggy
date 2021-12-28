@@ -2,6 +2,7 @@ import { useAlert } from 'react-alert';
 import { useEffect, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { postDataAPI } from './../../utils/fetchData';
+import HeadInfo from './../../utils/HeadInfo';
 
 const ActivateAccount = () => {
   const toast = useAlert();
@@ -25,7 +26,10 @@ const ActivateAccount = () => {
   }, [slug, activateAccount]);
 
   return(
-    <div></div>
+    <>
+      <HeadInfo title='Bloggy - Account Activation' />
+      <div></div>
+    </>
   );
 }
 

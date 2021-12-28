@@ -7,6 +7,7 @@ import { GLOBAL_TYPES } from './../redux/types/globalTypes';
 import { isContentChange } from './../utils/validator';
 import ReactQuill from './../components/editor/ReactQuill';
 import NotFound from './../components/global/NotFound';
+import HeadInfo from './../utils/HeadInfo';
 
 const CreateBlog = ({id}) => {
   const [blogData, setBlogData] = useState({
@@ -124,62 +125,65 @@ const CreateBlog = ({id}) => {
 
   if (!auth.token) return <NotFound />
   return (
-    <form className='createBlog container' onSubmit={handleSubmit}>
-      <div className='createBlog__left'>
-        <div className='createBlog__avatar'>
-          {
-            (thumbnailPreview || id) &&
-            <img
-              src={
-                id
-                ? thumbnailPreview
-                  ? URL.createObjectURL(thumbnailPreview)
-                  : blogData.thumbnail
-                : thumbnailPreview
-                  ? URL.createObjectURL(thumbnailPreview)
-                  : ''
-              }
-              alt={`Bloggy - ${blogData.title}`}
-            />
-          }
+    <>
+      <HeadInfo title='Bloggy - Create Blog' />
+      <form className='createBlog container' onSubmit={handleSubmit}>
+        <div className='createBlog__left'>
+          <div className='createBlog__avatar'>
+            {
+              (thumbnailPreview || id) &&
+              <img
+                src={
+                  id
+                  ? thumbnailPreview
+                    ? URL.createObjectURL(thumbnailPreview)
+                    : blogData.thumbnail
+                  : thumbnailPreview
+                    ? URL.createObjectURL(thumbnailPreview)
+                    : ''
+                }
+                alt={`Bloggy - ${blogData.title}`}
+              />
+            }
+            <div className="inputGroup">
+              <label htmlFor="thumbnail">Thumbnail</label>
+              <input type="file" name='thumbnail' id='thumbnail' onChange={handleChangeImage} accept="image/*" />
+            </div>
+          </div>
           <div className="inputGroup">
-            <label htmlFor="thumbnail">Thumbnail</label>
-            <input type="file" name='thumbnail' id='thumbnail' onChange={handleChangeImage} accept="image/*" />
+            <label htmlFor="title">Title</label>
+            <input type="text" name="title" id="title" value={blogData.title} onChange={handleChange} />
+          </div>
+          <div className="inputGroup">
+            <label htmlFor="description">Description</label>
+            <textarea name="description" id="description" value={blogData.description} onChange={handleChange} />
+          </div>
+          <div className="inputGroup">
+            <label htmlFor="category">Category</label>
+            <select name="category" id="category" value={blogData.category} onChange={handleChange}>
+              <option value="">- Select Category -</option>
+              {
+                category.map(item => (
+                  <option value={item._id}>{item.name}</option>
+                ))
+              }
+            </select>
           </div>
         </div>
-        <div className="inputGroup">
-          <label htmlFor="title">Title</label>
-          <input type="text" name="title" id="title" value={blogData.title} onChange={handleChange} />
+        <div className='createBlog__right'>
+          <label htmlFor="content">Content</label>
+          <ReactQuill body={body} setBody={setBody} />
+          <button
+            disabled={alert.loading ? true : false}
+            className={`createBlog__submit ${alert.loading && 'disabled'}`}
+            type="submit"
+          >
+            {alert.loading ? 'Loading ...' : 'Submit'}
+          </button>
+          <div className="clear"></div>
         </div>
-        <div className="inputGroup">
-          <label htmlFor="description">Description</label>
-          <textarea name="description" id="description" value={blogData.description} onChange={handleChange} />
-        </div>
-        <div className="inputGroup">
-          <label htmlFor="category">Category</label>
-          <select name="category" id="category" value={blogData.category} onChange={handleChange}>
-            <option value="">- Select Category -</option>
-            {
-              category.map(item => (
-                <option value={item._id}>{item.name}</option>
-              ))
-            }
-          </select>
-        </div>
-      </div>
-      <div className='createBlog__right'>
-        <label htmlFor="content">Content</label>
-        <ReactQuill body={body} setBody={setBody} />
-        <button
-          disabled={alert.loading ? true : false}
-          className={`createBlog__submit ${alert.loading && 'disabled'}`}
-          type="submit"
-        >
-          {alert.loading ? 'Loading ...' : 'Submit'}
-        </button>
-        <div className="clear"></div>
-      </div>
-    </form>
+      </form>
+    </>
   );
 }
 

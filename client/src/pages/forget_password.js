@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { forgetPassword } from './../redux/actions/authActions';
+import HeadInfo from './../utils/HeadInfo';
 
 const ForgetPassword = () => {
   const [account, setAccount] = useState('');
@@ -22,22 +23,25 @@ const ForgetPassword = () => {
   }, [auth, navigate]);
 
   return (
-    <div className='forgetPassword container'>
-      <h2>Forget Password</h2>
-      <form onSubmit={handleSubmit}>
-        <div className="inputGroup">
-          <label htmlFor="account">Email or Phone number</label>
-          <input type="text" name="account" id="account" value={account} onChange={e => setAccount(e.target.value)} autoComplete='off' />
-        </div>
-        <button
-          type="submit"
-          disabled={alert.loading ? true : false}
-          className={alert.loading && 'disabled'}
-        >
-          {alert.loading ? 'Loading ...' : 'Send'}
-        </button>
-      </form>
-    </div>
+    <>
+      <HeadInfo title='Bloggy - Forget Password' />
+      <div className='forgetPassword container'>
+        <h2>Forget Password</h2>
+        <form onSubmit={handleSubmit}>
+          <div className="inputGroup">
+            <label htmlFor="account">Email or Phone number</label>
+            <input type="text" name="account" id="account" value={account} onChange={e => setAccount(e.target.value)} autoComplete='off' />
+          </div>
+          <button
+            type="submit"
+            disabled={alert.loading ? true : false}
+            className={alert.loading && 'disabled'}
+          >
+            {alert.loading ? 'Loading ...' : 'Send'}
+          </button>
+        </form>
+      </div>
+    </>
   );
 }
 

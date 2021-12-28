@@ -7,6 +7,7 @@ import Header from './../components/home/Header';
 import Filter from './../components/home/Filter';
 import Spinner from './../components/global/Spinner';
 import Message from './../components/global/Message';
+import HeadInfo from './../utils/HeadInfo';
 
 const Home = () => {
   const [filter, setFilter] = useState([]);
@@ -23,50 +24,53 @@ const Home = () => {
   }, [dispatch, filter]);
 
   return (
-    <div className='container'>
-      <Header />
-      <Filter
-        category={category}
-        filter={filter}
-        setFilter={setFilter}
-      />
-      <div className='home'>
-        {
-          alert.loading
-          ? <Spinner />
-          : (
-            <>
-              {
-                blogCategory.length === 0
-                ? (
-                  <Message text="There's no blog found with this category." />
-                )
-                : (
-                  <>
-                    {
-                      blogCategory.map(item => (
-                        <div key={item._id}>
-                          <div className='blogCategory'>
-                            <h2 className='blogCategory--title'>{item.name}</h2>
-                            {
-                              item.count > 4 &&
-                              <Link to={`/blogs/${item.name}`}>
-                                See More
-                              </Link>
-                            }
+    <>
+      <HeadInfo title='Bloggy - Home' />
+      <div className='container'>
+        <Header />
+        <Filter
+          category={category}
+          filter={filter}
+          setFilter={setFilter}
+        />
+        <div className='home'>
+          {
+            alert.loading
+            ? <Spinner />
+            : (
+              <>
+                {
+                  blogCategory.length === 0
+                  ? (
+                    <Message text="There's no blog found with this category." />
+                  )
+                  : (
+                    <>
+                      {
+                        blogCategory.map(item => (
+                          <div key={item._id}>
+                            <div className='blogCategory'>
+                              <h2 className='blogCategory--title'>{item.name}</h2>
+                              {
+                                item.count > 4 &&
+                                <Link to={`/blogs/${item.name}`}>
+                                  See More
+                                </Link>
+                              }
+                            </div>
+                            <ArticleContainer blogs={item.blogs} />
                           </div>
-                          <ArticleContainer blogs={item.blogs} />
-                        </div>
-                      ))
-                    }
-                  </>
-                )
-              }
-            </>
-          )
-        }
+                        ))
+                      }
+                    </>
+                  )
+                }
+              </>
+            )
+          }
+        </div>
       </div>
-    </div>
+    </>
   )
 }
 

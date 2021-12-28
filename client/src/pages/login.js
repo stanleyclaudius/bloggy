@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import LoginMethod from './../components/login/LoginMethod';
 import AccountLogin from './../components/login/AccountLogin';
 import SmsLogin from './../components/login/SmsLogin';
+import HeadInfo from './../utils/HeadInfo';
 
 const Login = () => {
   const [queryParams] = useSearchParams();
@@ -23,13 +24,16 @@ const Login = () => {
   }, [auth.token, navigate, queryParams]);
 
   return (
-    <div className='login container'>
-      <h1>Sign In</h1>
-      <div className='login__content'>
-        <LoginMethod isSmsLogin={isSmsLogin} setIsSmsLogin={setIsSmsLogin} />
-        {isSmsLogin ? <SmsLogin /> : <AccountLogin />}
+    <>
+      <HeadInfo title='Bloggy - Login' />
+      <div className='login container'>
+        <h1>Sign In</h1>
+        <div className='login__content'>
+          <LoginMethod isSmsLogin={isSmsLogin} setIsSmsLogin={setIsSmsLogin} />
+          {isSmsLogin ? <SmsLogin /> : <AccountLogin />}
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 

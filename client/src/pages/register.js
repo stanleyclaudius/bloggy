@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { GLOBAL_TYPES } from './../redux/types/globalTypes';
 import { register } from './../redux/actions/authActions';
+import HeadInfo from './../utils/HeadInfo';
 
 const Register = () => {
   const [userData, setUserData] = useState({
@@ -62,45 +63,48 @@ const Register = () => {
   }, [auth.token, navigate]);
 
   return (
-    <div className='register'>
-      <h1>Sign Up</h1>
-      <form onSubmit={handleSubmit}>
-        <div className="inputGroup">
-          <label htmlFor="name">Name</label>
-          <input type="text" name="name" id="name" value={userData.name} onChange={handleChange} autoComplete='off' />
-        </div>
-        <div className="inputGroup">
-          <label htmlFor="account">Email or Phone number</label>
-          <input type="text" name="account" id="account" value={userData.account} onChange={handleChange} autoComplete='off' />
-        </div>
-        <div className="inputGroup">
-          <label htmlFor="password">Password</label>
-          <div className="inputGroup--password">
-            <input type={showPassword ? 'text' : 'password'} name="password" id="password" value={userData.password} onChange={handleChange} />
-            {
-              showPassword
-              ? <FaEyeSlash onClick={() => setShowPassword(false)} />
-              : <FaEye onClick={() => setShowPassword(true)} />
-            }
+    <>
+      <HeadInfo tilte='Bloggy - Register' />
+      <div className='register'>
+        <h1>Sign Up</h1>
+        <form onSubmit={handleSubmit}>
+          <div className="inputGroup">
+            <label htmlFor="name">Name</label>
+            <input type="text" name="name" id="name" value={userData.name} onChange={handleChange} autoComplete='off' />
           </div>
-        </div>
-        <div className="inputGroup">
-          <label htmlFor="confirmPassword">Confirm Password</label>
-          <div className="inputGroup--password">
-            <input type={showConfirmPassword ? 'text' : 'password'} name="confirmPassword" id="confirmPassword" value={userData.confirmPassword} onChange={handleChange} />
-            {
-              showConfirmPassword
-              ? <FaEyeSlash onClick={() => setShowConfirmPassword(false)} />
-              : <FaEye onClick={() => setShowConfirmPassword(true)} />
-            }
+          <div className="inputGroup">
+            <label htmlFor="account">Email or Phone number</label>
+            <input type="text" name="account" id="account" value={userData.account} onChange={handleChange} autoComplete='off' />
           </div>
-        </div>
-        <button className={alert.loading ? 'disabled' : ''} disabled={alert.loading ? true : false} type="submit">
-          {alert.loading ? 'Loading ...' : 'Sign Up'}
-        </button>
-        <p>Already have an account? Click <Link to='/login'>here</Link></p>
-      </form>
-    </div>
+          <div className="inputGroup">
+            <label htmlFor="password">Password</label>
+            <div className="inputGroup--password">
+              <input type={showPassword ? 'text' : 'password'} name="password" id="password" value={userData.password} onChange={handleChange} />
+              {
+                showPassword
+                ? <FaEyeSlash onClick={() => setShowPassword(false)} />
+                : <FaEye onClick={() => setShowPassword(true)} />
+              }
+            </div>
+          </div>
+          <div className="inputGroup">
+            <label htmlFor="confirmPassword">Confirm Password</label>
+            <div className="inputGroup--password">
+              <input type={showConfirmPassword ? 'text' : 'password'} name="confirmPassword" id="confirmPassword" value={userData.confirmPassword} onChange={handleChange} />
+              {
+                showConfirmPassword
+                ? <FaEyeSlash onClick={() => setShowConfirmPassword(false)} />
+                : <FaEye onClick={() => setShowConfirmPassword(true)} />
+              }
+            </div>
+          </div>
+          <button className={alert.loading ? 'disabled' : ''} disabled={alert.loading ? true : false} type="submit">
+            {alert.loading ? 'Loading ...' : 'Sign Up'}
+          </button>
+          <p>Already have an account? Click <Link to='/login'>here</Link></p>
+        </form>
+      </div>
+    </>
   );
 }
 
