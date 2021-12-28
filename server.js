@@ -7,6 +7,7 @@ const connectDB = require('./config/db');
 const { SocketServer } = require('./SocketServer');
 const { createServer } = require('http');
 const { Server } = require('socket.io');
+const path = require('path');
 
 dotenv.config({
   path: './config/.env'
@@ -33,4 +34,12 @@ app.use('/api/v1/user', require('./routes/user.route'));
 app.use('/api/v1/comment', require('./routes/comment.route'));
 
 connectDB();
+
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static('client/build'));
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'));
+  })
+}
+
 http.listen(process.env.PORT, () => console.log(`Server is running on PORT ${process.env.PORT}`));
