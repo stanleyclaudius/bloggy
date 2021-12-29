@@ -4,7 +4,7 @@ import { MdAccountCircle } from 'react-icons/md';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { googleLogin, facebookLogin } from './../../redux/actions/authActions';
-import { GOOGLE_CLIENT_ID } from './../../constant';
+import { GOOGLE_CLIENT_ID, FACEBOOK_APP_ID } from './../../constant';
 import GoogleLogin from 'react-google-login-lite';
 import FacebookLogin from 'react-facebook-login-lite';
 
@@ -35,7 +35,7 @@ const LoginMethod = ({isSmsLogin, setIsSmsLogin}) => {
 
       <div>
         <FacebookLogin
-          appId='485087349580137'
+          appId={FACEBOOK_APP_ID}
           onSuccess={onFacebookSuccess}
         />
       </div>
